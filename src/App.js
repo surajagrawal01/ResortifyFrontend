@@ -1,12 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-        <h2>Resortify</h2>
-    </div>
-  );
+import {Button} from 'react-bootstrap';
+export default function App(){
+    return(
+        <>
+        <h1>Hye</h1>
+        <Button variant='primary'>
+                 hello
+        </Button>
+        </>
+    )
 }
-
-export default App;
