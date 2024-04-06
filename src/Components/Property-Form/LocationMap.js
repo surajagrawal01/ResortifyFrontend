@@ -1,9 +1,9 @@
 import { MapContainer,Marker,TileLayer,Popup} from 'react-leaflet'
 import { useContext } from 'react';
-import PropertyContext from '../context/PropertyContext';
+import PropertyContext from '../../context/PropertyContext';
 import { useEffect,useRef} from 'react';
 import { Icon } from 'leaflet';
-import image from'../images/gps.png'
+import image from'../../Images/gps.png'
 export default function LocationMap(props){
   const {resort, resortDispatch} = useContext(PropertyContext)
   const mapRef = useRef(null);

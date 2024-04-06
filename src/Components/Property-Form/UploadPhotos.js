@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import {Form,Button} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import PropertyContext from '../context/PropertyContext';
+import PropertyContext from '../../context/PropertyContext';
 export default function UploadPhotos(){
     const {resort,resortDispatch} = useContext(PropertyContext)
     const navigate = useNavigate()

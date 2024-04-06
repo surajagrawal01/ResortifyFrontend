@@ -1,5 +1,5 @@
 import {useState,useContext} from 'react'
-import PropertyContext from '../context/PropertyContext';
+import PropertyContext from '../../context/PropertyContext';
 import axios from 'axios';
 
 import {Form} from 'react-bootstrap';

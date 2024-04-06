@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useContext} from "react"
 import {Button} from "react-bootstrap"
 
-import PropertyContext from "../context/PropertyContext"
+import PropertyContext from "../../context/PropertyContext"
 export default function Rooms(){
     const resort = useContext(PropertyContext)
     const navigate = useNavigate()

@@ -3,7 +3,7 @@ import {useContext, useState} from 'react'
 import { useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from 'formik';
  import * as Yup from 'yup';
-import PropertyContext from "../context/PropertyContext";
+import PropertyContext from "../../context/PropertyContext";
 export default function RoomDetails(){
    const {resort ,resortDispatch} = useContext(PropertyContext)
    const [dateError,setDateError] =useState('')

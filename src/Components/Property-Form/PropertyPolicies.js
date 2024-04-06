@@ -1,7 +1,7 @@
 import Form from 'react-bootstrap/Form';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PropertyContext from '../context/PropertyContext';
+import PropertyContext from '../../context/PropertyContext';
 import axios from 'axios';
 
 const policies = ['dayOut', 'nightOut', 'wholeDay'];

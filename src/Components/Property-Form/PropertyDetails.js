@@ -6,7 +6,7 @@ import axios from "axios"
 import {useNavigate} from "react-router-dom"
 import {Row,Col,Button} from "react-bootstrap"
 import * as Yup from 'yup';
-import PropertyContext from '../context/PropertyContext';
+import PropertyContext from '../../context/PropertyContext';
 
 export default function PropertyDetails(){
   const {resort, resortDispatch} = useContext(PropertyContext)
