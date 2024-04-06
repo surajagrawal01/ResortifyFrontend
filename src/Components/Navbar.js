@@ -1,35 +1,94 @@
 import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Nav, Navbar, NavbarBrand, NavLink, } from 'react-bootstrap';
+import {
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap"
+import { useSelector, useDispatch } from 'react-redux';
+import { FaHome, FaBuilding, FaUser } from 'react-icons/fa';
 import logo from "../Images/logo.png"
-function NavigationBar() {
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { clearUserData } from '../actions/userActions';
+import { setLoginFalse } from '../actions/isLoginActions';
+
+export default function NavigationBar() {
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const isLoggedIn = useSelector((state) => {
+    return state.isLogIn.isLoggedIn
+  })
+
+  const userDetail = useSelector((state) => {
+    return state.user.user
+  })
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    dispatch(setLoginFalse())
+    dispatch(clearUserData())
+    navigate("/")
+  }
+
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
-      <img src= {logo} width="100"  height= "50" id="homepageImg"  />
-        <Navbar.Brand href="#home"></Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <>
+      <Navbar expand="lg" className="gray-background">
+        <Container>
+          <NavbarBrand href="/">
+            <img
+              alt="logo"
+              src={logo}
+              style={{
+                height: 50,
+                width: 50
+              }}
+            />
+            &nbsp; Resortify
+          </NavbarBrand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav"> &nbsp; &nbsp;
+            <Nav>
+              <NavLink className='mx-md-2'><Link to='/about' className='link-style'> <FaHome /> About Us</Link></NavLink>
+              {isLoggedIn ?
+                userDetail.role == 'owner' && <Nav.Link><Link to='/list-property' className='link-style'> <FaBuilding /> List Your Property</Link></Nav.Link>
+                : <Nav.Link><Link to='/list-property' className='link-style'> <FaBuilding /> List Your Property</Link></Nav.Link>}
+            </Nav>
+            <Nav className="ms-auto">
+              {isLoggedIn ?
+                <>
+                  <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                      <FaUser />
+                    </DropdownToggle>
+                    {
+                      userDetail.role == 'user' ?
+                        <DropdownMenu end>
+                          <DropdownItem>Personal Details</DropdownItem>
+                          <DropdownItem>Your Bookings</DropdownItem>
+                          <DropdownItem divider />
+                          <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+                        </DropdownMenu> :
+                        <DropdownMenu end>
+                          <DropdownItem>Property Details</DropdownItem>
+                          <DropdownItem><Link to='/owner-dashobard' className='link-style'> Dashboard </Link></DropdownItem>
+                          <DropdownItem divider />
+                          <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+                        </DropdownMenu>
+                    }
+                  </UncontrolledDropdown>
+                </>
+                : <Nav.Link><Link to='/registration-page' className='link-style'><FaUser /> Login/SignUp </Link></Nav.Link>
+              }
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </>
+
   );
 }
 
-export default NavigationBar;
