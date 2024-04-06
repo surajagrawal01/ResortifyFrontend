@@ -3,6 +3,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 
+
 export default function OTPVerification() {
     const [otp, setOtp] = useState('')
     const [errors, setErrors] = useState({})
@@ -58,6 +59,7 @@ export default function OTPVerification() {
 
     return (
         <>
+            
             <Container fluid>
                 <Row>
                     <Col xs={12} md={6} className='m-auto'>

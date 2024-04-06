@@ -5,8 +5,14 @@ import { Link } from "react-router-dom"
 import * as Yup from "yup"
 import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 import logo from "../../Images/logo.png"
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { setLoginTrue } from "../../actions/isLoginActions"
+import { startSetUser } from "../../actions/userActions"
 export default function LoginPage() {
     const [serverErrors, setServerErrors] = useState({})
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     return (
         <Formik
             initialValues={{ email: '', password: '' }}
@@ -20,9 +26,13 @@ export default function LoginPage() {
                     .required('Required')
             })}
             onSubmit={async (values) => {
+                console.log(values)
                 try {
                     const response = await axios.post("http://localhost:3060/api/users/login", values)
                     localStorage.setItem('token', response.data.token)
+                    dispatch(setLoginTrue())
+                    dispatch(startSetUser())
+                    navigate("/")
                 } catch (err) {
                     console.log(err)
                     setServerErrors(err.response.data)

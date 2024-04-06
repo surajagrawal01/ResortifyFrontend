@@ -7,12 +7,16 @@ import PropertyContext from "./context/PropertyContext";
 import { useReducer } from "react";
 import FinanceAndLegal from "./components/FinanceLegal";
 import RegistartionForm from './Components/userRegistration/RegistrationPage';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import {setLoginTrue} from "./actions/isLoginActions"
+import { Routes, Route, Link } from 'react-router-dom';
 import OTPVerification from './Components/userRegistration/OtpVerification';
 import LoginPage from './Components/userRegistration/LogInPage';
 import ForgotPassword from './Components/userRegistration/ForgotPassword';
 import OwnerDashBoard from "./Components/DashBoards/ownerDashboard"
 import HomePage from './Components/HomePage';
+import { useSelector, useDispatch } from 'react-redux';
+import { startSetUser } from './actions/userActions';
 
 function PropertyReducer(state,action){
   switch(action.type){
@@ -35,9 +39,9 @@ function PropertyReducer(state,action){
           return {...state}
       }
   }
-  
-
 }
+
+
   const initialState = {
     propertyData:{},
     amenities:[],
@@ -49,18 +53,33 @@ function PropertyReducer(state,action){
   
 export default function App(){
   const [resort,resortDispatch] = useReducer(PropertyReducer,initialState)
+  
+  const dispatch = useDispatch()
+
+    useEffect(()=>{
+        const token = localStorage.getItem('token')
+        if(token){
+            dispatch(setLoginTrue())
+            dispatch(startSetUser())
+        }
+    },[])
+
+    const isLoggedIn = useSelector((state) => {
+        return state.isLogIn.isLoggedIn
+    })
     return(
         <>
         <h2>Resortify</h2>
         <BrowserRouter>
         <PropertyContext.Provider value={{resort, resortDispatch}} >
         <Routes>
-      <Route path="/" element={<HomePage />} />
+             <Route path="/" element={<HomePage />} />
                 <Route path='/registration-page' element={<RegistartionForm />}/>
                 <Route path='/emailVerification' element={<OTPVerification />} />
                 <Route path='/loginPage' element={<LoginPage />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/owner-dashobard" element={<OwnerDashBoard />} />
+                <Route path="/list-property" element={ isLoggedIn ? <LoginPage/>  : <RegistartionForm/> } />
            <Route path="/properties-details" element={<PropertyDetails/>}/> 
            <Route path="/room-amenities" element={<RoomDetails />} /> 
           <Route path="/add-rooms" element={<Rooms/>} />
