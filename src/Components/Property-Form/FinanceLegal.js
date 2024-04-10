@@ -6,7 +6,7 @@ import {Form} from 'react-bootstrap';
 export default function FinanceAndLegal(){
     const {resort, resortDispatch} = useContext(PropertyContext)
     const [ownerShip,setOwnerShip] = useState('')
-    const [documents,setDocuments] = useState([])
+ 
     const [verify,setVerify] = useState(false)
     const [upload,setUpload] = useState(false)
     const [errors,setErrors] = useState({})
@@ -18,6 +18,7 @@ export default function FinanceAndLegal(){
     panNo:''
    })
    const newErrors ={}
+   const formData = new FormData()
    const validateErrors=()=>{
         if(ownerShip.length === 0){
             newErrors.ownerShip = 'Please select the ownerShip'
@@ -39,24 +40,46 @@ export default function FinanceAndLegal(){
         }
 
    }
+   const handleDocs =(files)=>{
+    for(let i=0; i<files.length;i++){
+        formData.append('files',files[i])
+    }
+    
+  }
+  const handlePhotos=async(e)=>{
+    e.preventDefault()
+    console.log(ownerShip)
+    const result = await axios.post('http://localhost:3060/api/documentsphotos',formData)
+    console.log(result.data)
+    const formdata ={
+        financeAndLegal:{
+            typeOfOwnership:ownerShip,
+            typeOfDocument: result.data
+            },
+    
+    }
+    setUpload(true)
+    resortDispatch({type:'ADD_PROPERTY_DETAILS',payload:formdata})
+  }
    
    const handleSubmit=async(e)=>{
+         e.preventDefault()
         validateErrors()
         if(Object.keys(newErrors).length === 0){
-            const formdata ={
-                financeAndLegal:{
-                    typeOfOwnership:ownerShip,
-                    typeOfDocument:documents
-                    },
-                bankingDetails:bankingDetails
-            }
-         
-            resortDispatch({type:'ADD_PROPERTY_DETAILS',payload:formdata})
+           
             try{
-                const form = {...resort.propertyData,roomTypesData:[...resort.roomTypes],geoLocation:{...resort.geoLocation},packages:[...resort.packages]}
+                // const formdata ={
+                //     bankingDetails:bankingDetails
+                // }
+                // console.log(formdata)
+                //  resortDispatch({type:'ADD_PROPERTY_DETAILS',payload:formdata})
+
+                const form = {...resort.propertyData,roomTypesData:[...resort.roomTypes],geoLocation:{...resort.geoLocation},packages:[...resort.packages],bankingDetails:{...bankingDetails}}
                 console.log(form)
+               
                 const response = await axios.post('http://127.0.0.1:3060/api/owners/propertydetails',form,{headers
-                :{Authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZmFiZjZlYmIxOTY4OGFlZTg3MDZmMSIsInJvbGUiOiJvd25lciIsImlhdCI6MTcxMjM4NTIzOSwiZXhwIjoxNzEyOTkwMDM5fQ.ICB0s1jv2bCWhlQ6p3i4hC3CPfK5sbD4-8kcB2LctN0"}})
+                :{Authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZmFiZjZlYmIxOTY4OGFlZTg3MDZmMSIsInJvbGUiOiJvd25lciIsImlhdCI6MTcxMjM4NTIzOSwiZXhwIjoxNzEyOTkwMDM5fQ.ICB0s1jv2bCWhlQ6p3i4hC3CPfK5sbD4-8kcB2LctN0"
+                }})
                 console.log(response.data)
         
             }catch(err){
@@ -68,15 +91,7 @@ export default function FinanceAndLegal(){
         }
    }
 
-  const handleDocs =(e)=>{
-    e.preventDefault()
-    const result =[]
-    const docs = e.target.elements.documents.files
-    for(let i =0;i<docs.length ; i++){
-        result.push(docs[i].name)
-    }
-    setDocuments(result)
-  }
+ 
   const handleChange =(e)=>{
     const {name,value} = e.target
     setBankingDetails({...bankingDetails,[name]:value})
@@ -97,14 +112,16 @@ export default function FinanceAndLegal(){
                 </select>  
         </div>
         {Object.keys(errors).length !== 0 ? <p style={{color:'red'}}>{errors.ownerShip}</p>:""}
-        <h4>Upload Documents</h4>
-        <form onSubmit={handleDocs}>
+        <h4>Upload Documents</h4><p>property documents,IdentityProofs</p>
+        <form onSubmit={handlePhotos}>
         <Form.Group controlId="formFileMultiple" className="mb-3" name="documents">
-            <Form.Control type="file"  name="documents" multiple />
+            <Form.Control type="file"
+                          name="files"
+                          onChange={(e)=>{handleDocs(e.target.files)}}
+                          multiple />
         </Form.Group>
         <button className='btn btn-success'
-                value={upload}
-                onClick={e =>{setUpload(e.target.checked)}}
+
                 type="submit">upload</button>
         </form>
        
@@ -113,7 +130,7 @@ export default function FinanceAndLegal(){
             <form>
             <div className='form-group'>
                     <input type="text"
-                            disabled={upload === false}
+                            
                             name="bankingAccountNumber"
                             value={bankingDetails.bankingAccountNumber}
                             onChange={handleChange}
@@ -121,7 +138,7 @@ export default function FinanceAndLegal(){
                             placeholder="bank account number" />
                     {Object.keys(errors).length >0 ? <p style={{color:'red'}}>{errors.bankingAccountNumber}</p>:''}
                     <input  type="text"
-                             disabled={upload === false}
+                           
                              name="reEnterBankAccount"
                              value={bankingDetails.reEnterBankAccount}
                              onChange={handleChange}
@@ -129,7 +146,7 @@ export default function FinanceAndLegal(){
                             placeholder="Re-enter bank account number" />
                     {Object.keys(errors).length >0 ? <p style={{color:'red'}}>{errors.reEnterBankAccount}</p>:''}
                     <input type="text" 
-                            disabled={upload === false}
+                           
                             name="IFSCCode"
                             value={bankingDetails.IFSCCode}
                             onChange={handleChange}
@@ -138,7 +155,7 @@ export default function FinanceAndLegal(){
                                 />
                     {Object.keys(errors).length >0 ? <p style={{color:'red'}}>{errors.IFSCCode}</p>:''}
                     <input type="text"
-                            disabled={upload === false}
+                           
                             name="gstIN"
                             value={bankingDetails.gstIN}
                             onChange={handleChange}
@@ -146,7 +163,7 @@ export default function FinanceAndLegal(){
                             placeholder="GSTIN number" />
                     {Object.keys(errors).length > 0 ? <p  style={{color:'red'}}>{errors.gstIN}</p>:''}
                     <input type="text"
-                            disabled={upload === false}
+                          
                             name="panNo"
                             value={bankingDetails.panNo}
                             onChange={handleChange}

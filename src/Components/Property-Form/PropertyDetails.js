@@ -165,6 +165,7 @@ console.log(errors)
         const formdata ={
             propertyName:values.propertyName,
             propertyBuiltDate:values.propertyBuiltDate,
+            ownerEmail:values.ownerEmail,
             location:{
               houseNumber:values.houseNumber,
                 locality:values.locality,

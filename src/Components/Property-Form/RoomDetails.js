@@ -29,6 +29,7 @@ export default function RoomDetails(){
     }
 
     console.log(resort.roomTypes)
+    console.log(resort.amenities)
    return(
         <div>
             <h2>Room Amenities</h2>
@@ -44,6 +45,7 @@ export default function RoomDetails(){
         children:'',
         startDate:'',
         endDate:'',
+        checked:[]
 
         }}
        validationSchema={Yup.object({
@@ -76,6 +78,7 @@ export default function RoomDetails(){
        })}
 
        onSubmit={ (values) => {
+          
             const roomTypesData=[{
                NumberOfRooms:values.NumberOfRooms,
                roomType:values.roomType,
@@ -83,10 +86,9 @@ export default function RoomDetails(){
                smokingAllowed:values.smokingAllowed === 'true' ? true : false,
                extraBed:values.extraBed === 'true'? true:false,
                baseRoomPrice:values.baseRoomPrice,
-               availability:{startDate:values.startDate,endDate:values.endDate}
+               availability:{startDate:values.startDate,endDate:values.endDate},
+               roomAmentities:values.checked
             }]
-            
-            console.log(values.startDate,values.endDate)
             if(values.startDate === values.endDate){
                setDateError('start and end Date cannot be same')
             }else{

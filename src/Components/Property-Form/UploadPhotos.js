@@ -1,43 +1,76 @@
-import { useContext } from 'react';
-import {Form,Button} from 'react-bootstrap';
+import { useContext,useState } from 'react';
+import axios from 'axios'
+import {Button} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import PropertyContext from '../../context/PropertyContext';
 export default function UploadPhotos(){
     const {resort,resortDispatch} = useContext(PropertyContext)
+    
+    const formData = new FormData()
+    const formData1 = new FormData()
     const navigate = useNavigate()
-    const handlePhotos=(e)=>{
-        const result1  =[]
-        const result2=[]
-        e.preventDefault()
-        const propertyPhotos = e.target.elements.propertyPhotos.files
-        for(let i=0; i<propertyPhotos.length ; i++){
-            result1.push(propertyPhotos[i].name)
-        }
-        const photos = e.target.elements.photos.files
-        for(let i=0; i<photos.length ; i++){
-            result2.push(photos[i].name)
-        }
-        const formdata = { propertyPhotos:result1,photos:result2}
-        console.log(formdata)
-        resortDispatch({type:"ADD_PROPERTY_DETAILS",payload:formdata})
 
+
+    const handleImage =(files)=>{
+    for(let i=0; i< files.length  ; i++){
+       const file = files[i]
+       formData.append("files",file)
+    }
+    
+   }
+   const handleRoomPhotos =(files)=>{
+    for(let i =0; i<files.length; i++){
+        const file = files[i]
+        formData1.append("files",file)
+       }
+   }
+   
+
+    const handlePhotos=async(e)=>{
+        e.preventDefault()   
+        // Append each selected image to FormData
+        try{
+            const response = await axios.post('http://localhost:3060/api/propertyphotos',formData)
+            const response2 = await axios.post('http://localhost:3060/api/roomphotos',formData1)
+            console.log(response.data)
+            console.log(response2.data)
+          
+            const form ={
+                "propertyPhotos":response.data,
+            }
+            const form2={
+                "photos":response2.data,
+            }
+            resortDispatch({type:"ADD_PROPERTY_DETAILS",payload:form})
+            resortDispatch({type:"ADD_ROOM_DETAILS",payload:form2})
+
+        }catch(err){
+            console.log(err)
+
+        }
+       
+       
         navigate("/policies")
     }
+   
+
     console.log(resort)
+   
     return (
         <div>
             <h2>Upload Property Photos</h2>
              <form onSubmit={handlePhotos}>
-                <Form.Group controlId="formFileMultiple" className="mb-3" name="propertyPhotos">
-                    <label>Select Property Photos</label> 
-                     <Form.Control type="file"  name="propertyPhotos" multiple />
-                 </Form.Group>
-             <h2>Upload Room Photos</h2>
-                <Form.Group controlId="formFileMultiple" className="mb-3" name="photos">
-                <label> Select Rooms Photos  </label>
-                     <Form.Control type="file" name='photos' multiple />
-                    
-                </Form.Group>   
+                 <label>Upload Property Photos</label>
+                 <input type="file"
+                        name='file'
+                        multiple
+                        onChange={(e) =>{handleImage(e.target.files)}}/><br/>   
+                <label>Upload Rooms Photos </label> 
+                <input type="file"
+                        name='file'
+                        multiple
+                        onChange={(e)=>handleRoomPhotos(e.target.files)} /> <br/> 
+               
                 <Button type="sumbit"> next</Button>
              </form>
               
