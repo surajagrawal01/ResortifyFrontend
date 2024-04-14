@@ -16,7 +16,7 @@ Welcome to Resortify Frontend! This repository contains the frontend codebase fo
 - **Stripe**: Payment gateway for processing payments securely.
 - **axios**: Promise-based HTTP client for making API requests.
 - **multer**: Middleware for handling multipart/form-data, used for image uploads.
-- **react-datatable-component**: React component for creating robust tables.
+- **react-datatable-component**: React component for creating tables.
 
 ## Features
 
