@@ -1,9 +1,10 @@
-import PropertyDetails from './Components/Property-Form/PropertyDetails';
+import PropertyDetails from "./Components/Property-Form/PropertyDetails";
 import RoomDetails from "./Components/Property-Form/RoomDetails";
 import Rooms from "./Components/Property-Form/Rooms";
-import UploadPhotos from "./Components/Property-Form/UploadPhotos"
+import UploadPhotos from "./Components/Property-Form/UploadPhotos";
 import Policies from "./Components/Property-Form/PropertyPolicies";
 import PropertyContext from "./context/PropertyContext";
+
 import { useReducer } from "react";
 import FinanceAndLegal from "./Components/Property-Form/FinanceLegal";
 import RegistartionForm from './Components/userRegistration/RegistrationPage';
@@ -24,51 +25,73 @@ import Footer from "./Components/Footer"
 import PaymentPage from './Components/PaymentComp/PaymentPage';
 import Success from './Components/PaymentComp/Success';
 import Failure from './Components/PaymentComp/Failure';
-function PropertyReducer(state, action) {
-    switch (action.type) {
-        case 'ADD_PROPERTY_DETAILS': {
-            return { ...state, propertyData: { ...state.propertyData, ...action.payload } }
-        }
-        case 'ADD_AMENITIES': {
-            return { ...state, amenities: action.payload }
-        }
-        case 'ADD_ROOM_DETAILS': {
-            return { ...state, roomTypes: [...state.roomTypes, { ...action.payload }] }
-        }
-        case 'ADD_GEOLOCATION': {
-            return { ...state, geoLocation: { ...action.payload } }
-        }
-        case 'ADD_PACKAGES': {
-            return { ...state, packages: [...state.packages, action.payload] }
-        }
-        default: {
-            return { ...state }
-        }
-    }
-}
+import StepperForm from "./Components/Property-Form/StepperForm";
 
+function PropertyReducer(state, action) {
+  switch (action.type) {
+    case "ADD_PROPERTY_DETAILS": {
+      return {
+        ...state,
+        propertyData: { ...state.propertyData, ...action.payload },
+      };
+    }
+    case "ADD_AMENITIES": {
+      return { ...state, amenities: action.payload };
+    }
+    case "ADD_ROOM_DETAILS": {
+      return {
+        ...state,
+        roomTypes: [...state.roomTypes, { ...action.payload }],
+      };
+    }
+
+    case "ADD_GEOLOCATION": {
+      return { ...state, geoLocation: { ...action.payload } };
+    }
+    case "ADD_FORM": {
+      return {
+        ...state,
+        propertyData: {
+          ...state.propertyData,
+          roomTypesData: [...state.roomTypes],
+        },
+      };
+    }
+    default: {
+      return { ...state };
+    }
+  }
+}
 
 const initialState = {
-    propertyData: {},
-    amenities: [],
-    packages: [],
-    geoLocation: {},
-    roomTypes: []
-}
-
+  propertyData: {},
+  amenities: [],
+  geoLocation: {},
+  roomTypes: [],
+};
 
 export default function App() {
-    const [resort, resortDispatch] = useReducer(PropertyReducer, initialState)
+  const [resort, resortDispatch] = useReducer(PropertyReducer, initialState);
 
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        const token = localStorage.getItem('token')
-        if (token) {
-            dispatch(setLoginTrue())
-            dispatch(startSetUser())
-        }
-    }, [])
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(setLoginTrue());
+      dispatch(startSetUser());
+    }
+  }, []);
+
+  const isLoggedIn = useSelector((state) => {
+    return state.isLogIn.isLoggedIn;
+  });
+  return (
+    <>
+      <PropertyContext.Provider value={{ resort, resortDispatch }}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/registration-page" element={<RegistartionForm />} />
 
     const isLoggedIn = useSelector((state) => {
         return state.isLogIn.isLoggedIn
@@ -86,6 +109,7 @@ export default function App() {
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/owner-dashobard" element={<OwnerDashBoard />} />
                     <Route path="/list-property" element={isLoggedIn ? <LoginPage /> : <RegistartionForm />} />
+                    <Route path="/stepperform" element={<StepperForm />} />
                     <Route path="/properties-details" element={<PropertyDetails />} />
                     <Route path="/room-amenities" element={<RoomDetails />} />
                     <Route path="/add-rooms" element={<Rooms />} />

@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+# Resortify Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to Resortify Frontend! This repository contains the frontend codebase for the Resortify web application, offering users the ability to book resorts and owners to register their hotels. Resortify Frontend is built using React.js and incorporates various libraries and tools for enhanced functionality and user experience.
 
-## Available Scripts
+## Technologies Used
 
-In the project directory, you can run:
+- **React.js**: JavaScript library for building user interfaces.
+- **Bootstrap**: CSS framework for responsive and mobile-first design.
+- **reactstrap**: React components library for Bootstrap.
+- **Leaflet**: JavaScript library for interactive maps.
+- **react-leaflet**: React components for Leaflet maps integration.
+- **redux**: State management library for managing global state.
+- **react-router-dom**: React library for routing and navigation.
+- **formik**: Form library for building forms in React.
+- **yup**: JavaScript schema validation library for form validation.
+- **Stripe**: Payment gateway for processing payments securely.
+- **axios**: Promise-based HTTP client for making API requests.
+- **multer**: Middleware for handling multipart/form-data, used for image uploads.
+- **react-datatable-component**: React component for creating tables.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Multi-Step Form**: Utilizes a multi-step form for seamless user experience during resort booking and registration.
+- **Global State Management**: Manages global state using Redux for efficient data handling.
+- **Form Handling and Validation**: Implements Formik and Yup for form creation and validation, ensuring data integrity.
+- **Error Handling**: Handles form errors and server errors gracefully to enhance user experience.
+- **Payment Gateway Integration**: Integrates Stripe for secure payment processing between owners and users.
+- **Interactive Maps**: Utilizes Leaflet and react-leaflet for interactive maps displaying resort locations.
+- **Image Uploads**: Implements multer for uploading resort images, enhancing visual appeal.
+- **Sorting and Filtering**: Allows users to filter and sort resorts based on various criteria.
+- **Admin Dashboard**: Provides an admin dashboard with tables created using react-datatable-component for managing bookings and resorts effectively.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+1. Clone the repository:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   ```bash
+   git clone https://github.com/yourusername/Resortify-Frontend.git
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Install Dependencies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+      cd Resortify-Frontend
+      npm install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Start the development server
 
-### `npm run eject`
+   ```bash
+       npm start
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
+Once the development server is running, you can access Resortify Frontend in your web browser. Users can book resorts and owners can register their hotels using the intuitive multi-step form. The application provides a seamless experience with global state management, form validation, and error handling. Additionally, users can explore resort locations on interactive maps and filter and sort resorts based on preferences.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contributing
+Contributions are welcome! If you have any suggestions, improvements, or feature requests, feel free to submit a pull request or open an issue.
