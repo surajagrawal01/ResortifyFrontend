@@ -36,9 +36,9 @@ export default function NavigationBar() {
 
   return (
     <>
-      <Navbar expand="lg" className="gray-background">
+      <Navbar expand="lg" className="gray-background navbar">
         <Container>
-          <NavbarBrand href="/">
+          <NavbarBrand><Link to='/' className='link-style'>
             <img
               alt="logo"
               src={logo}
@@ -48,13 +48,14 @@ export default function NavigationBar() {
               }}
             />
             &nbsp; Resortify
+          </Link>
           </NavbarBrand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav"> &nbsp; &nbsp;
             <Nav>
               <NavLink className='mx-md-2'><Link to='/about' className='link-style'> <FaHome /> About Us</Link></NavLink>
               {isLoggedIn ?
-                userDetail.role == 'owner' && <Nav.Link><Link to='/list-property' className='link-style'> <FaBuilding /> List Your Property</Link></Nav.Link>
+                userDetail.role === 'owner' && <Nav.Link><Link to='/list-property' className='link-style'> <FaBuilding /> List Your Property</Link></Nav.Link>
                 : <Nav.Link><Link to='/list-property' className='link-style'> <FaBuilding /> List Your Property</Link></Nav.Link>}
             </Nav>
             <Nav className="ms-auto">
@@ -65,7 +66,7 @@ export default function NavigationBar() {
                       <FaUser />
                     </DropdownToggle>
                     {
-                      userDetail.role == 'user' ?
+                      userDetail.role === 'user' ?
                         <DropdownMenu end>
                           <DropdownItem>Personal Details</DropdownItem>
                           <DropdownItem>Your Bookings</DropdownItem>

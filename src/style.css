@@ -1,33 +1,61 @@
 .gray-background {
-    background-color: rgba(239, 239, 239, 0.862);
-    color: #000;
+  background-color: rgba(239, 239, 239, 0.862);
+  color: #000;
 }
+
 .search-background {
-    background-color: rgba(1, 1, 1, 0.862);
-    color: #000;
+  background-color: rgba(1, 1, 1, 0.862);
+  color: #000;
 }
+
 .indicate-warning {
-    color:rgb(207, 122, 82)
+  color: rgb(207, 122, 82)
 }
 
 .card-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: #ffffff;
+  border-bottom: 1px solid #dddddd;
+  z-index: 1000;
+  /* Ensure Navbar appears above other content */
+}
 
 @media (max-width: 767px) {
-    .dynamic-height {
-      height: auto !important; 
-      /* //The !important keyword is used to ensure that these styles take precedence over any other conflicting styles. */
-      min-height: 15rem !important;
-    }
-    .height-mobile {
-        height: 3rem !important;
-    }
+  .dynamic-height {
+    height: auto !important;
+    /* //The !important keyword is used to ensure that these styles take precedence over any other conflicting styles. */
+    min-height: 15rem !important;
   }
 
-  .link-style {
-    color: inherit; /* Use the color inherited from the parent */
-    text-decoration: none; /* Remove underline */
+  .height-mobile {
+    height: 3rem !important;
   }
+}
+
+.link-style {
+  color: inherit;
+  /* Use the color inherited from the parent */
+  text-decoration: none;
+  /* Remove underline */
+}
+
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f8f9fa;
+  border-top: 1px solid #dddddd;
+  padding: 10px 0;
+  text-align: center;
+}

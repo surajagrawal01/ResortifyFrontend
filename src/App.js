@@ -17,7 +17,13 @@ import OwnerDashBoard from "./Components/DashBoards/ownerDashboard"
 import HomePage from './Components/HomePage';
 import { useSelector, useDispatch } from 'react-redux';
 import { startSetUser } from './actions/userActions';
-
+import ListResorts from './Components/ListingResorts/ListResorts';
+import NavigationBar from './Components/Navbar';
+import ResortDetail from './Components/ResortDetail/ResortDetail';
+import Footer from "./Components/Footer"
+import PaymentPage from './Components/PaymentComp/PaymentPage';
+import Success from './Components/PaymentComp/Success';
+import Failure from './Components/PaymentComp/Failure';
 function PropertyReducer(state, action) {
     switch (action.type) {
         case 'ADD_PROPERTY_DETAILS': {
@@ -67,8 +73,10 @@ export default function App() {
     const isLoggedIn = useSelector((state) => {
         return state.isLogIn.isLoggedIn
     })
+    
     return (
         <>
+            <NavigationBar />
             <PropertyContext.Provider value={{ resort, resortDispatch }} >
                 <Routes>
                     <Route path="/" element={<HomePage />} />
@@ -84,8 +92,14 @@ export default function App() {
                     <Route path="/upload-photos" element={<UploadPhotos />} />
                     <Route path="/policies" element={<Policies />} />
                     <Route path="/finance-and-legal" element={<FinanceAndLegal />} />
+                    <Route path="/resort-listing" element={<ListResorts />} />
+                    <Route path="/resort-detail/:id" element={<ResortDetail />} />
+                    <Route path="/booking/payment/:id" element={<PaymentPage/>} />
+                    <Route path="/success" element={<Success />} />
+                    <Route path="/cancel" element={<Failure />} />
                 </Routes>
             </PropertyContext.Provider>
+            <Footer />
         </>
     )
 }

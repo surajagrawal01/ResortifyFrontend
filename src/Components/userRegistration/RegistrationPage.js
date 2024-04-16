@@ -36,7 +36,6 @@ export default function RegistartionForm() {
                     localStorage.setItem('email', values.email)
                     const response = await axios.post("http://localhost:3060/api/users", values)
                     navigate('/emailVerification')
-                    console.log(response.data)
                 } catch (err) {
                     console.log(err)
                     setServerErrors(err.response.data.errors)

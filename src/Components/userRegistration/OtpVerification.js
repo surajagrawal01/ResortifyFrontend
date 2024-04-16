@@ -1,8 +1,7 @@
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import { Container, Row, Col, Image, Card } from 'react-bootstrap';
-
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 export default function OTPVerification() {
     const [otp, setOtp] = useState('')
@@ -16,7 +15,7 @@ export default function OTPVerification() {
     const validate = () => {
         if (!otp) {
             errorsObj.otpError = 'otp field is required'
-        } else if (otp.length != 6) {
+        } else if (otp.length !== 6) {
             errorsObj.otpError = 'otp field must have 6 digits only'
         }
     }
@@ -42,8 +41,7 @@ export default function OTPVerification() {
             otp: otp
         }
         validate()
-        console.log(errorsObj)
-        if (Object.keys(errorsObj).length == 0) {
+        if (Object.keys(errorsObj).length === 0) {
             try {
                 const response = await axios.post("http://localhost:3060/api/users/verifyEmail", formData)
                 alert(response.data)
@@ -59,7 +57,6 @@ export default function OTPVerification() {
 
     return (
         <>
-            
             <Container fluid>
                 <Row>
                     <Col xs={12} md={6} className='m-auto'>

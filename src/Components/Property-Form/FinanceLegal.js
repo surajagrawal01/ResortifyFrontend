@@ -37,7 +37,6 @@ export default function FinanceAndLegal(){
         if(bankingDetails.panNo.length !== 10){
             newErrors.panNo ='Enter Valid Pan Number'
         }
-
    }
    
    const handleSubmit=async(e)=>{

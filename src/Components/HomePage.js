@@ -1,4 +1,3 @@
-import NavigationBar from "./Navbar"
 import SearchBar from "./SearchBar"
 import SearchCity from "./SearchCity"
 import OwnerDashBoard from "./DashBoards/ownerDashboard"
@@ -16,11 +15,10 @@ export default function HomePage() {
 
     return (
         <>
-            <NavigationBar />
             {isLoggedIn ?
                 <>
                     {
-                        userDetail.role == 'owner' ?
+                        userDetail.role === 'owner' ?
 
                             <OwnerDashBoard />
                             :
