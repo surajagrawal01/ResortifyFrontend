@@ -3,7 +3,7 @@ import * as Yup from "yup"
 import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Container, Row, Col, Image, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 export default function ForgotPassword() {
 
     const navigate = useNavigate()
@@ -15,12 +15,11 @@ export default function ForgotPassword() {
 
     const handleOTP = async (e) => {
         e.preventDefault()
-        if(email.length == 0){
+        if (email.length === 0) {
             formErrors.email = 'Email Required'
-        }else{
+        } else {
             try {
                 const response = await axios.post('http://localhost:3060/api/users/reVerifiyEmail', { email })
-                console.log(response.data)
                 setServerErrors({})
                 setFormErrors({})
                 setIsActive(false)
@@ -48,7 +47,7 @@ export default function ForgotPassword() {
             onSubmit={async (values) => {
                 try {
                     const formData = { email, otp: values.otp, password: values.password }
-                    const resonse = await axios.put('http://localhost:3060/api/users/forgotPassword', formData)
+                    const response = await axios.put('http://localhost:3060/api/users/forgotPassword', formData)
                     alert('Password Updated')
                     navigate('/loginPage')
                     setServerErrors({})
@@ -59,10 +58,10 @@ export default function ForgotPassword() {
             }}>
 
             <>
-                <Container fluid>
+                <Container fluid className="mt-4">
                     <Row>
                         <Col xs={12} md={6} className='m-auto'>
-                            <Card style={{ width: '30rem' }} className='m-auto p-3' border="primary">
+                            <Card className='m-auto p-3' border="primary">
                                 <Card.Body>
 
                                     <Card.Title > Update Password </Card.Title> <hr />
@@ -87,7 +86,7 @@ export default function ForgotPassword() {
                                         <button onClick={handleOTP} className="btn btn-primary">Send OTP</button> <br />
 
                                         <label className="form-label" htmlFor="otp">OTP</label>
-                                        <Field className="form-control" name="otp" type="number" disabled={isActive} id="otp"/>
+                                        <Field className="form-control" name="otp" type="number" disabled={isActive} id="otp" />
                                         <ErrorMessage className="text-danger" component="div" name="otp" /> <br />
 
                                         <label className="form-label" htmlFor="password">password</label>

@@ -58,7 +58,7 @@ export default function ModalDashboard(props) {
                         <label className="form-label">Packages</label>
                         <input
                             type="text"
-                            value={booking.packages.map((ele) => { return ele })}
+                            value={booking.packages.map((ele) => { return ele.packageName })}
                             disabled={true}
                             className="form-control" />
                         <label className='form-label'>Actions</label>

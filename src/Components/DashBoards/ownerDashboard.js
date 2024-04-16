@@ -13,7 +13,6 @@ export default function OwnerDashBoard() {
         (async () => {
             try {
                 const response = await axiosInstance.get("http://localhost:3060/api/bookings")
-                console.log(response.data)
                 setBookings(response.data)
             } catch (err) {
                 console.log(err)
@@ -60,10 +59,6 @@ export default function OwnerDashBoard() {
         {
             name: 'No of Guests',
             selector: row => row.guests.adult + row.guests.children
-        },
-        {
-            name: 'Conatct No',
-            selector: row => row.contactNumber
         },
         {
             name: 'Amount',
