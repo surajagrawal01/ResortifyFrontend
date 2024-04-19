@@ -35,13 +35,14 @@ export default function StepperForm() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  const goToPrevious =()=>{
-    handleBack()
-  }
+  const goToPrevious = () => {
+    handleBack();
+    setRoomDetails(false);
+  };
   const steps = [
     <PropertyDetails enableButton={enableButton} />,
     <RoomDetails enableRoomDetails={enableRoomDetails} />,
-    <Rooms goToPrevious={goToPrevious}/>,
+    <Rooms goToPrevious={goToPrevious} />,
     <UploadPhotos enableUpload={enableUpload} />,
     <PropertyPolicies enablePolicies={enablePolicies} />,
     <FinanceAndLegal />,

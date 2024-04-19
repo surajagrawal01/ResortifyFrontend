@@ -25,6 +25,8 @@ import PaymentPage from './Components/PaymentComp/PaymentPage';
 import Success from './Components/PaymentComp/Success';
 import Failure from './Components/PaymentComp/Failure';
 import StepperForm from "./Components/Property-Form/StepperForm";
+import Reviews from "./Components/Reviews/review";
+import AdminDashboard from "./Components/DashBoards/AdminDashBoard";
 
 function PropertyReducer(state, action) {
   switch (action.type) {
@@ -104,6 +106,8 @@ export default function App() {
           <Route path="/upload-photos" element={<UploadPhotos />} />
           <Route path="/policies" element={<Policies />} />
           <Route path="/finance-and-legal" element={<FinanceAndLegal />} />
+          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/admindashboard" element={<AdminDashboard />} />
           <Route path="/resort-listing" element={<ListResorts />} />
           <Route path="/resort-detail/:id" element={<ResortDetail />} />
           <Route path="/booking/payment/:id" element={<PaymentPage />} />

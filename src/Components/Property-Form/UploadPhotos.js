@@ -1,16 +1,14 @@
 import { useContext, useState } from "react";
 import axios from "axios";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+
 import PropertyContext from "../../context/PropertyContext";
 
 export default function UploadPhotos(props) {
   const { resort, resortDispatch } = useContext(PropertyContext);
   const [error, setError] = useState("");
-
+  localStorage.getItem("propertyPhotos") && props.enableUpload();
   const formData = new FormData();
-
-  const navigate = useNavigate();
 
   const handleImage = (files) => {
     for (let i = 0; i < files.length; i++) {
@@ -31,13 +29,16 @@ export default function UploadPhotos(props) {
         { headers: { Authorization: localStorage.getItem("token") } }
       );
       console.log(response.data);
-      if (response.data.length === 0) {
+
+      if (response.data.propertyPhotos.length === 0) {
         setError("please atleast one photo");
       } else {
         setError("");
         const form = {
-          propertyPhotos: response.data,
+          propertyPhotos: response.data.propertyPhotos,
         };
+        const photos = JSON.stringify(form);
+        localStorage.setItem("propertyPhotos", photos);
         resortDispatch({ type: "ADD_PROPERTY_DETAILS", payload: form });
         resortDispatch({ type: "ADD_FORM" });
         props.enableUpload();
@@ -65,6 +66,21 @@ export default function UploadPhotos(props) {
         />
         <br />
         {error.length ? <span style={{ color: "red" }}>{error}</span> : ""}
+        <div>
+          {localStorage.getItem("propertyPhotos") &&
+            JSON.parse(
+              localStorage.getItem("propertyPhotos")
+            ).propertyPhotos.map((ele, i) => {
+              return (
+                <img
+                  key={i}
+                  src={`http://localhost:3060/images/${ele}`}
+                  style={{ width: "25%", height: "25%", margin: "20px" }}
+                  alt="documents"
+                />
+              );
+            })}
+        </div>
         <br />
         <Button className="btn btn-success" type="sumbit">
           {" "}

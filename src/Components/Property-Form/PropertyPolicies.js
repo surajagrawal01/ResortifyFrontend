@@ -1,24 +1,21 @@
 import Form from "react-bootstrap/Form";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import PropertyContext from "../../context/PropertyContext";
 import axios from "axios";
 
-const policies = ["dayOut", "nightOut", "wholeDay"];
-
+// const policies = ["dayOut", "nightOut", "wholeDay"];
+const policies = ["wholeDay"];
 export default function Policies(props) {
   const { resort, resortDispatch } = useContext(PropertyContext);
-  const navigate = useNavigate();
   const [checkIn, setCheckIn] = useState({});
   const [select, setSelect] = useState(null);
   const [checkOut, setCheckOut] = useState({});
   const [handleChecked, setHandleChecked] = useState([]);
   const [cancellation, setCancellation] = useState([]);
-
-  // errors to be set
-
   const [property, setProperty] = useState([]);
   const [identity, setIdentity] = useState([]);
+  // errors to be set
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -28,9 +25,21 @@ export default function Policies(props) {
           "http://localhost:3060/api/static-data"
         );
 
-        setCancellation(response.data.cancellationPolicies);
-        setProperty(response.data.propertyRules);
-        setIdentity(response.data.IdentityProofs);
+        setCancellation(
+          (localStorage.getItem("cancellation") &&
+            JSON.parse(localStorage.getItem("cancellation"))) ||
+            response.data.cancellationPolicies
+        );
+        setProperty(
+          (localStorage.getItem("property") &&
+            JSON.parse(localStorage.getItem("property"))) ||
+            response.data.propertyRules
+        );
+        setIdentity(
+          (localStorage.getItem("identity") &&
+            JSON.parse(localStorage.getItem("identity"))) ||
+            response.data.IdentityProofs
+        );
       } catch (err) {
         console.log(err);
         alert(err.msg);
@@ -50,7 +59,10 @@ export default function Policies(props) {
         };
       }
     });
-
+    localStorage.setItem("bookingPolicies", JSON.stringify(bookingPolicies));
+    localStorage.setItem("cancellation", JSON.stringify(cancellation));
+    localStorage.setItem("property", JSON.stringify(property));
+    localStorage.setItem("identity", JSON.stringify(identity));
     const finaldataCancellation = cancellation
       .filter((ele) => ele.checked)
       .map((ele) => ele.field);
@@ -69,7 +81,7 @@ export default function Policies(props) {
       Object.keys(checkIn).length === 0 ||
       Object.keys(checkOut).length === 0
     ) {
-      newErrors.checkInOut = "please select at least one booking policy";
+      newErrors.checkInOut = "please select booking policy";
     }
     if (finaldataCancellation.length === 0) {
       newErrors.cancellationPolicies =
@@ -94,7 +106,7 @@ export default function Policies(props) {
         cancellationPolicies: finaldataCancellation,
         propertyRules,
       };
-
+      // set localStorage details
       // Dispatch form data and navigate to the next step
       resortDispatch({ type: "ADD_PROPERTY_DETAILS", payload: formData });
       setErrors({});

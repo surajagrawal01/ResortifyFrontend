@@ -3,18 +3,22 @@ import { useContext, useEffect, useState } from "react";
 import "leaflet/dist/leaflet";
 import LocationMap from "./LocationMap";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Row, Col, Button, Container, Card } from "react-bootstrap";
 import * as Yup from "yup";
 import PropertyContext from "../../context/PropertyContext";
 
 export default function PropertyDetails(props) {
   const { resort, resortDispatch } = useContext(PropertyContext);
-  const navigate = useNavigate();
+
   const [map, setMap] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [propertyAmenities, setpropertyAmenities] = useState([]);
-  const [packages, setPackages] = useState([{ package: "", price: "" }]);
+  const [packages, setPackages] = useState(
+    (localStorage.getItem("propertyDetails") &&
+      JSON.parse(localStorage.getItem("propertyDetails")).packages) || [
+      { package: "", price: "" },
+    ]
+  );
   const [amenities, setAmenities] = useState([]);
   const [location, setLocation] = useState([]);
   const [address, setAddress] = useState("");
@@ -29,8 +33,6 @@ export default function PropertyDetails(props) {
         const property = response.data.filter((ele) => {
           return ele.type === "property";
         });
-
-        console.log(response.data);
         setAmenities(response.data);
         setpropertyAmenities(property);
       } catch (err) {
@@ -38,6 +40,7 @@ export default function PropertyDetails(props) {
       }
     })();
   }, []);
+
   useEffect(() => {
     if (address) {
       (async () => {
@@ -76,7 +79,6 @@ export default function PropertyDetails(props) {
       locationErrors.country = "enter country";
     }
     if (Object.keys(locationErrors).length === 0) {
-      console.log("hi");
       const result = `${locality},${area},${city},${pincode},${state},${country}`;
       setErrors({});
       setAddress(result);
@@ -113,25 +115,58 @@ export default function PropertyDetails(props) {
     setSubmit(false);
     return false;
   };
-
+  console.log(JSON.parse(localStorage.getItem("propertyDetails")));
   return (
     <div>
       <h2>Property Details</h2>
       <Formik
         initialValues={{
-          propertyName: "",
-          propertyBuiltDate: "",
-          ownerEmail: "",
-          houseNumber: "",
-          propertyDescription: "",
-          locality: "",
-          area: "",
-          pincode: "",
-          city: "",
-          state: "",
-          country: "",
-          checked: [],
-          totalRooms: 0,
+          propertyName:
+            (localStorage.getItem("propertyDetails") &&
+              JSON.parse(localStorage.getItem("propertyDetails"))
+                .propertyName) ||
+            "",
+          propertyBuiltDate:
+            (localStorage.getItem("propertyDetails") &&
+              JSON.parse(localStorage.getItem("propertyDetails"))
+                .propertyBuiltDate) ||
+            "",
+          ownerEmail:
+            JSON.parse(localStorage.getItem("propertyDetails"))?.ownerEmail ||
+            "",
+          houseNumber:
+            JSON.parse(localStorage.getItem("propertyDetails"))?.location
+              .houseNumber || "",
+          propertyDescription:
+            JSON.parse(localStorage.getItem("propertyDetails"))
+              ?.propertyDescription || "",
+          locality:
+            JSON.parse(localStorage.getItem("propertyDetails"))?.location
+              .locality || "",
+          area:
+            JSON.parse(localStorage.getItem("propertyDetails"))?.location
+              .area || "",
+          pincode:
+            JSON.parse(localStorage.getItem("propertyDetails"))?.location
+              .pincode || "",
+          city:
+            JSON.parse(localStorage.getItem("propertyDetails"))?.location
+              .city || "",
+          state:
+            JSON.parse(localStorage.getItem("propertyDetails"))?.location
+              .state || "",
+          country:
+            JSON.parse(localStorage.getItem("propertyDetails"))?.location
+              .country || "",
+          checked:
+            JSON.parse(localStorage.getItem("propertyDetails"))
+              ?.propertyAmenities || [],
+          totalRooms:
+            JSON.parse(localStorage.getItem("propertyDetails"))?.totalRooms ||
+            0,
+          basePrice:
+            JSON.parse(localStorage.getItem("propertyDetails"))?.basePrice ||
+            "",
         }}
         validationSchema={Yup.object({
           propertyName: Yup.string().required("Required"),
@@ -177,18 +212,34 @@ export default function PropertyDetails(props) {
             totalRooms: values.totalRooms,
             packages: packages,
           };
-          // console.log(formdata)
           resortDispatch({ type: "ADD_PROPERTY_DETAILS", payload: formdata });
           resortDispatch({ type: "ADD_AMENITIES", payload: amenities });
 
-          const response = await axios.post(
-            "http://127.0.0.1:3060/api/owners/propertydetails",
-            formdata,
-            {
-              headers: { Authorization: localStorage.getItem("token") },
-            }
-          );
-          console.log(response.data);
+          if (JSON.parse(localStorage.getItem("propertyDetails"))) {
+            const response2 = await axios.put(
+              `http://localhost:3060/api/owners/propertydetails/${localStorage.getItem(
+                "_id"
+              )}`,
+              formdata,
+              {
+                headers: { Authorization: localStorage.getItem("token") },
+              }
+            );
+            console.log("update", response2.data);
+          } else {
+            const response = await axios.post(
+              "http://127.0.0.1:3060/api/owners/propertydetails",
+              formdata,
+              {
+                headers: { Authorization: localStorage.getItem("token") },
+              }
+            );
+            console.log("create", response.data);
+            localStorage.setItem("_id", response.data._id);
+            const result = JSON.stringify(formdata);
+            localStorage.setItem("propertyDetails", result);
+          }
+
           props.enableButton();
         }}
       >
@@ -209,6 +260,7 @@ export default function PropertyDetails(props) {
                       className="form-control"
                       {...formik.getFieldProps("propertyName")}
                     />
+
                     {formik.touched.propertyName &&
                     formik.errors.propertyName ? (
                       <div style={{ color: "red" }}>
