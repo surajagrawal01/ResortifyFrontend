@@ -1,20 +1,33 @@
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { useLocation, useParams } from "react-router-dom"
 import axios from "axios"
-import {clearBooking} from "../../actions/bookingAction"
+import { clearBooking } from "../../actions/bookingAction"
 import { useNavigate } from "react-router-dom"
 import Swal from 'sweetalert2'
-export default function BookingInfo() {
+export default function BookingInfo({ searchInfo, updateDateInfo, dateSearchInfo }) {
+
+    //state for handling error that if checkin date is greater than checkout date
+    const [dateError, setDateError] = useState('')
+
+    //use effect to update the dateError state
+    useEffect(() => {
+        if (dateSearchInfo.checkIn > dateSearchInfo.checkOut) {
+            setDateError('Date Should be greater than checkin')
+        } else {
+            setDateError('')
+        }
+    }, [dateSearchInfo])
+
 
     const { id } = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
 
-    const searchInfo = Object.fromEntries(new URLSearchParams(useLocation().search))
-    
+    const todayDate = new Date().toISOString().split('T')[0];
+
     const Rooms = useSelector((state) => {
         return state.booking.Rooms
     })
@@ -23,11 +36,11 @@ export default function BookingInfo() {
         return state.booking.packages
     })
 
-    const roomPrice = () => {
+    const roomPrice = useMemo(() => {
         return Rooms.reduce((acc, cv) => {
             return ((cv.baseRoomPrice * cv.value) + acc)
         }, 0)
-    }
+    }, [Rooms])
 
     const sweetAlertFunc = () => {
         Swal.fire({
@@ -84,37 +97,42 @@ export default function BookingInfo() {
         })
     }
 
-    const packagePrice = () => {
+    const packagePrice = useMemo(() => {
         const arr = packages.filter((ele) => ele.isChecked === true)
         return arr.reduce((acc, cv) => {
             return acc + Number(cv.price)
         }, 0)
-    }
+    }, [packages])
 
-    const calculateTax = () => {
-        let roomValue = roomPrice()
-        let packagesValue = packagePrice()
+
+    const taxValue = useMemo(() => {
+        let roomValue = roomPrice
+        let packagesValue = packagePrice
         return Math.round((roomValue + packagesValue) * 0.12)
-    }
+    }, [packages, Rooms])
 
-    const hanldeTotalAmount = () => {
-        let roomValue = roomPrice()
-        let packagesValue = packagePrice()
-        let taxValue = calculateTax()
-        return roomValue + packagesValue + taxValue
-    }
+
+    const totalAmount = useMemo(() => {
+        let roomValue = roomPrice
+        let packagesValue = packagePrice
+        let taxData = taxValue
+        return roomValue + packagesValue + taxData
+    }, [Rooms, packages])
+
 
     const handleClick = async () => {
         if (Rooms.length < 1) {
             alert('Atleast Select One Room TYpe')
-        }
-        else {
+        } else if (dateError) {
+            //here handled if error then alert else book
+            alert('Checkout date must be greater or equal to checkin date')
+        } else {
             const token = localStorage.getItem("token")
             if (token) {
                 try {
                     const response = await axios.post("http://localhost:3060/api/bookings", formData, {
                         headers: {
-                            Authorization:token
+                            Authorization: token
                         }
                     })
                     sweetAlertFunc()
@@ -124,10 +142,14 @@ export default function BookingInfo() {
                 }
             }
             else {
-                navigate("/loginPage",{state:`${location.pathname}${location.search}`})
+                navigate("/loginPage", { state: `${location.pathname}${location.search}` })
             }
         }
+    }
 
+    //based on user interaction invoking the callback function responsible for state updation in ResortDetail component
+    const handleChangeDate = (e) => {
+        updateDateInfo(e)
     }
 
     return (
@@ -147,11 +169,14 @@ export default function BookingInfo() {
                                         </div>
                                         <div className="col">
                                             <input
-                                                type="text"
+                                                type="date"
+                                                name='checkIn'
                                                 className="form-control"
-                                                value={searchInfo.checkIn}
-                                                disabled={true}
+                                                value={dateSearchInfo.checkIn}
+                                                min={todayDate}
+                                                disabled={false}
                                                 id="checkIn"
+                                                onChange={handleChangeDate}
                                             />
                                         </div>
                                     </div>
@@ -161,12 +186,17 @@ export default function BookingInfo() {
                                         </div>
                                         <div className="col">
                                             <input
-                                                type="text"
+                                                type="date"
+                                                name='checkOut'
                                                 className="form-control"
-                                                value={searchInfo.checkOut}
-                                                disabled={true}
+                                                value={dateSearchInfo.checkOut}
+                                                min={dateSearchInfo.checkIn}
+                                                onChange={handleChangeDate}
+                                                disabled={false}
                                                 id="checkOut"
                                             />
+                                            {/* //error showing for checkin checkout date */}
+                                            {dateSearchInfo.checkIn > dateSearchInfo.checkOut && <span className='text-danger'>{dateError}</span>}
                                         </div>
                                     </div>
                                     <div className="row align-items-center my-2">
@@ -183,7 +213,7 @@ export default function BookingInfo() {
                                             />
                                         </div>
                                     </div>
-                                    <div className="row align-items-center my-2">
+                                    {/* <div className="row align-items-center my-2">
                                         <div className="col-auto" style={{ width: "150px" }}>
                                             <label htmlFor="checkOut">Booking Type</label>
                                         </div>
@@ -196,7 +226,7 @@ export default function BookingInfo() {
                                                 id="checkOut"
                                             />
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="row align-items-center my-2">
                                         <div className="col-auto" style={{ width: "150px" }}>
                                             <label htmlFor="checkOut">Rooms:</label>
@@ -229,7 +259,7 @@ export default function BookingInfo() {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                value={roomPrice()}
+                                                value={roomPrice}
                                                 disabled={true}
                                                 id="checkOut"
                                             />
@@ -243,7 +273,7 @@ export default function BookingInfo() {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                value={packagePrice()}
+                                                value={packagePrice}
                                                 disabled={true}
                                                 id="checkOut"
                                             />
@@ -257,7 +287,7 @@ export default function BookingInfo() {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                value={calculateTax()}
+                                                value={taxValue}
                                                 disabled={true}
                                                 id="checkOut"
                                             />
@@ -271,7 +301,7 @@ export default function BookingInfo() {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                value={hanldeTotalAmount()}
+                                                value={totalAmount}
                                                 disabled={true}
                                                 id="checkOut"
                                             />
