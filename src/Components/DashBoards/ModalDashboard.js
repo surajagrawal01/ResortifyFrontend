@@ -52,13 +52,13 @@ export default function ModalDashboard(props) {
                         <label className="form-label">Room Type</label>
                         <input
                             type="text"
-                            value={booking.Rooms.map((ele) => { return ele.roomTypeId.roomType })}
+                            value={booking.Rooms.map((ele) => { return [ele.roomTypeId.roomType, ele.NumberOfRooms] })}
                             disabled={true}
                             className="form-control" />
                         <label className="form-label">Packages</label>
                         <input
                             type="text"
-                            value={booking.packages.map((ele) => { return ele })}
+                            value={booking.packages.map((ele) => { return ele.packageName })}
                             disabled={true}
                             className="form-control" />
                         <label className='form-label'>Actions</label>

@@ -1,19 +1,40 @@
-import axios from 'axios'
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-const { format } = require('date-fns')
-
+import { useNavigate } from 'react-router-dom'
+import { addBooking } from '../actions/bookingAction';
+import { useDispatch, useSelector } from "react-redux"
+import { clearResortsData } from '../actions/reosrtsDataAction';
 export default function SearchBar() {
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const todayDate = new Date().toISOString().split('T')[0];
+
+    const searchInfo = JSON.parse(localStorage.getItem('searchInfo'));
+
     return (
         <>
             <Formik
-                initialValues={{ location: '', checkIn: '', checkOut: '', adult: '', children: '', bookingCategory: '' }}
+                initialValues={ searchInfo 
+                    ? {
+                        location: searchInfo?.location,
+                        checkIn: searchInfo?.checkIn,
+                        checkOut: searchInfo?.checkOut,
+                        adult: searchInfo?.adult,
+                        children: searchInfo?.children
+                    } :
+                    { location: '', checkIn: '', checkOut: '', adult: '', children: '' }}
+                // { location: '', checkIn: '', checkOut: '', adult: '', children: '', bookingCategory: '' }}
                 validationSchema={Yup.object({
                     location: Yup.string()
                         .required('Required'),
                     checkIn: Yup.date()
-                        .min(format(new Date(), 'dd/MM/yyyy'), 'Not Less than today date')
+                        .min(today, 'Not Less than today date')
                         .required('Required'),
                     checkOut: Yup.date()
                         .min(Yup.ref('checkIn'), 'Should Not be less than checkIn date')
@@ -24,20 +45,22 @@ export default function SearchBar() {
                     children: Yup.number()
                         .min(0, 'Should not be less than zero')
                         .required('Required'),
-                    bookingCategory: Yup.string()
-                        .required('Required')
+                    // bookingCategory: Yup.string()
+                    //     .required('Required')
                 })}
                 onSubmit={async (values) => {
                     try {
-                        const response = await axios.get(`http://localhost:3060/api/properties/lists?city=${values.location}`)
-                        console.log(response)
+                        dispatch(addBooking(values))
+                        dispatch(clearResortsData())
+                        localStorage.setItem('searchInfo', JSON.stringify(values))
+                        navigate(`/resort-listing?location=${values.location}&checkIn=${values.checkIn}&checkOut=${values.checkOut}&adult=${values.adult}&children=${values.children}`)
                     } catch (err) {
                         alert(err.message)
                         console.log(err)
                     }
                 }}
             >
-                <>
+                {({ values, setFieldValue }) => (
                     <Container fluid className='search-background d-flex align-items-center dynamic-height' style={{ "height": "15rem" }}>
                         <Row className="justify-content-center w-100">
                             <Col xs={12} md={8}>
@@ -50,37 +73,38 @@ export default function SearchBar() {
                                                 <datalist id="locations">
                                                     <option value="Bangalore" />
                                                 </datalist>
+                                                <ErrorMessage name="location" component="div" className="text-danger" />
                                             </div>
-                                            <div className='col-md-2'>
+                                            <div className='col-md-3'>
                                                 <label className='form-label' htmlFor='checkIn'>CheckIn</label>
-                                                <Field className="form-control" name="checkIn" id="checkIn" type="date" />
+                                                <Field className="form-control" name="checkIn" id="checkIn" type="date" min={todayDate}/>
                                                 <ErrorMessage className='text-danger' component="div" name='checkIn' />
                                             </div>
-                                            <div className='col-md-2'>
+                                            <div className='col-md-3'>
                                                 <label className='form-label' htmlFor='checkOut'>CheckOut</label>
-                                                <Field className="form-control" name="checkOut" id="checkOut" type="date" />
+                                                <Field className="form-control" name="checkOut" id="checkOut" type="date" min={values.checkIn || todayDate} />
                                                 <ErrorMessage className='text-danger' component="div" name='checkOut' />
                                             </div>
                                             <div className='col-md-2'>
                                                 <label className='form-label' htmlFor='adult'>Adult</label>
-                                                <Field className="form-control" name="adult" id="adult" type="number" />
+                                                <Field className="form-control" name="adult" id="adult" type="number" min={1} />
                                                 <ErrorMessage className='text-danger' component="div" name='adult' />
                                             </div>
                                             <div className='col-md-2'>
                                                 <label className='form-label' htmlFor='children'>Children</label>
-                                                <Field className="form-control" name="children" id="children" type="number" />
+                                                <Field className="form-control" name="children" id="children" type="number" min={0} />
                                                 <ErrorMessage className='text-danger' component="div" name='children' />
                                             </div>
-                                            <div className='col-md-2'>
+                                            {/* <div className='col-md-2'>
                                                 <label htmlFor="bookingCategory" className='form-label'>Select Trip Type:</label>
                                                 <Field as="select" name="bookingCategory" className="form-select">
                                                     <option value="">Select</option>
-                                                    <option value="day">Day Out</option>
-                                                    <option value="night">Night Out</option>
-                                                    <option value="full">Full day</option>
+                                                    <option value="Day-Out">Day Out</option>
+                                                    <option value="Night-Out">Night Out</option>
+                                                    <option value="Whole-Day">Full day</option>
                                                 </Field>
                                                 <ErrorMessage name="bookingCategory" component="div" className="text-danger" />
-                                            </div>
+                                            </div> */}
                                             <button type='submit' className="btn btn-secondary mt-4" style={{ "width": "100%" }}>Search</button>
                                         </Form>
                                     </Card.Body>
@@ -88,7 +112,7 @@ export default function SearchBar() {
                             </Col>
                         </Row>
                     </Container>
-                </>
+                )}
             </Formik>
 
         </>

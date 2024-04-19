@@ -19,7 +19,6 @@ export default function FinanceAndLegal() {
     gstIN: "",
     panNo: "",
   });
-
   const newErrors = {};
   const formData = new FormData();
   const validateErrors = () => {
@@ -87,7 +86,6 @@ export default function FinanceAndLegal() {
         // }
         // console.log(formdata)
         //  resortDispatch({type:'ADD_PROPERTY_DETAILS',payload:formdata})
-
         const form = {
           bookingPolicies: resort.propertyData.bookingPolicies,
           cancellationPolicies: resort.propertyData.cancellationPolicies,
