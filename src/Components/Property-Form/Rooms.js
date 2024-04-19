@@ -6,9 +6,7 @@ import { Button } from "react-bootstrap";
 import PropertyContext from "../../context/PropertyContext";
 export default function Rooms(props) {
   const resort = useContext(PropertyContext);
-  const navigate = useNavigate();
   let rooms = 0;
-  console.log(resort.resort);
   // const validateSumOfRooms =()=>{
   //        const sumOfRooms =resort.resort.roomTypes.reduce((acc,roomType) => acc + roomType[0].NumberOfRooms, 0);
   //        return sumOfRooms === resort.propertyData.totalRooms;
@@ -16,7 +14,7 @@ export default function Rooms(props) {
   //   }
   function CalcRooms() {
     rooms = resort.resort.roomTypes.reduce((acc, cv) => {
-      return acc + cv[0].NumberOfRooms;
+      return acc + cv[0]?.NumberOfRooms;
     }, 0);
     let total = resort?.resort?.propertyData?.totalRooms;
     total = total ? total : 0;
@@ -24,9 +22,9 @@ export default function Rooms(props) {
   }
   const handleRooms = () => {
     props.goToPrevious();
+    localStorage.removeItem("roomDetails");
+    localStorage.removeItem("roomId");
   };
-
-  console.log(resort.resort);
   return (
     <div>
       <h2>Total Rooms Added {CalcRooms()}</h2>
@@ -38,11 +36,11 @@ export default function Rooms(props) {
               {resort.resort.roomTypes.map((ele, i) => {
                 return (
                   <div key={i} style={{ border: "1px solid black" }}>
-                    <span>Room Type: {ele[0].roomType}</span>
+                    <span>Room Type: {ele[0]?.roomType}</span>
                     <br />
-                    <span>Number Of Rooms: {ele[0].NumberOfRooms}</span>
+                    <span>Number Of Rooms: {ele[0]?.NumberOfRooms}</span>
                     <br />
-                    <span>Description : {ele[0].roomDescription}</span>
+                    <span>Description : {ele[0]?.roomDescription}</span>
                     <br />
                   </div>
                 );

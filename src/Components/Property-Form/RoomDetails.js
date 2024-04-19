@@ -1,18 +1,17 @@
 import { Row, Col, Button } from "react-bootstrap";
 import { useContext, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import PropertyContext from "../../context/PropertyContext";
-import StepperForm from "./StepperForm";
 export default function RoomDetails(props) {
   const { resort, resortDispatch } = useContext(PropertyContext);
   const [dateError, setDateError] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
-  const formData1 = new FormData();
 
+  const formData1 = new FormData();
+  localStorage.getItem("roomDetails") && props.enableRoomDetails();
   const handleRoomPhotos = (files) => {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
@@ -30,24 +29,66 @@ export default function RoomDetails(props) {
       .required("Required")
       .min(new Date(), `End date less than today's date`);
   };
-
+  console.log(JSON.parse(localStorage.getItem("roomDetails")));
   return (
     <div>
       <h2>Room Amenities</h2>
 
       <Formik
         initialValues={{
-          NumberOfRooms: "",
-          roomType: "",
-          roomDescription: "",
-          smokingAllowed: "false",
-          extraBed: "false",
-          baseRoomPrice: "",
-          adult: "",
-          children: "",
-          startDate: "",
-          endDate: "",
-          checked: [],
+          NumberOfRooms:
+            (localStorage.getItem("roomDetails") &&
+              JSON.parse(localStorage.getItem("roomDetails"))[0]
+                ?.NumberOfRooms) ||
+            "",
+          roomType:
+            (localStorage.getItem("roomDetails") &&
+              JSON.parse(localStorage.getItem("roomDetails"))[0]?.roomType) ||
+            "",
+          roomDescription:
+            (localStorage.getItem("roomDetails") &&
+              JSON.parse(localStorage.getItem("roomDetails"))[0]
+                ?.roomDescription) ||
+            "",
+          smokingAllowed:
+            (localStorage.getItem("roomDetails") &&
+              JSON.parse(localStorage.getItem("roomDetails"))[0]
+                ?.smokingAllowed) ||
+            "false",
+          extraBed:
+            (localStorage.getItem("roomDetails") &&
+              JSON.parse(localStorage.getItem("roomDetails"))[0]?.extraBed) ||
+            "false",
+          baseRoomPrice:
+            (localStorage.getItem("roomDetails") &&
+              JSON.parse(localStorage.getItem("roomDetails"))[0]
+                ?.baseRoomPrice) ||
+            "",
+          adult:
+            (localStorage.getItem("roomDetails") &&
+              JSON.parse(localStorage.getItem("roomDetails"))[0]?.roomOcupancy
+                .adult) ||
+            "",
+          children:
+            (localStorage.getItem("roomDetails") &&
+              JSON.parse(localStorage.getItem("roomDetails"))[0]?.roomOcupancy
+                .children) ||
+            "",
+          startDate:
+            (localStorage.getItem("roomDetails") &&
+              JSON.parse(localStorage.getItem("roomDetails"))[0]?.availability
+                .startDate) ||
+            "",
+          endDate:
+            (localStorage.getItem("roomDetails") &&
+              JSON.parse(localStorage.getItem("roomDetails"))[0]?.availability
+                .endDate) ||
+            "",
+          checked:
+            (localStorage.getItem("roomDetails") &&
+              JSON.parse(localStorage.getItem("roomDetails"))[0]
+                ?.roomAmentities) ||
+            [],
         }}
         validationSchema={Yup.object({
           // NumberOfRooms: Yup.number()
@@ -78,30 +119,32 @@ export default function RoomDetails(props) {
             "http://localhost:3060/api/roomphotos",
             formData1
           );
-
-          if (response2.data.length === 0) {
+          console.log(response2.data);
+          // localStorage.setItem("roomId", response2.data);
+          if (
+            response2.data.length === 0 &&
+            localStorage.getItem("roomDetails")
+          ) {
             setError("upload atleast one photo");
           } else {
-            const roomTypesData = [
-              {
-                NumberOfRooms: values.NumberOfRooms,
-                roomType: values.roomType,
-                roomDescription: values.roomDescription,
-                roomOcupancy: {
-                  adult: values.adult,
-                  children: values.children,
-                },
-                smokingAllowed: values.smokingAllowed === "true" ? true : false,
-                extraBed: values.extraBed === "true" ? true : false,
-                baseRoomPrice: values.baseRoomPrice,
-                availability: {
-                  startDate: values.startDate,
-                  endDate: values.endDate,
-                },
-                roomAmentities: values.checked,
-                photos: response2.data,
+            const roomTypesData = {
+              NumberOfRooms: values.NumberOfRooms,
+              roomType: values.roomType,
+              roomDescription: values.roomDescription,
+              roomOcupancy: {
+                adult: values.adult,
+                children: values.children,
               },
-            ];
+              smokingAllowed: values.smokingAllowed === "true" ? true : false,
+              extraBed: values.extraBed === "true" ? true : false,
+              baseRoomPrice: values.baseRoomPrice,
+              availability: {
+                startDate: values.startDate,
+                endDate: values.endDate,
+              },
+              roomAmentities: values.checked,
+              photos: response2.data,
+            };
 
             if (values.startDate === values.endDate) {
               setDateError("start and end Date cannot be same");
@@ -114,15 +157,45 @@ export default function RoomDetails(props) {
 
               let roomstotal = roomsAlreadyAdded + values.NumberOfRooms;
 
-              if (roomstotal <= resort.propertyData.totalRooms) {
-                const response = await axios.post(
-                  "http://127.0.0.1:3060/api/owners/propertydetails/roomtypemodel",
-                  roomTypesData,
-                  {
-                    headers: { Authorization: localStorage.getItem("token") },
-                  }
-                );
-                console.log(response.data);
+              if (
+                roomstotal <= resort.propertyData.totalRooms &&
+                localStorage.getItem("roomDetails")
+              ) {
+                try {
+                  const response2 = await axios.put(
+                    `http://localhost:3060/api/owners/propertydetails/rooms/${localStorage.getItem(
+                      "roomId"
+                    )}`,
+                    roomTypesData,
+                    {
+                      headers: { Authorization: localStorage.getItem("token") },
+                    }
+                  );
+                  console.log("update", response2.data);
+                  localStorage.setItem(
+                    "roomDetails",
+                    JSON.stringify(response2.data)
+                  );
+                  localStorage.setItem("roomId", response2.data._id);
+                } catch (err) {
+                  console.log(err);
+                }
+              } else if (roomstotal <= resort.propertyData.totalRooms) {
+                try {
+                  const response = await axios.post(
+                    "http://127.0.0.1:3060/api/owners/propertydetails/roomtypemodel",
+                    roomTypesData,
+                    {
+                      headers: { Authorization: localStorage.getItem("token") },
+                    }
+                  );
+                  console.log("create room type", response.data);
+                  const formdata = JSON.stringify(roomTypesData);
+                  localStorage.setItem("roomDetails", formdata);
+                  localStorage.setItem("roomId", response.data._id);
+                } catch (err) {
+                  console.log(err);
+                }
                 resortDispatch({
                   type: "ADD_ROOM_DETAILS",
                   payload: roomTypesData,
@@ -136,6 +209,7 @@ export default function RoomDetails(props) {
               }
             }
           }
+
           //for validation
 
           // console.log({roomTypesData})
@@ -278,6 +352,21 @@ export default function RoomDetails(props) {
               handleRoomPhotos(e.target.files);
             }}
           />
+          <div>
+            {localStorage.getItem("roomDetails") &&
+              JSON.parse(localStorage.getItem("roomDetails"))[0]?.photos.map(
+                (ele, i) => {
+                  return (
+                    <img
+                      key={i}
+                      src={`http://localhost:3060/images/${ele}`}
+                      style={{ width: "25%", height: "25%", margin: "20px" }}
+                      alt="documents"
+                    />
+                  );
+                }
+              )}
+          </div>
           <br />
           {error.length ? <p style={{ color: "red" }}>{error}</p> : ""}
           <br />

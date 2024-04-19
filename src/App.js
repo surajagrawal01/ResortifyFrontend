@@ -19,6 +19,8 @@ import HomePage from "./Components/HomePage";
 import { useSelector, useDispatch } from "react-redux";
 import { startSetUser } from "./actions/userActions";
 import StepperForm from "./Components/Property-Form/StepperForm";
+import Reviews from "./Components/Reviews/review";
+import AdminDashboard from "./Components/DashBoards/AdminDashBoard";
 
 function PropertyReducer(state, action) {
   switch (action.type) {
@@ -101,6 +103,8 @@ export default function App() {
           <Route path="/upload-photos" element={<UploadPhotos />} />
           <Route path="/policies" element={<Policies />} />
           <Route path="/finance-and-legal" element={<FinanceAndLegal />} />
+          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/admindashboard" element={<AdminDashboard />} />
         </Routes>
       </PropertyContext.Provider>
     </>

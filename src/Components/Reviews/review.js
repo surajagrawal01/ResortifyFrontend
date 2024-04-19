@@ -1,0 +1,106 @@
+import { useState, useParams } from "react";
+import StarRating from "./Ratings";
+import { Card, Row, Col, Form, Button } from "react-bootstrap";
+import axios from "axios";
+import Swal from "sweetalert2";
+export default function Reviews() {
+  const [ratings, setRatings] = useState(0);
+  const [description, setDescription] = useState("");
+  const [reviewPhotos, setReviewPhotos] = useState([]);
+  const photos = new FormData();
+  // const id = useParams();
+  const handleRatingChange = (value) => {
+    setRatings(value);
+  };
+  const handleImage = async (files) => {
+    for (let i = 0; i < files.length; i++) {
+      let file = files[i];
+      photos.append("files", file);
+    }
+    try {
+      const response = await axios.post(
+        "http://localhost:3060/api/reviewsphotos",
+        photos,
+        { headers: { Authorization: localStorage.getItem("userToken") } }
+      );
+      console.log(response.data);
+      setReviewPhotos(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = {
+      ratings: ratings,
+      description: description,
+      photos: reviewPhotos,
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:3060/api/users/reviews/661cecd1ee66ea2828f2446f",
+        formData,
+        { headers: { Authorization: localStorage.getItem("userToken") } }
+      );
+      console.log(response.data);
+      Swal.fire({
+        icon: "success",
+        title: "Review",
+        text: "Thank You for your review😊.",
+        showConfirmButton: true,
+        timer: 3500,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <div>
+      <Card style={{ width: "40rem" }} className="mx-auto my-5 p-3">
+        <Card.Title>Add Your Review</Card.Title>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group>
+            <Form.Label>Upload Resort Photos</Form.Label>
+
+            <input
+              type="file"
+              className="form-control"
+              name="file"
+              multiple
+              onChange={(e) => {
+                handleImage(e.target.files);
+              }}
+            />
+            <br />
+          </Form.Group>
+          <Form.Group as={Row} controlId="formRating">
+            <Form.Label column sm={2}>
+              Rating:
+            </Form.Label>
+            <Col sm={10}>
+              <StarRating onChange={handleRatingChange} />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="formDescription">
+            <Form.Label column sm={2}>
+              Description:
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                as="textarea"
+                value={description}
+                placeholder="Add Description"
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </Col>
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </Form>
+      </Card>
+    </div>
+  );
+}

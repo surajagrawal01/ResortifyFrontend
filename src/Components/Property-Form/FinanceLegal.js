@@ -1,9 +1,12 @@
 import { useState, useContext } from "react";
 import PropertyContext from "../../context/PropertyContext";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Form } from "react-bootstrap";
+import Swal from "sweetalert2";
 export default function FinanceAndLegal() {
   const { resort, resortDispatch } = useContext(PropertyContext);
+  const navigate = useNavigate();
   const [ownerShip, setOwnerShip] = useState("");
   const [error, setError] = useState("");
   const [verify, setVerify] = useState(false);
@@ -52,6 +55,7 @@ export default function FinanceAndLegal() {
   const handlePhotos = async (e) => {
     e.preventDefault();
     console.log(ownerShip);
+    // localStorage -- then make a put request else post
     const result = await axios.post(
       "http://localhost:3060/api/documentsphotos",
       formData
@@ -92,6 +96,7 @@ export default function FinanceAndLegal() {
           bankingDetails: bankingDetails,
         };
         console.log(form);
+        localStorage.setItem("financeAndLegal", JSON.stringify(form));
 
         const response = await axios.post(
           "http://127.0.0.1:3060/api/owners/propertydetails/generalModel",
@@ -103,7 +108,24 @@ export default function FinanceAndLegal() {
           }
         );
         setErrors("");
-        console.log(response.data);
+        Swal.fire({
+          icon: "success",
+          title: "Welcome Aboard!",
+          text: "Your resort has been successfully registered.",
+          showConfirmButton: true,
+          timer: 3500,
+        });
+        localStorage.removeItem("propertyDetails");
+        localStorage.removeItem("roomDetails");
+        localStorage.removeItem("roomId");
+        localStorage.removeItem("_id");
+        localStorage.removeItem("bookingPolicies");
+        localStorage.removeItem("cancellation");
+        localStorage.removeItem("financeAndLegal");
+        localStorage.removeItem("identity");
+        localStorage.removeItem("propertyPhotos");
+        localStorage.removeItem("property");
+        navigate("/owner-dashobard");
       } catch (err) {
         console.log(err);
       }
