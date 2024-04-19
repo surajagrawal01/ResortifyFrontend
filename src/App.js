@@ -4,7 +4,6 @@ import Rooms from "./Components/Property-Form/Rooms";
 import UploadPhotos from "./Components/Property-Form/UploadPhotos";
 import Policies from "./Components/Property-Form/PropertyPolicies";
 import PropertyContext from "./context/PropertyContext";
-
 import { useReducer } from "react";
 import FinanceAndLegal from "./Components/Property-Form/FinanceLegal";
 import RegistartionForm from './Components/userRegistration/RegistrationPage';
@@ -88,42 +87,31 @@ export default function App() {
   });
   return (
     <>
-      <PropertyContext.Provider value={{ resort, resortDispatch }}>
+      <NavigationBar />
+      <PropertyContext.Provider value={{ resort, resortDispatch }} >
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/registration-page" element={<RegistartionForm />} />
-
-    const isLoggedIn = useSelector((state) => {
-        return state.isLogIn.isLoggedIn
-    })
-    
-    return (
-        <>
-            <NavigationBar />
-            <PropertyContext.Provider value={{ resort, resortDispatch }} >
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path='/registration-page' element={<RegistartionForm />} />
-                    <Route path='/emailVerification' element={<OTPVerification />} />
-                    <Route path='/loginPage' element={<LoginPage />} />
-                    <Route path="/forgot-password" element={<ForgotPassword />} />
-                    <Route path="/owner-dashobard" element={<OwnerDashBoard />} />
-                    <Route path="/list-property" element={isLoggedIn ? <LoginPage /> : <RegistartionForm />} />
-                    <Route path="/stepperform" element={<StepperForm />} />
-                    <Route path="/properties-details" element={<PropertyDetails />} />
-                    <Route path="/room-amenities" element={<RoomDetails />} />
-                    <Route path="/add-rooms" element={<Rooms />} />
-                    <Route path="/upload-photos" element={<UploadPhotos />} />
-                    <Route path="/policies" element={<Policies />} />
-                    <Route path="/finance-and-legal" element={<FinanceAndLegal />} />
-                    <Route path="/resort-listing" element={<ListResorts />} />
-                    <Route path="/resort-detail/:id" element={<ResortDetail />} />
-                    <Route path="/booking/payment/:id" element={<PaymentPage/>} />
-                    <Route path="/success" element={<Success />} />
-                    <Route path="/cancel" element={<Failure />} />
-                </Routes>
-            </PropertyContext.Provider>
-            <Footer />
-        </>
-    )
+          <Route path='/registration-page' element={<RegistartionForm />} />
+          <Route path='/emailVerification' element={<OTPVerification />} />
+          <Route path='/loginPage' element={<LoginPage />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/owner-dashobard" element={<OwnerDashBoard />} />
+          <Route path="/list-property" element={isLoggedIn ? <LoginPage /> : <RegistartionForm />} />
+          <Route path="/stepperform" element={<StepperForm />} />
+          <Route path="/properties-details" element={<PropertyDetails />} />
+          <Route path="/room-amenities" element={<RoomDetails />} />
+          <Route path="/add-rooms" element={<Rooms />} />
+          <Route path="/upload-photos" element={<UploadPhotos />} />
+          <Route path="/policies" element={<Policies />} />
+          <Route path="/finance-and-legal" element={<FinanceAndLegal />} />
+          <Route path="/resort-listing" element={<ListResorts />} />
+          <Route path="/resort-detail/:id" element={<ResortDetail />} />
+          <Route path="/booking/payment/:id" element={<PaymentPage />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/cancel" element={<Failure />} />
+        </Routes>
+      </PropertyContext.Provider>
+      <Footer />
+    </>
+  )
 }

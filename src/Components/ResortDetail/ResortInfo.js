@@ -43,30 +43,55 @@ export default function ResortInfo({ resort }) {
 
     useEffect(() => {
         dispatch(addPackages(property.packages))
-        // return (() => {
-        //     dispatch(removeRoomData())
-        // })
+        return (() => {
+            dispatch(removeRoomData())
+        })
     }, [dispatch, property.packages])
+
+
+    //for handle booking based on user search
+    const bookingData = {}
+
+    resort.bookings.forEach((ele)=>{
+        ele.Rooms.forEach((rom)=>{
+            if(rom.roomTypeId._id in bookingData){
+                bookingData[rom.roomTypeId._id] += rom.NumberOfRooms
+            }else{
+                bookingData[rom.roomTypeId._id] = rom.NumberOfRooms
+            }
+        })
+    })
 
 
     const handleButton = (roomData) => {
         const room = rooms.find((ele) => ele._id === roomData._id)
+        //checking here the toal no of particular room booked 
+        let roomBooked 
+        if(roomData._id in bookingData){
+            roomBooked = bookingData[roomData._id] 
+        }
+        
         if (room) {
             return (
                 <>
                     <button className='btn btn-info mx-md-1' onClick={() => { dispatch(decreaseRoomData(roomData._id)) }} disabled={room.value === 1}>-</button>
                     {room.value}
-                    <button className='btn btn-info mx-md-1' onClick={() => { dispatch(increaseRoomData(roomData._id)) }} disabled={room.value === roomData.NumberOfRooms}>+</button>
+                    {/* to handle the plus butoon with no of bookings and the toal no of rooms */}
+                    <button className='btn btn-info mx-md-1' onClick={() => { dispatch(increaseRoomData(roomData._id)) }} disabled={room.value === (roomData.NumberOfRooms-(roomBooked||0))}>+</button>
                     <button className='btn btn-info mx-md-1' onClick={() => { dispatch(removeRoom(roomData._id)) }}>x</button>
                 </>
             )
         } else {
             return (
-                <button className='btn btn-info mx-1' onClick={() => { dispatch(addRoom(roomData)) }}>Add</button>
+                <button className='btn btn-info mx-1' disabled={roomBooked >= roomData.NumberOfRooms} onClick={() => { dispatch(addRoom(roomData)) }}>Add</button>
             )
         }
     }
+
+   
     
+    console.log(bookingData,'bookingData')
+
     return (
         <>
             <Container fluid >
@@ -176,7 +201,7 @@ export default function ResortInfo({ resort }) {
                                     </Col>
                                     <Col className='col-md-3'>
                                         < FaPersonCircleCheck /> Guests Policies : {generalProperyData.propertyRules.guestPolicies.map((ele, i) => {
-                                            return <li key={i}>{ele} &nbsp;</li>
+                                            return <li key={i}>{ele}</li>
                                         })}
                                     </Col> 
                                 </Row> <br/>
