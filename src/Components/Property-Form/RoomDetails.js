@@ -271,7 +271,7 @@ export default function RoomDetails(props) {
                   <ErrorMessage name="roomDescription" />{" "}
                 </span>
               </Row>
-              <div role="group" aria-labelledby="my-radio-group"  className="col-4 my-2">
+              <div role="group" aria-labelledby="my-radio-group" className="col-4 my-2">
                 <label className="mx-2">Smoking Allowed</label>
                 <label className="form-check-label mx-1">
                   <Field type="radio" name="smokingAllowed" value="true" className="form-check-input mx-1" />
@@ -290,7 +290,7 @@ export default function RoomDetails(props) {
                   Yes
                 </label>
                 <label className="form-check-label mx-1" >
-                  <Field type="radio" name="extraBed" value="false" className="form-check-input mx-1"/>
+                  <Field type="radio" name="extraBed" value="false" className="form-check-input mx-1" />
                   No
                 </label>
                 <ErrorMessage name="extraBed" />
@@ -364,78 +364,76 @@ export default function RoomDetails(props) {
                   handleRoomPhotos(e.target.files);
                 }}
               />
-            </Col>
-          </Row>
-          <h2>Availability</h2>
-          <Row>
-            <Col>
-              <label>Start Date</label>
-              <Field name="startDate" type="date" />
+              <h2>Availability</h2>
+              <Row>
+                <Col>
+                  <label>Start Date</label>
+                  <Field name="startDate" type="date" />
+                  <span style={{ color: "red" }}>
+                    {" "}
+                    <ErrorMessage name="startDate" />
+                  </span>
+                </Col>
+                <Col>
+                  <label>End Date</label>
+                  <Field name="endDate" type="date" />
+                  <span style={{ color: "red" }}>
+                    <ErrorMessage name="endDate" />{" "}
+                  </span>
+                </Col>
+                {dateError.length > 0 ? (
+                  <span style={{ color: "red" }}>{dateError}</span>
+                ) : (
+                  ""
+                )}
+              </Row>
+              <h2>Room Amenities</h2>
+              {resort.amenities
+                .filter((ele) => {
+                  return ele.type === "room";
+                })
+                .map((ele) => {
+                  return (
+                    <div key={ele._id}>
+                      <label>
+                        <Field type="checkbox" name="checked" value={ele._id} />
+                        {ele.name}
+                      </label>
+                    </div>
+                  );
+                })}{" "}
               <span style={{ color: "red" }}>
-                {" "}
-                <ErrorMessage name="startDate" />
+                <ErrorMessage name="checked" />
               </span>
-            </Col>
-            <Col>
-              <label>End Date</label>
-              <Field name="endDate" type="date" />
-              <span style={{ color: "red" }}>
-                <ErrorMessage name="endDate" />{" "}
-              </span>
-            </Col>
-            {dateError.length > 0 ? (
-              <span style={{ color: "red" }}>{dateError}</span>
-            ) : (
-              ""
-            )}
-          </Row>
-          <h2>Room Amenities</h2>
-          {resort.amenities
-            .filter((ele) => {
-              return ele.type === "room";
-            })
-            .map((ele) => {
-              return (
-                <div key={ele._id}>
-                  <label>
-                    <Field type="checkbox" name="checked" value={ele._id} />
-                    {ele.name}
-                  </label>
-                </div>
-              );
-            })}{" "}
-          <span style={{ color: "red" }}>
-            <ErrorMessage name="checked" />
-          </span>
-          <br />
-          <label>Upload Room Photos</label>
-          <input
-            type="file"
-            name="file"
-            multiple
-            onChange={(e) => {
-              handleRoomPhotos(e.target.files);
-            }}
-          />
-          <br />
-          {localStorage.getItem("roomPhotos") &&
-            JSON.parse(localStorage.getItem("roomPhotos")).map((ele, i) => {
-              return (
-                <img
-                  key={i}
-                  src={`http://localhost:3060/images/${ele}`}
-                  style={{ width: "25%", height: "25%", margin: "20px" }}
-                  alt="documents"
-                />
-              );
-            })}
-          {error.length ? <p style={{ color: "red" }}>{error}</p> : ""}
-          <br />
-          <Button type="submit" className="offset-8 col-md-2">Submit</Button>
-        </Form>
-         </Card>
+              <br />
+              <label>Upload Room Photos</label>
+              <input
+                type="file"
+                name="file"
+                multiple
+                onChange={(e) => {
+                  handleRoomPhotos(e.target.files);
+                }}
+              />
+              <br />
+              {localStorage.getItem("roomPhotos") &&
+                JSON.parse(localStorage.getItem("roomPhotos")).map((ele, i) => {
+                  return (
+                    <img
+                      key={i}
+                      src={`http://localhost:3060/images/${ele}`}
+                      style={{ width: "25%", height: "25%", margin: "20px" }}
+                      alt="documents"
+                    />
+                  );
+                })}
+              {error.length ? <p style={{ color: "red" }}>{error}</p> : ""}
+              <br />
+              <Button type="submit" className="offset-8 col-md-2">Submit</Button>
+            </Form>
+          </Card>
         </Container>
       </Formik>
-    </div>
+    </div >
   );
 }

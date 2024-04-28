@@ -118,16 +118,17 @@ export default function App() {
           <PropertyContext.Provider value={{ resort, resortDispatch }} >
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/aboutus" element={<AboutUs />} />
               <Route path='/registration-page' element={<RegistartionForm />} />
               <Route path='/loginPage' element={<LoginPage />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/resort-listing" element={<ListResorts />} />
               <Route path="/resort-detail/:id" element={<ResortDetail />} />
               <Route path="/emailVerification" element={<OTPVerification />} />
-              <Route path="/chat" element={<Chat/>} />
+              <Route path="/chat" element={<Chat />} />
               <Route path="/personal-detail"
                 element={
-                  <PrivateRoute permittedRoles={['owner','user']}>
+                  <PrivateRoute permittedRoles={['owner', 'user']}>
                     <PersonalDetail />
                   </PrivateRoute>}
               />
@@ -149,6 +150,12 @@ export default function App() {
                     <StepperForm />
                   </PrivateRoute>}
               />
+              <Route path="/my-bookings"
+                element={
+                  <PrivateRoute permittedRoles={['user']}>
+                    <MyBookings />
+                  </PrivateRoute>}
+              />
               {/* <Route path="/properties-details" element={<PropertyDetails />} />
               <Route path="/room-amenities" element={<RoomDetails />} />
               <Route path="/add-rooms" element={<Rooms />} />
@@ -157,7 +164,7 @@ export default function App() {
               <Route path="/finance-and-legal" element={<FinanceAndLegal />} /> */}
               <Route
                 path="/reviews/:id/bookings/:bookingId"
-                 element={<Reviews />}
+                element={<Reviews />}
               />
               <Route path="/booking/payment/:id" element={<PaymentPage />} />
               <Route path="/success"
@@ -174,12 +181,10 @@ export default function App() {
               />
               <Route path="/unauthorized" element={<UnAuthorized />} />
               <Route path="*" element={<NotFound />} />
-                <Route path="/my-bookings" element={<MyBookings />} />
-          <Route path="/aboutus" element={<AboutUs />} />
             </Routes>
           </PropertyContext.Provider>
           <Footer />
-        </> }   
+        </>}
     </>
   );
 }

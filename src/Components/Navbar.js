@@ -47,7 +47,7 @@ export default function NavigationBar() {
         return (
           <div>
             <DropdownItem><Link to='/personal-detail' className='link-style'> Personal Details </Link></DropdownItem>
-            <DropdownItem>Your Bookings</DropdownItem></div>)
+            <DropdownItem><Link to='/my-bookings' className='link-style'> Your Bookings </Link></DropdownItem></div>)
       }
       case 'owner': {
         return (
@@ -120,7 +120,7 @@ export default function NavigationBar() {
                       <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
-                </>
+                </> )
                 : <Nav.Link><Link to='/registration-page' className='link-style'><FaUserCircle /> Login/SignUp </Link></Nav.Link>
               }
             </Nav>
