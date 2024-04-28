@@ -1,14 +1,17 @@
-import { useState, useParams } from "react";
+import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import StarRating from "./Ratings";
 import { Card, Row, Col, Form, Button } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
 export default function Reviews() {
   const [ratings, setRatings] = useState(0);
+  const { id, bookingId } = useParams();
   const [description, setDescription] = useState("");
   const [reviewPhotos, setReviewPhotos] = useState([]);
+  const navigate = useNavigate();
   const photos = new FormData();
-  // const id = useParams();
+
   const handleRatingChange = (value) => {
     setRatings(value);
   };
@@ -21,11 +24,12 @@ export default function Reviews() {
       const response = await axios.post(
         "http://localhost:3060/api/reviewsphotos",
         photos,
-        { headers: { Authorization: localStorage.getItem("userToken") } }
+        { headers: { Authorization: localStorage.getItem("token") } }
       );
       console.log(response.data);
       setReviewPhotos(response.data);
     } catch (err) {
+      alert(err.message);
       console.log(err);
     }
   };
@@ -39,11 +43,11 @@ export default function Reviews() {
     };
     try {
       const response = await axios.post(
-        "http://localhost:3060/api/users/reviews/661cecd1ee66ea2828f2446f",
+        `http://localhost:3060/api/users/reviews/${id}?bookingId=${bookingId}`,
         formData,
-        { headers: { Authorization: localStorage.getItem("userToken") } }
+        { headers: { Authorization: localStorage.getItem("token") } }
       );
-      console.log(response.data);
+
       Swal.fire({
         icon: "success",
         title: "Review",
@@ -51,6 +55,7 @@ export default function Reviews() {
         showConfirmButton: true,
         timer: 3500,
       });
+      navigate("/");
     } catch (err) {
       console.log(err);
     }

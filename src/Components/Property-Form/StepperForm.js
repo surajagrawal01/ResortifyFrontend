@@ -15,6 +15,7 @@ export default function StepperForm() {
   const [roomdetails, setRoomDetails] = useState(false);
   const [upload, setUpload] = useState(false);
   const [policies, setPolicies] = useState(false);
+  const [roomEnable, setRoomEnable] = useState(false);
 
   const enableButton = () => {
     setIsSubmit(true);
@@ -29,6 +30,7 @@ export default function StepperForm() {
     setPolicies(true);
   };
   const handleNext = () => {
+    setRoomEnable(false);
     setActiveStep(activeStep + 1);
   };
 
@@ -39,10 +41,13 @@ export default function StepperForm() {
     handleBack();
     setRoomDetails(false);
   };
+  const verifyRooms = () => {
+    setRoomEnable(true);
+  };
   const steps = [
     <PropertyDetails enableButton={enableButton} />,
     <RoomDetails enableRoomDetails={enableRoomDetails} />,
-    <Rooms goToPrevious={goToPrevious} />,
+    <Rooms goToPrevious={goToPrevious} verifyRooms={verifyRooms} />,
     <UploadPhotos enableUpload={enableUpload} />,
     <PropertyPolicies enablePolicies={enablePolicies} />,
     <FinanceAndLegal />,
@@ -60,7 +65,10 @@ export default function StepperForm() {
       </Stepper>
       <div>
         {steps[activeStep]}
-        <Button onClick={handleBack} disabled={activeStep === 0}>
+        <Button
+          onClick={handleBack}
+          disabled={activeStep === 0 || roomEnable === true}
+        >
           back{" "}
         </Button>
         {activeStep === 5 ? (
