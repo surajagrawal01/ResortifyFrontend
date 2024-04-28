@@ -1,10 +1,10 @@
 import { Container, Row, Col, Image, Card } from 'react-bootstrap';
-import logo from "../../Images/logo.png"
 import { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from "axios"
 import { Link, useNavigate } from 'react-router-dom';
+import img from "../../Images/bg-register4.jpg"
 
 export default function RegistartionForm() {
     const [serverErrors, setServerErrors] = useState([])
@@ -43,13 +43,18 @@ export default function RegistartionForm() {
             }}
         >
             <>
-                <Container fluid>
+                <Container fluid style={{
+                        "backgroundImage": `url(${img})`,
+                        "backgroundSize": "cover",
+                        "backgroundPosition": "center",
+                        "backgroundRepeat": "no-repeat"
+                    }}>
                     <Row>
                         <Col xs={12} md={6}>
-                            <Image src={logo} fluid style={{ height: '100vh', objectFit: 'cover' }} />
+                            <Image  fluid style={{ height: '100vh', objectFit: 'cover' }} />
                         </Col>
                         <Col xs={12} md={6} className='m-auto'>
-                            <Card style={{ width: '30rem' }} className='m-auto p-3' border="primary">
+                            <Card style={{ width: '30rem' }} className='m-auto p-3'>
                                 <Card.Body>
 
                                     <Card.Title > Registration Form </Card.Title> <hr />

@@ -1,4 +1,4 @@
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Container, Card } from "react-bootstrap";
 import { useContext, useState } from "react";
 import axios from "axios";
 
@@ -216,162 +216,171 @@ export default function RoomDetails(props) {
           // const formdata = {roomTypesData:roomTypesData}
         }}
       >
-        <Form>
-          <Row>
-            <Col>
-              <Field
-                name="NumberOfRooms"
-                type="number"
-                placeholder="Number of rooms"
-              />
-              <span style={{ color: "red" }}>
-                <ErrorMessage name="NumberOfRooms" />
-              </span>
+        <Container fluid>
+          <Card
+            className="m-auto p-3"
+          >
+            <Form>
+              <Row>
+                <Col className="col-4 m-1">
+                  <Field
+                    name="NumberOfRooms"
+                    type="number"
+                    placeholder="Number of rooms"
+                    className="form-control"
+                  />
+                  <span style={{ color: "red" }}>
+                    <ErrorMessage name="NumberOfRooms" />
+                  </span>
 
-              {/* <ErrorMessage name="roomTypes" /> */}
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Field
-                name="roomType"
-                type="text"
-                placeholder="room Type : basic/standard/delux "
-              />
-              <span style={{ color: "red" }}>
-                {" "}
-                <ErrorMessage name="roomType" />
-              </span>
-            </Col>
-            <Col>
-              <Field name="baseRoomPrice" type="number" placeholder="price" />
-              <span style={{ color: "red" }}>
-                <ErrorMessage name="baseRoomPrice" />
-              </span>
-            </Col>
-          </Row>
-          <Row>
-            <Field
-              name="roomDescription"
-              type="text"
-              placeholder="room description"
-            />
-            <span style={{ color: "red" }}>
-              <ErrorMessage name="roomDescription" />{" "}
-            </span>
-          </Row>
-          <div role="group" aria-labelledby="my-radio-group">
-            <label>Smoking Allowed</label>
-            <label>
-              <Field type="radio" name="smokingAllowed" value="true" />
-              yes
-            </label>
-            <label>
-              <Field type="radio" name="smokingAllowed" value="false" />
-              no
-            </label>{" "}
-            <ErrorMessage name="smokingAllowed" />
-          </div>
-          <div role="group" aria-labelledby="my-radio-group">
-            <label>Extra Bed</label>
-            <label>
-              <Field type="radio" name="extraBed" value="true" />
-              yes
-            </label>
-            <label>
-              <Field type="radio" name="extraBed" value="false" />
-              no
-            </label>
-            <ErrorMessage name="extraBed" />
-          </div>
-          <h2>Room Occupancy</h2>
-          {/* backend validations are remaining and change the names of Schemas of room types and rooms */}
-          <Row>
-            <Col>
-              <Field name="adult" type="number" placeholder="number of adult" />
-              <span style={{ color: "red" }}>
-                <ErrorMessage name="adult" />
-              </span>
-            </Col>
-            <Col>
-              <Field
-                name="children"
-                type="number"
-                placeholder="number of children"
-              />
-            </Col>
-          </Row>
-          <h2>Availability</h2>
-          <Row>
-            <Col>
-              <label>Start Date</label>
-              <Field name="startDate" type="date" />
-              <span style={{ color: "red" }}>
-                {" "}
-                <ErrorMessage name="startDate" />
-              </span>
-            </Col>
-            <Col>
-              <label>End Date</label>
-              <Field name="endDate" type="date" />
-              <span style={{ color: "red" }}>
-                <ErrorMessage name="endDate" />{" "}
-              </span>
-            </Col>
-            {dateError.length > 0 ? (
-              <span style={{ color: "red" }}>{dateError}</span>
-            ) : (
-              ""
-            )}
-          </Row>
-          <h2>Room Amenities</h2>
-          {resort.amenities
-            .filter((ele) => {
-              return ele.type === "room";
-            })
-            .map((ele) => {
-              return (
-                <div key={ele._id}>
-                  <label>
-                    <Field type="checkbox" name="checked" value={ele._id} />
-                    {ele.name}
-                  </label>
-                </div>
-              );
-            })}{" "}
-          <span style={{ color: "red" }}>
-            <ErrorMessage name="checked" />
-          </span>
-          <br />
-          <label>Upload Room Photos</label>
-          <input
-            type="file"
-            name="file"
-            multiple
-            onChange={(e) => {
-              handleRoomPhotos(e.target.files);
-            }}
-          />
-          <div>
-            {localStorage.getItem("roomDetails") &&
-              JSON.parse(localStorage.getItem("roomDetails"))[0]?.photos.map(
-                (ele, i) => {
+                  {/* <ErrorMessage name="roomTypes" /> */}
+                </Col>
+              </Row>
+              <Row>
+                <Col className="col-4 m-1">
+                  <Field
+                    name="roomType"
+                    type="text"
+                    placeholder="room Type : Basic/Standard/Delux"
+                    className="form-control"
+                  />
+                  <span style={{ color: "red" }}>
+                    {" "}
+                    <ErrorMessage name="roomType" />
+                  </span>
+                </Col>
+                <Col className="col-4 m-1">
+                  <Field name="baseRoomPrice" type="number" placeholder="price" className="form-control" />
+                  <span style={{ color: "red" }}>
+                    <ErrorMessage name="baseRoomPrice" />
+                  </span>
+                </Col>
+              </Row>
+              <Row className="col-8 m-1">
+                <Field
+                  name="roomDescription"
+                  type="text"
+                  placeholder="room description"
+                  className="form-control"
+                />
+                <span style={{ color: "red" }}>
+                  <ErrorMessage name="roomDescription" />{" "}
+                </span>
+              </Row>
+              <div role="group" aria-labelledby="my-radio-group"  className="col-4 my-2">
+                <label className="mx-2">Smoking Allowed</label>
+                <label className="form-check-label mx-1">
+                  <Field type="radio" name="smokingAllowed" value="true" className="form-check-input mx-1" />
+                  Yes
+                </label>
+                <label className="form-check-label mx-1">
+                  <Field type="radio" name="smokingAllowed" value="false" className="form-check-input mx-1" />
+                  No
+                </label>{" "}
+                <ErrorMessage name="smokingAllowed" />
+              </div>
+              <div role="group" aria-labelledby="my-radio-group" className="col-4 my-2">
+                <label className="mx-2">Extra Bed</label>
+                <label className="form-check-label mx-1" >
+                  <Field type="radio" name="extraBed" value="true" className="form-check-input mx-1" />
+                  Yes
+                </label>
+                <label className="form-check-label mx-1" >
+                  <Field type="radio" name="extraBed" value="false" className="form-check-input mx-1"/>
+                  No
+                </label>
+                <ErrorMessage name="extraBed" />
+              </div>
+              <h2 className="text-decoration-underline">Room Occupancy</h2>
+              {/* backend validations are remaining and change the names of Schemas of room types and rooms */}
+              <Row>
+                <Col className="col-4">
+                  <Field name="adult" type="number" placeholder="number of adult" className="form-control" />
+                  <span style={{ color: "red" }}>
+                    <ErrorMessage name="adult" />
+                  </span>
+                </Col>
+                <Col className="col-4">
+                  <Field
+                    name="children"
+                    type="number"
+                    placeholder="number of children"
+                    className="form-control"
+                  />
+                </Col>
+              </Row>
+              <h2 className="text-decoration-underline my-2">Availability</h2>
+              <Row>
+                <Col className="d-flex align-items-center col-md-4">
+                  <label className="form-label col-md-2">Start Date</label>
+                  <Field name="startDate" type="date" className="form-control" />
+                  <span style={{ color: "red" }}>
+                    {" "}
+                    <ErrorMessage name="startDate" />
+                  </span>
+                </Col>
+                <Col className="d-flex align-items-center col-md-4">
+                  <label className="form-label col-md-2">End Date</label>
+                  <Field name="endDate" type="date" className="form-control" />
+                  <span style={{ color: "red" }}>
+                    <ErrorMessage name="endDate" />{" "}
+                  </span>
+                </Col>
+                {dateError.length > 0 ? (
+                  <span style={{ color: "red" }}>{dateError}</span>
+                ) : (
+                  ""
+                )}
+              </Row>
+              <h2 className="text-decoration-underline my-2">Room Amenities</h2>
+              {resort.amenities
+                .filter((ele) => {
+                  return ele.type === "room";
+                })
+                .map((ele) => {
                   return (
-                    <img
-                      key={i}
-                      src={`http://localhost:3060/images/${ele}`}
-                      style={{ width: "25%", height: "25%", margin: "20px" }}
-                      alt="documents"
-                    />
+                    <div key={ele._id} className="col-md-4">
+                      <label className="form-check-label">
+                        <Field type="checkbox" name="checked" value={ele._id} className="form-check-input mx-1" />
+                        {ele.name}
+                      </label>
+                    </div>
                   );
-                }
-              )}
-          </div>
-          <br />
-          {error.length ? <p style={{ color: "red" }}>{error}</p> : ""}
-          <br />
-          <Button type="submit">Submit</Button>
-        </Form>
+                })}{" "}
+              <span style={{ color: "red" }}>
+                <ErrorMessage name="checked" />
+              </span>
+              <br />
+              <h3 className="text-decoration-underline">Upload Room Photos</h3>
+              <input
+                type="file"
+                name="file"
+                multiple
+                onChange={(e) => {
+                  handleRoomPhotos(e.target.files);
+                }}
+              />
+              <div>
+                {localStorage.getItem("roomDetails") &&
+                  JSON.parse(localStorage.getItem("roomDetails"))[0]?.photos.map(
+                    (ele, i) => {
+                      return (
+                        <img
+                          key={i}
+                          src={`http://localhost:3060/images/${ele}`}
+                          style={{ width: "25%", height: "25%", margin: "20px" }}
+                          alt="documents"
+                        />
+                      );
+                    }
+                  )}
+              </div>
+              {error.length ? <p style={{ color: "red" }}>{error}</p> : ""}
+              <br />
+              <Button type="submit" className="offset-8 col-md-2">Submit</Button>
+            </Form>
+          </Card>
+        </Container>
       </Formik>
     </div>
   );

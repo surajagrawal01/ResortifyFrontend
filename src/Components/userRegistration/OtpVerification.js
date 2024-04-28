@@ -48,6 +48,7 @@ export default function OTPVerification() {
                 navigate("/loginPage")
             } catch (err) {
                 console.log(err)
+                console.log(err.response)
                 setServerErrors(err.response.data)
             }
         } else {
@@ -65,11 +66,7 @@ export default function OTPVerification() {
 
                                 <Card.Title > OTP Verification </Card.Title> <hr />
                                 {
-                                    serverErrors.length > 0 && <div>
-                                        {serverErrors.map((ele, i) => {
-                                            return <div key={i} className='text-danger'>**{ele.msg}</div>
-                                        })}
-                                    </div>
+                                    serverErrors.error && <div className="text-danger">{serverErrors.error}</div>
                                 }
                                 <form onSubmit={handleSubmit}>
                                     <label className="form-label" htmlFor="otp">Enter Otp</label>
@@ -81,11 +78,9 @@ export default function OTPVerification() {
                                     />
                                     <a href="" onClick={handleOtpResend}>Resend-Otp</a> <br />
                                     {
-                                        errors.otpError && <div>{errors.otpError}</div>
+                                        errors.otpError && <div className="text-danger">{errors.otpError}</div>
                                     }
-                                    {
-                                        serverErrors.error && <div>{serverErrors.error}</div>
-                                    } <br />
+                                    <br />
                                     <input type="submit" value='Verify' className="btn btn-primary" />
                                 </form>
                             </Card.Body>

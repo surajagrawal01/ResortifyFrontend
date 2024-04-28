@@ -52,19 +52,21 @@ export default function UploadPhotos(props) {
 
   return (
     <div>
-      <h2>Upload Property Photos</h2>
+      <h2 className="text-decoration-underline m-2">Upload Property Photos</h2>
 
       <form onSubmit={handlePhotos}>
-        <label>Upload Property Photos</label>
-        <input
-          type="file"
-          name="file"
-          multiple
-          onChange={(e) => {
-            handleImage(e.target.files);
-          }}
-        />
-        <br />
+        <label className="form-label m-2">Upload Property Photos</label>
+        <div className="col-md-6">
+          <input
+            className="form-control m-2 col-md-8"
+            type="file"
+            name="file"
+            multiple
+            onChange={(e) => {
+              handleImage(e.target.files);
+            }}
+          />
+        </div>
         {error.length ? <span style={{ color: "red" }}>{error}</span> : ""}
         <div>
           {localStorage.getItem("propertyPhotos") &&
@@ -82,7 +84,7 @@ export default function UploadPhotos(props) {
             })}
         </div>
         <br />
-        <Button className="btn btn-success" type="sumbit">
+        <Button className="btn btn-success offset-9 offset-md-4 col-2" type="sumbit">
           {" "}
           Upload
         </Button>

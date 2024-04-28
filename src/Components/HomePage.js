@@ -2,6 +2,7 @@ import SearchBar from "./SearchBar"
 import SearchCity from "./SearchCity"
 import OwnerDashBoard from "./DashBoards/ownerDashboard"
 import { useSelector } from "react-redux"
+import AdminDashboard from "./DashBoards/AdminDashBoard"
 
 export default function HomePage() {
 
@@ -13,21 +14,28 @@ export default function HomePage() {
         return state.isLogIn.isLoggedIn
     })
 
+    const conditionalPage = (role) => {
+        switch (role) {
+            case 'owner': {
+                return <OwnerDashBoard />
+            }
+            case "user": {
+                return <div>
+                    <SearchBar />
+                    <SearchCity />
+                </div>
+            }
+            case "admin": {
+                return <AdminDashboard />
+            }
+        }
+    }
+
     return (
         <>
             {isLoggedIn ?
                 <>
-                    {
-                        userDetail.role === 'owner' ?
-
-                            <OwnerDashBoard />
-                            :
-                            <>
-                                <SearchBar />
-                                <SearchCity />
-                            </>
-
-                    }
+                    {conditionalPage(userDetail.role)}
                 </>
                 :
                 <>

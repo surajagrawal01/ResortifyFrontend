@@ -7,7 +7,8 @@ import {
   DropdownItem
 } from "reactstrap"
 import { useSelector, useDispatch } from 'react-redux';
-import { FaHome, FaBuilding, FaUser } from 'react-icons/fa';
+import { FaHome, FaBuilding,  FaUserCircle } from 'react-icons/fa';
+import { IoMdChatboxes } from "react-icons/io";
 import logo from "../Images/logo.png"
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -34,6 +35,28 @@ export default function NavigationBar() {
     navigate("/")
   }
 
+  const conditionalLinks = (role) => {
+    switch (role) {
+      case 'admin': {
+        return (<DropdownItem><Link to='/owner-dashobard' className='link-style'> Dashboard </Link></DropdownItem>)
+      }
+      case 'user': {
+        return (
+          <div>
+            <DropdownItem><Link to='/personal-detail' className='link-style'> Personal Details </Link></DropdownItem>
+            <DropdownItem>Your Bookings</DropdownItem></div>)
+      }
+      case 'owner': {
+        return (
+          <div>
+            <DropdownItem><Link to='/personal-detail' className='link-style'> Personal Details </Link></DropdownItem>
+            <DropdownItem><Link to='/owner-dashobard' className='link-style'> Dashboard </Link></DropdownItem>
+          </div>
+        )
+      }
+    }
+  }
+
   return (
     <>
       <Navbar expand="lg" className="gray-background navbar">
@@ -55,34 +78,25 @@ export default function NavigationBar() {
             <Nav>
               <NavLink className='mx-md-2'><Link to='/about' className='link-style'> <FaHome /> About Us</Link></NavLink>
               {isLoggedIn ?
-                userDetail.role === 'owner' && <Nav.Link><Link to='/list-property' className='link-style'> <FaBuilding /> List Your Property</Link></Nav.Link>
-                : <Nav.Link><Link to='/list-property' className='link-style'> <FaBuilding /> List Your Property</Link></Nav.Link>}
+                userDetail.role === 'owner' && <Nav.Link><Link to='/stepperform' className='link-style'> <FaBuilding /> List Your Property</Link></Nav.Link>
+                : <Nav.Link><Link to='/stepperform' className='link-style'> <FaBuilding /> List Your Property</Link></Nav.Link>}
             </Nav>
             <Nav className="ms-auto">
+              <Nav.Link><Link to='/chat' className='link-style'> <IoMdChatboxes/> ChatwithUs</Link> </Nav.Link>
               {isLoggedIn ?
                 <>
                   <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
-                      <FaUser />
+                      <FaUserCircle />
                     </DropdownToggle>
-                    {
-                      userDetail.role === 'user' ?
-                        <DropdownMenu end>
-                          <DropdownItem>Personal Details</DropdownItem>
-                          <DropdownItem>Your Bookings</DropdownItem>
-                          <DropdownItem divider />
-                          <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
-                        </DropdownMenu> :
-                        <DropdownMenu end>
-                          <DropdownItem>Property Details</DropdownItem>
-                          <DropdownItem><Link to='/owner-dashobard' className='link-style'> Dashboard </Link></DropdownItem>
-                          <DropdownItem divider />
-                          <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
-                        </DropdownMenu>
-                    }
+                    <DropdownMenu end>
+                      {conditionalLinks(userDetail.role)}
+                      <DropdownItem divider />
+                      <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+                    </DropdownMenu>
                   </UncontrolledDropdown>
                 </>
-                : <Nav.Link><Link to='/registration-page' className='link-style'><FaUser /> Login/SignUp </Link></Nav.Link>
+                : <Nav.Link><Link to='/registration-page' className='link-style'><FaUserCircle /> Login/SignUp </Link></Nav.Link>
               }
             </Nav>
           </Navbar.Collapse>

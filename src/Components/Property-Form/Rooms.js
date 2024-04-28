@@ -1,4 +1,4 @@
-import { Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Image, Card } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { Button } from "react-bootstrap";
@@ -27,31 +27,34 @@ export default function Rooms(props) {
   };
   return (
     <div>
-      <h2>Total Rooms Added {CalcRooms()}</h2>
-
-      <form>
-        <div>
-          {resort.resort.roomTypes.length ? (
-            <div>
-              {resort.resort.roomTypes.map((ele, i) => {
-                return (
-                  <div key={i} style={{ border: "1px solid black" }}>
-                    <span>Room Type: {ele[0]?.roomType}</span>
-                    <br />
-                    <span>Number Of Rooms: {ele[0]?.NumberOfRooms}</span>
-                    <br />
-                    <span>Description : {ele[0]?.roomDescription}</span>
-                    <br />
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
-        <Button onClick={handleRooms}>ADD +</Button>
-      </form>
+      <h2 className='text-decoration-underline'>Total Rooms Added {CalcRooms()}</h2>
+      <Container fluid>
+        <form>
+          <div>
+            {resort.resort.roomTypes.length ? (
+              <div>
+                {resort.resort.roomTypes.map((ele, i) => {
+                  return (
+                    <Card
+                      className=" p-3 col-md-4 m-2"
+                      border="primary"
+                    >
+                      <div key={i}>
+                        <div className='m-1'>Room Type: {ele[0]?.roomType}</div>
+                        <div className='m-1'>Number Of Rooms: {ele[0]?.NumberOfRooms}</div>
+                        <div className='m-1'>Description : {ele[0]?.roomDescription}</div>
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+          <Button onClick={handleRooms} className='m-2'>ADD ROOM TYPE +</Button>
+        </form>
+      </Container>
     </div>
   );
 }

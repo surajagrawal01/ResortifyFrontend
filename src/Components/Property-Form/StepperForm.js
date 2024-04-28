@@ -8,6 +8,7 @@ import UploadPhotos from "./UploadPhotos";
 import PropertyPolicies from "./PropertyPolicies";
 import FinanceAndLegal from "./FinanceLegal";
 import { Button } from "react-bootstrap";
+import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 
 export default function StepperForm() {
   const [activeStep, setActiveStep] = useState(0);
@@ -60,14 +61,15 @@ export default function StepperForm() {
       </Stepper>
       <div>
         {steps[activeStep]}
-        <Button onClick={handleBack} disabled={activeStep === 0}>
-          back{" "}
+        <Button onClick={handleBack} disabled={activeStep === 0} className="m-4">
+          <GoArrowLeft /> back{" "}
         </Button>
         {activeStep === 5 ? (
           ""
         ) : (
           <Button
             onClick={handleNext}
+            className="offset-md-10"
             disabled={
               (activeStep === 0 && !isSubmit) ||
               (activeStep === 1 && !roomdetails) ||
@@ -75,7 +77,7 @@ export default function StepperForm() {
               (activeStep === 4 && !policies)
             }
           >
-            next
+            next <GoArrowRight />
           </Button>
         )}
       </div>
