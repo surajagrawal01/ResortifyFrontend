@@ -112,8 +112,7 @@ export default function AdminDashboard() {
         formdata,
         {
           headers: {
-            Authorization:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZmFiMzQ0YmIxOTY4OGFlZTg3MDZkOCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcxMzUxOTc2MywiZXhwIjoxNzE0MTI0NTYzfQ.ayh2JW2xvd8rdO5NOF26IBcpmhQTeTv4H9BKZZDPjjA",
+            Authorization: localStorage.get("adminToken"),
           },
         }
       );

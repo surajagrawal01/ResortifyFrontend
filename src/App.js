@@ -6,24 +6,24 @@ import Policies from "./Components/Property-Form/PropertyPolicies";
 import PropertyContext from "./context/PropertyContext";
 import { useReducer } from "react";
 import FinanceAndLegal from "./Components/Property-Form/FinanceLegal";
-import RegistartionForm from './Components/userRegistration/RegistrationPage';
-import { useEffect } from 'react';
-import { setLoginTrue } from "./actions/isLoginActions"
-import { Routes, Route, Link } from 'react-router-dom';
-import OTPVerification from './Components/userRegistration/OtpVerification';
-import LoginPage from './Components/userRegistration/LogInPage';
-import ForgotPassword from './Components/userRegistration/ForgotPassword';
-import OwnerDashBoard from "./Components/DashBoards/ownerDashboard"
-import HomePage from './Components/HomePage';
-import { useSelector, useDispatch } from 'react-redux';
-import { startSetUser } from './actions/userActions';
-import ListResorts from './Components/ListingResorts/ListResorts';
-import NavigationBar from './Components/Navbar';
-import ResortDetail from './Components/ResortDetail/ResortDetail';
-import Footer from "./Components/Footer"
-import PaymentPage from './Components/PaymentComp/PaymentPage';
-import Success from './Components/PaymentComp/Success';
-import Failure from './Components/PaymentComp/Failure';
+import RegistartionForm from "./Components/userRegistration/RegistrationPage";
+import { useEffect } from "react";
+import { setLoginTrue } from "./actions/isLoginActions";
+import { Routes, Route, Link } from "react-router-dom";
+import OTPVerification from "./Components/userRegistration/OtpVerification";
+import LoginPage from "./Components/userRegistration/LogInPage";
+import ForgotPassword from "./Components/userRegistration/ForgotPassword";
+import OwnerDashBoard from "./Components/DashBoards/ownerDashboard";
+import HomePage from "./Components/HomePage";
+import { useSelector, useDispatch } from "react-redux";
+import { startSetUser } from "./actions/userActions";
+import ListResorts from "./Components/ListingResorts/ListResorts";
+import NavigationBar from "./Components/Navbar";
+import ResortDetail from "./Components/ResortDetail/ResortDetail";
+import Footer from "./Components/Footer";
+import PaymentPage from "./Components/PaymentComp/PaymentPage";
+import Success from "./Components/PaymentComp/Success";
+import Failure from "./Components/PaymentComp/Failure";
 import StepperForm from "./Components/Property-Form/StepperForm";
 import Reviews from "./Components/Reviews/review";
 import AdminDashboard from "./Components/DashBoards/AdminDashBoard";
@@ -33,6 +33,8 @@ import { RotatingLines } from "react-loader-spinner";
 import NotFound from "./Components/NotFound";
 import Chat from "./Components/ChatSystem/Chat";
 import PersonalDetail from "./Components/UserPersonalDetail";
+import MyBookings from "./Components/UserDetails/MyBookings";
+import AboutUs from "./Components/AboutUs/aboutus";
 
 function PropertyReducer(state, action) {
   switch (action.type) {
@@ -153,7 +155,10 @@ export default function App() {
               <Route path="/upload-photos" element={<UploadPhotos />} />
               <Route path="/policies" element={<Policies />} />
               <Route path="/finance-and-legal" element={<FinanceAndLegal />} /> */}
-              <Route path="/reviews" element={<Reviews />} />
+              <Route
+                path="/reviews/:id/bookings/:bookingId"
+                 element={<Reviews />}
+              />
               <Route path="/booking/payment/:id" element={<PaymentPage />} />
               <Route path="/success"
                 element={
@@ -169,10 +174,12 @@ export default function App() {
               />
               <Route path="/unauthorized" element={<UnAuthorized />} />
               <Route path="*" element={<NotFound />} />
+                <Route path="/my-bookings" element={<MyBookings />} />
+          <Route path="/aboutus" element={<AboutUs />} />
             </Routes>
           </PropertyContext.Provider>
           <Footer />
-        </>}
+        </> }   
     </>
-  )
+  );
 }

@@ -3,6 +3,7 @@ import SearchCity from "./SearchCity"
 import OwnerDashBoard from "./DashBoards/ownerDashboard"
 import { useSelector } from "react-redux"
 import AdminDashboard from "./DashBoards/AdminDashBoard"
+import UserRecentSearches from "./UserDetails/UserRecentSearches";
 
 export default function HomePage() {
 
@@ -23,6 +24,8 @@ export default function HomePage() {
                 return <div>
                     <SearchBar />
                     <SearchCity />
+                    <hr />
+                    <UserRecentSearches />
                 </div>
             }
             case "admin": {
@@ -44,5 +47,5 @@ export default function HomePage() {
                 </>
             }
         </>
-    )
+  );
 }

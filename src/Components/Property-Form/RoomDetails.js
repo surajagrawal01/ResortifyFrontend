@@ -30,6 +30,7 @@ export default function RoomDetails(props) {
       .min(new Date(), `End date less than today's date`);
   };
   console.log(JSON.parse(localStorage.getItem("roomDetails")));
+  console.log(resort);
   return (
     <div>
       <h2>Room Amenities</h2>
@@ -38,55 +39,53 @@ export default function RoomDetails(props) {
         initialValues={{
           NumberOfRooms:
             (localStorage.getItem("roomDetails") &&
-              JSON.parse(localStorage.getItem("roomDetails"))[0]
-                ?.NumberOfRooms) ||
+              JSON.parse(localStorage.getItem("roomDetails"))?.NumberOfRooms) ||
             "",
           roomType:
             (localStorage.getItem("roomDetails") &&
-              JSON.parse(localStorage.getItem("roomDetails"))[0]?.roomType) ||
+              JSON.parse(localStorage.getItem("roomDetails"))?.roomType) ||
             "",
           roomDescription:
             (localStorage.getItem("roomDetails") &&
-              JSON.parse(localStorage.getItem("roomDetails"))[0]
+              JSON.parse(localStorage.getItem("roomDetails"))
                 ?.roomDescription) ||
             "",
           smokingAllowed:
             (localStorage.getItem("roomDetails") &&
-              JSON.parse(localStorage.getItem("roomDetails"))[0]
+              JSON.parse(localStorage.getItem("roomDetails"))
                 ?.smokingAllowed) ||
             "false",
           extraBed:
             (localStorage.getItem("roomDetails") &&
-              JSON.parse(localStorage.getItem("roomDetails"))[0]?.extraBed) ||
+              JSON.parse(localStorage.getItem("roomDetails"))?.extraBed) ||
             "false",
           baseRoomPrice:
             (localStorage.getItem("roomDetails") &&
-              JSON.parse(localStorage.getItem("roomDetails"))[0]
-                ?.baseRoomPrice) ||
+              JSON.parse(localStorage.getItem("roomDetails"))?.baseRoomPrice) ||
             "",
           adult:
             (localStorage.getItem("roomDetails") &&
-              JSON.parse(localStorage.getItem("roomDetails"))[0]?.roomOcupancy
-                .adult) ||
+              JSON.parse(localStorage.getItem("roomDetails"))?.roomOcupancy
+                ?.adult) ||
             "",
           children:
             (localStorage.getItem("roomDetails") &&
-              JSON.parse(localStorage.getItem("roomDetails"))[0]?.roomOcupancy
-                .children) ||
+              JSON.parse(localStorage.getItem("roomDetails"))?.roomOcupancy
+                ?.children) ||
             "",
           startDate:
             (localStorage.getItem("roomDetails") &&
-              JSON.parse(localStorage.getItem("roomDetails"))[0]?.availability
-                .startDate) ||
+              JSON.parse(localStorage.getItem("roomDetails"))?.availability
+                ?.startDate) ||
             "",
           endDate:
             (localStorage.getItem("roomDetails") &&
-              JSON.parse(localStorage.getItem("roomDetails"))[0]?.availability
-                .endDate) ||
+              JSON.parse(localStorage.getItem("roomDetails"))?.availability
+                ?.endDate) ||
             "",
           checked:
             (localStorage.getItem("roomDetails") &&
-              JSON.parse(localStorage.getItem("roomDetails"))[0]
+              JSON.parse(localStorage.getItem("roomDetails"))
                 ?.roomAmentities) ||
             [],
         }}
@@ -120,7 +119,8 @@ export default function RoomDetails(props) {
             formData1
           );
           console.log(response2.data);
-          // localStorage.setItem("roomId", response2.data);
+          // set into localStorage
+          localStorage.setItem("roomPhotos", JSON.stringify(response2.data));
           if (
             response2.data.length === 0 &&
             localStorage.getItem("roomDetails")
@@ -151,8 +151,9 @@ export default function RoomDetails(props) {
             } else {
               setDateError("");
               const roomsAlreadyAdded = resort.roomTypes.reduce((acc, cv) => {
-                console.log(cv, cv[0].NumberOfRooms, cv.roomType);
-                return acc + cv[0].NumberOfRooms * 1;
+                acc += cv.NumberOfRooms;
+                // console.log(cv, cv[0].NumberOfRooms, cv.roomType);
+                return acc;
               }, 0);
 
               let roomstotal = roomsAlreadyAdded + values.NumberOfRooms;
@@ -182,17 +183,20 @@ export default function RoomDetails(props) {
                 }
               } else if (roomstotal <= resort.propertyData.totalRooms) {
                 try {
-                  const response = await axios.post(
+                  const result = await axios.post(
                     "http://127.0.0.1:3060/api/owners/propertydetails/roomtypemodel",
                     roomTypesData,
                     {
                       headers: { Authorization: localStorage.getItem("token") },
                     }
                   );
-                  console.log("create room type", response.data);
+                  console.log("create room type", result.data);
                   const formdata = JSON.stringify(roomTypesData);
                   localStorage.setItem("roomDetails", formdata);
-                  localStorage.setItem("roomId", response.data._id);
+                  localStorage.setItem(
+                    "roomId",
+                    JSON.stringify(result.data._id)
+                  );
                 } catch (err) {
                   console.log(err);
                 }
@@ -360,26 +364,76 @@ export default function RoomDetails(props) {
                   handleRoomPhotos(e.target.files);
                 }}
               />
-              <div>
-                {localStorage.getItem("roomDetails") &&
-                  JSON.parse(localStorage.getItem("roomDetails"))[0]?.photos.map(
-                    (ele, i) => {
-                      return (
-                        <img
-                          key={i}
-                          src={`http://localhost:3060/images/${ele}`}
-                          style={{ width: "25%", height: "25%", margin: "20px" }}
-                          alt="documents"
-                        />
-                      );
-                    }
-                  )}
-              </div>
-              {error.length ? <p style={{ color: "red" }}>{error}</p> : ""}
-              <br />
-              <Button type="submit" className="offset-8 col-md-2">Submit</Button>
-            </Form>
-          </Card>
+            </Col>
+          </Row>
+          <h2>Availability</h2>
+          <Row>
+            <Col>
+              <label>Start Date</label>
+              <Field name="startDate" type="date" />
+              <span style={{ color: "red" }}>
+                {" "}
+                <ErrorMessage name="startDate" />
+              </span>
+            </Col>
+            <Col>
+              <label>End Date</label>
+              <Field name="endDate" type="date" />
+              <span style={{ color: "red" }}>
+                <ErrorMessage name="endDate" />{" "}
+              </span>
+            </Col>
+            {dateError.length > 0 ? (
+              <span style={{ color: "red" }}>{dateError}</span>
+            ) : (
+              ""
+            )}
+          </Row>
+          <h2>Room Amenities</h2>
+          {resort.amenities
+            .filter((ele) => {
+              return ele.type === "room";
+            })
+            .map((ele) => {
+              return (
+                <div key={ele._id}>
+                  <label>
+                    <Field type="checkbox" name="checked" value={ele._id} />
+                    {ele.name}
+                  </label>
+                </div>
+              );
+            })}{" "}
+          <span style={{ color: "red" }}>
+            <ErrorMessage name="checked" />
+          </span>
+          <br />
+          <label>Upload Room Photos</label>
+          <input
+            type="file"
+            name="file"
+            multiple
+            onChange={(e) => {
+              handleRoomPhotos(e.target.files);
+            }}
+          />
+          <br />
+          {localStorage.getItem("roomPhotos") &&
+            JSON.parse(localStorage.getItem("roomPhotos")).map((ele, i) => {
+              return (
+                <img
+                  key={i}
+                  src={`http://localhost:3060/images/${ele}`}
+                  style={{ width: "25%", height: "25%", margin: "20px" }}
+                  alt="documents"
+                />
+              );
+            })}
+          {error.length ? <p style={{ color: "red" }}>{error}</p> : ""}
+          <br />
+          <Button type="submit" className="offset-8 col-md-2">Submit</Button>
+        </Form>
+         </Card>
         </Container>
       </Formik>
     </div>

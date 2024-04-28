@@ -123,6 +123,8 @@ export default function FinanceAndLegal() {
         localStorage.removeItem("identity");
         localStorage.removeItem("propertyPhotos");
         localStorage.removeItem("property");
+        localStorage.removeItem("resortId");
+        localStorage.removeItem("roomPhotos");
         navigate("/owner-dashobard");
       } catch (err) {
         console.log(err);

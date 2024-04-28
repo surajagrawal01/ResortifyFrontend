@@ -1,4 +1,4 @@
-*{
+* {
   font-family: Arial, Helvetica, sans-serif;
 }
 .gray-background {
@@ -12,7 +12,7 @@
 }
 
 .indicate-warning {
-  color: rgb(207, 122, 82)
+  color: rgb(207, 122, 82);
 }
 
 .card-image {
@@ -20,7 +20,6 @@
   height: 100%;
   object-fit: cover;
 }
-
 
 .navbar {
   position: sticky;
@@ -51,7 +50,6 @@
   /* Remove underline */
 }
 
-
 .footer {
   /* position: fixed; */
   bottom: 0;
@@ -63,11 +61,46 @@
   text-align: center;
 }
 
-
 /* for spinner */
 .parent-container {
   display: flex;
   justify-content: center; /* Horizontally center content */
   align-items: center; /* Vertically center content */
   height: 100vh; /* Adjust height as needed */
+  
+.my-card:hover {
+  bottom: 8px;
+}
+
+.animated-circle-container {
+  text-align: center;
+}
+
+.circle {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid #007bff;
+  animation: fillCircle 2s ease forwards;
+}
+
+.circle-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: #007bff;
+}
+
+@keyframes fillCircle {
+  from {
+    background-color: transparent;
+    border-color: #007bff;
+  }
+  to {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
 }
