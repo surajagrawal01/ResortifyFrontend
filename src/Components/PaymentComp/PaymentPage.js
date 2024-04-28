@@ -2,6 +2,7 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom"
 import axios from "axios"
+import Swal from "sweetalert2"
 import { useNavigate, useLocation } from "react-router-dom"
 export default function PaymentPage() {
 
@@ -9,13 +10,26 @@ export default function PaymentPage() {
     const navigate = useNavigate()
     const location = useLocation()
 
+    const sweetAlertFunc = () => {
+        Swal.fire({
+            title: "Payment Link Info",
+            text: "Sorry, Link Deactivated",
+            icon: "error",
+            confirmButtonText: "OK"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                navigate("/")
+            }
+        })
+    }
+
     const { id } = useParams()
 
     useEffect(() => {
         ((async () => {
             try {
                 const response = await axios.get(`http://localhost:3060/api/bookings/${id}`)
-                setBookingInfo(response.data)
+                response.data == null ? sweetAlertFunc() :setBookingInfo(response.data)
             } catch (err) {
                 console.log(err)
                 alert(err.message)
@@ -52,11 +66,12 @@ export default function PaymentPage() {
         }
     }
 
+    console.log(bookingInfo, 'bookinginfo')
+
     return (
         <>
             {
-                bookingInfo ?
-
+                bookingInfo &&
                     <Container fluid>
                         <Row>
                             <Col xs={12} md={6} className='m-auto'>
@@ -168,7 +183,7 @@ export default function PaymentPage() {
                                 </Card>
                             </Col>
                         </Row>
-                    </Container> : <h1>SOrry link deactivated</h1>
+                    </Container>
             }
         </>
     )

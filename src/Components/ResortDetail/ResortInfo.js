@@ -21,7 +21,7 @@ export default function ResortInfo({ resort }) {
     const { property, roomTypes, reviews, generalProperyData } = resort
 
     const ratingsStar = (rate) => {
-        if (rate = 0) {
+        if (rate != 0) {
             const rating = []
             for (let i = 1; i <= rate; i++) {
                 rating.push(<FaStar />)

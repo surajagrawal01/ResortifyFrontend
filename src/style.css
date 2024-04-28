@@ -60,9 +60,18 @@
   padding: 10px 0;
   text-align: center;
 }
+
+/* for spinner */
+.parent-container {
+  display: flex;
+  justify-content: center; /* Horizontally center content */
+  align-items: center; /* Vertically center content */
+  height: 100vh; /* Adjust height as needed */
+  
 .my-card:hover {
   bottom: 8px;
 }
+
 .animated-circle-container {
   text-align: center;
 }

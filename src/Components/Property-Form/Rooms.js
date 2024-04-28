@@ -1,5 +1,6 @@
+import { Container, Row, Col, Image, Card, Button } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
 
 import PropertyContext from "../../context/PropertyContext";
 export default function Rooms(props) {
@@ -26,51 +27,35 @@ export default function Rooms(props) {
     setCalcRooms(rooms);
     setTotalRooms(total);
   }, []);
-  // function CalcRooms() {
-  //   // rooms = resort?.resort?.roomTypes.reduce((acc, cv) => {
-  //   //   return acc + cv?.NumberOfRooms;
-  //   // }, 0);
-  //   // console.log(resort.resort.roomTypes);
-  //   // let total = resort?.resort?.propertyData?.totalRooms;
-  //   // total = total ? total : 0;
-  //   // setCalcRooms(rooms);
-  //   // setTotalRooms(total);
-  //   return ` `;
-  // }
-  const handleRooms = async (id) => {
-    // console.log(id);
-    // try {
-    //   const response = await axios.post(
-    //     `http://localhost:3060/api/propertydetails/addrooms/${id}`
-    //   );
-    //   console.log(response.data);
-    // } catch (err) {
-    //   console.log(err);
-    // }
 
+  const handleRooms = async (id) => {
     props.goToPrevious();
     localStorage.removeItem("roomDetails");
     localStorage.removeItem("roomId");
   };
+  
   console.log(resort, "reducer data resort");
+  
   return (
     <div>
       <h2>Total Rooms Added {`${calcRooms} out of ${totalRooms}`}</h2>
-
+      <Container fluid>
       <form>
         <div>
           {resort.resort.roomTypes.length ? (
             <div>
               {resort.resort.roomTypes.map((ele, i) => {
                 return (
-                  <div key={i} style={{ border: "1px solid black" }}>
-                    <span>Room Type: {ele?.roomType}</span>
-                    <br />
-                    <span>Number Of Rooms: {ele?.NumberOfRooms}</span>
-                    <br />
-                    <span>Description : {ele?.roomDescription}</span>
-                    <br />
-                  </div>
+                  <Card
+                      className=" p-3 col-md-4 m-2"
+                      border="primary"
+                    >
+                      <div key={i}>
+                        <div className='m-1'>Room Type: {ele[0]?.roomType}</div>
+                        <div className='m-1'>Number Of Rooms: {ele[0]?.NumberOfRooms}</div>
+                        <div className='m-1'>Description : {ele[0]?.roomDescription}</div>
+                      </div>
+                    </Card>
                 );
               })}
             </div>
@@ -79,6 +64,7 @@ export default function Rooms(props) {
           )}
         </div>
         <Button
+          className='m-2'
           disabled={calcRooms === totalRooms ? true : false}
           onClick={() => {
             handleRooms(localStorage.getItem("_id"));
@@ -87,6 +73,7 @@ export default function Rooms(props) {
           ADD +
         </Button>
       </form>
+      </Container>
     </div>
   );
 }

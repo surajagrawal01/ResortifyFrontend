@@ -4,11 +4,11 @@ import { Formik, Field, Form, ErrorMessage } from "formik"
 import { Link } from "react-router-dom"
 import * as Yup from "yup"
 import { Container, Row, Col, Image, Card } from 'react-bootstrap';
-import logo from "../../Images/logo.png"
 import { useNavigate, useLocation } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { setLoginTrue } from "../../actions/isLoginActions"
 import { startSetUser } from "../../actions/userActions"
+import img from "../../Images/bg-login2.jpg"
 
 export default function LoginPage() {
     const [serverErrors, setServerErrors] = useState({})
@@ -50,13 +50,19 @@ export default function LoginPage() {
             }}
         >
             <>
-                <Container fluid>
+                <Container fluid style={{
+                        "backgroundImage": `url(${img})`,
+                        "backgroundSize": "cover",
+                        "backgroundPosition": "center",
+                        "backgroundRepeat": "no-repeat",
+                        "height": '100vh'
+                    }}>
                     <Row>
-                        <Col xs={12} md={6}>
-                            <Image src={logo} fluid style={{ height: '100vh', objectFit: 'cover' }} />
-                        </Col>
+                    <Col xs={0} md={6}>
+                            <Image  fluid style={{ height: '100vh', objectFit: 'cover' }} />
+                    </Col>
                         <Col xs={12} md={6} className='m-auto'>
-                            <Card style={{ width: '30rem' }} className='m-auto p-3' border="primary">
+                            <Card style={{ width: '30rem' }} className='m-auto p-3'>
                                 <Card.Body>
 
                                     <Card.Title> LogIn </Card.Title> <hr />

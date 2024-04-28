@@ -63,16 +63,16 @@ export default function ModalDashboard(props) {
                             className="form-control" />
                         <label className='form-label'>Actions</label>
                         <div className='form-control'>
-                            <button className='btn btn-primary mx-1' onClick={() => {
+                            <button className='btn btn-primary mx-1' disabled={booking?.status === 'approved'} onClick={() => {
                                 handleStatus(booking._id, 'approved')
                             }}>Approve</button>
-                            <button className='btn btn-danger mx-1' onClick={() => {
+                            <button className='btn btn-danger mx-1' disabled={booking?.status === 'approved' || booking?.status ==='notApproved' } onClick={() => {
                                 handleStatus(booking._id, 'notApproved')
                             }}>Reject</button>
-                            <button className='btn btn-success mx-1' onClick={() => {
+                            <button className='btn btn-success mx-1' disabled={booking?.isCheckedIn === 'true'} onClick={() => {
                                 handleCheckInOut(booking._id, 'isCheckedIn')
                             }}>CheckIn</button>
-                            <button className='btn btn-info mx-1' onClick={() => {
+                            <button className='btn btn-info mx-1' disabled={booking?.isCheckedOut === 'true'} onClick={() => {
                                 handleCheckInOut(booking._id, 'isCheckedOut')
                             }}>CheckOut</button>
                         </div>

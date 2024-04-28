@@ -32,7 +32,7 @@ export default function AdminDashboard() {
         );
         const generalModel = await axios.get(
           "http://localhost:3060/api/generalmodel",
-          { headers: { Authorization: localStorage.getItem("adminToken") } }
+          { headers: { Authorization: localStorage.getItem("token") } }
         );
         console.log(response.data);
         setGeneralDetails(generalModel.data);
@@ -236,8 +236,7 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>Admin Dashboard</h1>
-      <Row>
+      <Row className="m-4">
         <Col md={6}>
           <Card
             style={{ width: "30rem" }}
@@ -291,6 +290,7 @@ export default function AdminDashboard() {
         </Col>
       </Row>
 
+      <hr />
       <DataTable pagination columns={columns} data={ownerDetails} />
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Resort Details</ModalHeader>
@@ -319,17 +319,16 @@ export default function AdminDashboard() {
         <ModalBody>
           {Object.keys(documents).length
             ? documents.financeAndLegal.typeOfDocument.map((ele) => {
-                const height = `(${
-                  100 / documents.financeAndLegal.typeOfDocument.length
+              const height = `(${100 / documents.financeAndLegal.typeOfDocument.length
                 })%`;
-                return (
-                  <img
-                    src={`http://localhost:3060/images/${ele}`}
-                    style={{ width: "100%", height: { height } }}
-                    alt="documents"
-                  />
-                );
-              })
+              return (
+                <img
+                  src={`http://localhost:3060/images/${ele}`}
+                  style={{ width: "100%", height: { height } }}
+                  alt="documents"
+                />
+              );
+            })
             : ""}
         </ModalBody>
         <ModalFooter>

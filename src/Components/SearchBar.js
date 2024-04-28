@@ -5,11 +5,12 @@ import { useNavigate } from 'react-router-dom'
 import { addBooking } from '../actions/bookingAction';
 import { useDispatch, useSelector } from "react-redux"
 import { clearResortsData } from '../actions/reosrtsDataAction';
+import img from "../Images/bg-search1.jpg"
 export default function SearchBar() {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -20,7 +21,7 @@ export default function SearchBar() {
     return (
         <>
             <Formik
-                initialValues={ searchInfo 
+                initialValues={searchInfo
                     ? {
                         location: searchInfo?.location,
                         checkIn: searchInfo?.checkIn,
@@ -29,7 +30,6 @@ export default function SearchBar() {
                         children: searchInfo?.children
                     } :
                     { location: '', checkIn: '', checkOut: '', adult: '', children: '' }}
-                // { location: '', checkIn: '', checkOut: '', adult: '', children: '', bookingCategory: '' }}
                 validationSchema={Yup.object({
                     location: Yup.string()
                         .required('Required'),
@@ -45,8 +45,6 @@ export default function SearchBar() {
                     children: Yup.number()
                         .min(0, 'Should not be less than zero')
                         .required('Required'),
-                    // bookingCategory: Yup.string()
-                    //     .required('Required')
                 })}
                 onSubmit={async (values) => {
                     try {
@@ -61,10 +59,16 @@ export default function SearchBar() {
                 }}
             >
                 {({ values, setFieldValue }) => (
-                    <Container fluid className='search-background d-flex align-items-center dynamic-height' style={{ "height": "15rem" }}>
+                    <Container fluid className='search-background d-flex align-items-center dynamic-height' style={{
+                        "height": "20rem",
+                        "backgroundImage": `url(${img})`,
+                        "backgroundSize": "cover",
+                        "backgroundPosition": "center",
+                        "backgroundRepeat": "no-repeat"
+                    }}>
                         <Row className="justify-content-center w-100">
                             <Col xs={12} md={8}>
-                                <Card className='p-3 m-4' border="primary" style={{ minHeight: '8rem', "borderRadius": "30px" }}>
+                                <Card className='p-3 m-4' style={{ minHeight: '12rem', "borderRadius": "30px" }}>
                                     <Card.Body className='row'>
                                         <Form className='row'>
                                             <div className='col-md-2'>
@@ -77,7 +81,7 @@ export default function SearchBar() {
                                             </div>
                                             <div className='col-md-3'>
                                                 <label className='form-label' htmlFor='checkIn'>CheckIn</label>
-                                                <Field className="form-control" name="checkIn" id="checkIn" type="date" min={todayDate}/>
+                                                <Field className="form-control" name="checkIn" id="checkIn" type="date" min={todayDate} />
                                                 <ErrorMessage className='text-danger' component="div" name='checkIn' />
                                             </div>
                                             <div className='col-md-3'>
@@ -95,17 +99,7 @@ export default function SearchBar() {
                                                 <Field className="form-control" name="children" id="children" type="number" min={0} />
                                                 <ErrorMessage className='text-danger' component="div" name='children' />
                                             </div>
-                                            {/* <div className='col-md-2'>
-                                                <label htmlFor="bookingCategory" className='form-label'>Select Trip Type:</label>
-                                                <Field as="select" name="bookingCategory" className="form-select">
-                                                    <option value="">Select</option>
-                                                    <option value="Day-Out">Day Out</option>
-                                                    <option value="Night-Out">Night Out</option>
-                                                    <option value="Whole-Day">Full day</option>
-                                                </Field>
-                                                <ErrorMessage name="bookingCategory" component="div" className="text-danger" />
-                                            </div> */}
-                                            <button type='submit' className="btn btn-secondary mt-4" style={{ "width": "100%" }}>Search</button>
+                                            <button type='submit' className="btn btn-secondary mt-4" style={{ "width": "100%", background: "#7758A6" }}>Search</button>
                                         </Form>
                                     </Card.Body>
                                 </Card>
@@ -114,7 +108,6 @@ export default function SearchBar() {
                     </Container>
                 )}
             </Formik>
-
         </>
     )
 }

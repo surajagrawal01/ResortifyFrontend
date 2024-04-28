@@ -140,9 +140,9 @@ export default function FinanceAndLegal() {
   };
   console.log(resort);
   return (
-    <div>
-      <h2>Finance And Legal</h2>
-      <div className="col-md-4">
+    <div className="m-3">
+      <h2 className="text-decoration-underline">Finance And Legal</h2>
+      <div className="col-md-4 my-2">
         <h4>Type Of OwnerShip : </h4>
         <select
           value={ownerShip}
@@ -162,117 +162,135 @@ export default function FinanceAndLegal() {
       ) : (
         ""
       )}
-      <h4>Upload Documents</h4>
-      <p>property documents,IdentityProofs</p>
+      <h4 className="my-2">Upload Documents</h4>
+      <p>Like : Property documents,IdentityProofs</p>
       <form onSubmit={handlePhotos}>
         <Form.Group
           controlId="formFileMultiple"
           className="mb-3"
           name="documents"
         >
-          <Form.Control
-            type="file"
-            name="files"
-            onChange={(e) => {
-              handleDocs(e.target.files);
-            }}
-            multiple
-          />
+          <div className="col-md-4">
+            <Form.Control
+              type="file"
+              name="files"
+              onChange={(e) => {
+                handleDocs(e.target.files);
+              }}
+              multiple
+            />
+          </div>
         </Form.Group>
         {Object.keys(error).length !== 0 ? (
           <p style={{ color: "red" }}>{error}</p>
         ) : (
           ""
         )}
-        <button className="btn btn-success" type="submit">
-          upload
+        <button className="btn btn-success offset-9 offset-md-2 col-md-2" type="submit">
+          Upload
         </button>
       </form>
 
       {upload && (
         <div>
-          <h4>Banking Details</h4>
+          <h4 className="text-decoration-underline">Banking Details</h4>
           <form>
             <div className="form-group">
-              <input
-                type="text"
-                name="bankingAccountNumber"
-                value={bankingDetails.bankingAccountNumber}
-                onChange={handleChange}
-                className="form-contol col-6"
-                placeholder="bank account number"
-              />
-              {Object.keys(errors).length > 0 ? (
-                <p style={{ color: "red" }}>{errors.bankingAccountNumber}</p>
-              ) : (
-                ""
-              )}
-              <input
-                type="text"
-                name="reEnterBankAccount"
-                value={bankingDetails.reEnterBankAccount}
-                onChange={handleChange}
-                className="form-contol col-6"
-                placeholder="Re-enter bank account number"
-              />
-              {Object.keys(errors).length > 0 ? (
-                <p style={{ color: "red" }}>{errors.reEnterBankAccount}</p>
-              ) : (
-                ""
-              )}
-              <input
-                type="text"
-                name="IFSCCode"
-                value={bankingDetails.IFSCCode}
-                onChange={handleChange}
-                placeholder="IFSC CODE"
-                className="form-control"
-              />
-              {Object.keys(errors).length > 0 ? (
-                <p style={{ color: "red" }}>{errors.IFSCCode}</p>
-              ) : (
-                ""
-              )}
-              <input
-                type="text"
-                name="gstIN"
-                value={bankingDetails.gstIN}
-                onChange={handleChange}
-                className="form-contol col-6"
-                placeholder="GSTIN number"
-              />
-              {Object.keys(errors).length > 0 ? (
-                <p style={{ color: "red" }}>{errors.gstIN}</p>
-              ) : (
-                ""
-              )}
-              <input
-                type="text"
-                name="panNo"
-                value={bankingDetails.panNo}
-                onChange={handleChange}
-                className="form-contol col-6"
-                placeholder="PAN Number"
-              />
-              {Object.keys(errors).length > 0 ? (
-                <p style={{ color: "red" }}>{errors.panNo}</p>
-              ) : (
-                ""
-              )}
+              <div className="row">
+                <div className="col-md-5 my-1">
+                  <input
+                    type="text"
+                    name="bankingAccountNumber"
+                    value={bankingDetails.bankingAccountNumber}
+                    onChange={handleChange}
+                    className="form-control"
+                    placeholder="Bank Account Number"
+                  />
+                  {Object.keys(errors).length > 0 ? (
+                    <p style={{ color: "red" }}>{errors.bankingAccountNumber}</p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="col-md-5 my-1">
+                  <input
+                    type="text"
+                    name="reEnterBankAccount"
+                    value={bankingDetails.reEnterBankAccount}
+                    onChange={handleChange}
+                    className="form-control"
+                    placeholder="Re-enter Bank Account Number"
+                  />
+
+                  {Object.keys(errors).length > 0 ? (
+                    <p style={{ color: "red" }}>{errors.reEnterBankAccount}</p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-5 my-1">
+                  <input
+                    type="text"
+                    name="IFSCCode"
+                    value={bankingDetails.IFSCCode}
+                    onChange={handleChange}
+                    placeholder="IFSC Code"
+                    className="form-control"
+                  />
+                  {Object.keys(errors).length > 0 ? (
+                    <p style={{ color: "red" }}>{errors.IFSCCode}</p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="col-md-5 my-1">
+                  <input
+                    type="text"
+                    name="gstIN"
+                    value={bankingDetails.gstIN}
+                    onChange={handleChange}
+                    className="form-control"
+                    placeholder="GSTIN Number"
+                  />
+                  {Object.keys(errors).length > 0 ? (
+                    <p style={{ color: "red" }}>{errors.gstIN}</p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+              <div className="col-md-5 my-1">
+                <input
+                  type="text"
+                  name="panNo"
+                  value={bankingDetails.panNo}
+                  onChange={handleChange}
+                  className="form-control"
+                  placeholder="PAN Number"
+                />
+                {Object.keys(errors).length > 0 ? (
+                  <p style={{ color: "red" }}>{errors.panNo}</p>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           </form>
           <div>
             <input
+              className="form-check-input"
               type="checkbox"
               value={verify}
               onChange={(e) => {
                 setVerify(e.target.checked);
               }}
             />
-            <span>Verification by the third </span>
+            <span className="mx-2">Verification by the third </span>
           </div>
           <button
-            className="btn btn-primary"
+            className="btn btn-primary offset-8 col-md-2"
             disabled={verify === false}
             onClick={handleSubmit}
             type="submit"

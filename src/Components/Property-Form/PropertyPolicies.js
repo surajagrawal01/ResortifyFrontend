@@ -1,6 +1,6 @@
 import Form from "react-bootstrap/Form";
 import { useContext, useEffect, useState } from "react";
-
+import { Row, Col, Button, Container, Card } from "react-bootstrap";
 import PropertyContext from "../../context/PropertyContext";
 import axios from "axios";
 
@@ -28,17 +28,17 @@ export default function Policies(props) {
         setCancellation(
           (localStorage.getItem("cancellation") &&
             JSON.parse(localStorage.getItem("cancellation"))) ||
-            response.data.cancellationPolicies
+          response.data.cancellationPolicies
         );
         setProperty(
           (localStorage.getItem("property") &&
             JSON.parse(localStorage.getItem("property"))) ||
-            response.data.propertyRules
+          response.data.propertyRules
         );
         setIdentity(
           (localStorage.getItem("identity") &&
             JSON.parse(localStorage.getItem("identity"))) ||
-            response.data.IdentityProofs
+          response.data.IdentityProofs
         );
       } catch (err) {
         console.log(err);
@@ -168,145 +168,157 @@ export default function Policies(props) {
   console.log("resort", resort);
   console.log(checkIn, checkOut);
   return (
-    <div>
-      <h3>Booking Policies</h3>
+    <Container fluid>
+      <Card
+        className="m-auto p-3"
+      >
+        <div>
+          <h3 className="text-decoration-underline">Booking Policies</h3>
 
-      <Form onSubmit={handleSubmit}>
-        {policies.map(
-          (
-            policy,
-            index //===================mapping over policies
-          ) => (
-            <div key={index} className="mb-3">
-              <Form.Check
-                type="checkbox"
-                id={index} //====================================in each child prop should have unique
-                label={policy}
-                checked={handleChecked[index] || false} //==================// sets to true or false by default it should be false
-                onChange={() => handleSelect(index)} //====================// sets to true or false
-              />
-              <Form.Group controlId={`checkIn-${index}`}>
-                <Form.Label>Check In</Form.Label>
-                <Form.Control
-                  type="time"
-                  disabled={select !== index}
-                  value={checkIn[index] || ""}
-                  onChange={(e) => {
-                    const newCheckIn = { ...checkIn }; //==================spreads the checkIn to add the value typed
-                    newCheckIn[index] = e.target.value; // =================takes the entered value
-                    setCheckIn(newCheckIn); //==============================sets the new value
-                  }}
-                />
-              </Form.Group>
-              <Form.Group controlId={`checkOut-${index}`}>
-                <Form.Label>Check Out</Form.Label>
-                <Form.Control
-                  type="time"
-                  disabled={select !== index}
-                  value={checkOut[index] || ""}
-                  onChange={(e) => {
-                    const newCheckOut = { ...checkOut };
-                    newCheckOut[index] = e.target.value;
-                    setCheckOut(newCheckOut);
-                  }}
-                />
-              </Form.Group>
-            </div>
-          )
-        )}
-        {Object.keys(errors).length ? (
-          <p style={{ color: "red" }}> {errors.checkInOut}</p>
-        ) : (
-          ""
-        )}
-        <h3>Cancellation Policy</h3>
-
-        {
-          <div>
-            {cancellation.map((ele) => {
-              return (
-                <div className="form-group" key={ele.id} controlId={ele.id}>
-                  <input
-                    type="checkBox"
-                    className="form-check-input"
-                    value={ele.field}
-                    checked={ele.checked}
-                    onChange={() => {
-                      handleCancellation(ele.id);
-                    }}
+          <Form onSubmit={handleSubmit}>
+            {policies.map(
+              (
+                policy,
+                index //===================mapping over policies
+              ) => (
+                <div key={index} className="mb-3">
+                  <Form.Check
+                    type="checkbox"
+                    id={index} //====================================in each child prop should have unique
+                    label={policy}
+                    checked={handleChecked[index] || false} //==================// sets to true or false by default it should be false
+                    onChange={() => handleSelect(index)} //====================// sets to true or false
                   />
-                  <label className="checkbox-label">{ele.field}</label>
+                  <Form.Group controlId={`checkIn-${index}`}>
+                    <Form.Label>Check In</Form.Label>
+                    <div className="col-md-4">
+                      <Form.Control
+                        type="time"
+                        disabled={select !== index}
+                        value={checkIn[index] || ""}
+                        onChange={(e) => {
+                          const newCheckIn = { ...checkIn }; //==================spreads the checkIn to add the value typed
+                          newCheckIn[index] = e.target.value; // =================takes the entered value
+                          setCheckIn(newCheckIn); //==============================sets the new value
+                        }}
+                      />
+                    </div>
+                  </Form.Group>
+                  <Form.Group controlId={`checkOut-${index}`}>
+                    <Form.Label>Check Out</Form.Label>
+                    <div className="col-md-4">
+                      <Form.Control
+                        type="time"
+                        disabled={select !== index}
+                        value={checkOut[index] || ""}
+                        onChange={(e) => {
+                          const newCheckOut = { ...checkOut };
+                          newCheckOut[index] = e.target.value;
+                          setCheckOut(newCheckOut);
+                        }}
+                      />
+                    </div>
+                  </Form.Group>
                 </div>
-              );
-            })}
+              )
+            )}
             {Object.keys(errors).length ? (
-              <p style={{ color: "red" }}>{errors.cancellationPolicies}</p>
+              <p style={{ color: "red" }}> {errors.checkInOut}</p>
             ) : (
               ""
             )}
-            <h3>Property Rules</h3>
-            <h4>Guest Policies Rules</h4>
-            {
-              <div>
-                {property.map((ele) => {
+            <Row>
+              <Col xs={12} md={4}>
+                <h3 className="text-decoration-underline">Cancellation Policy</h3>
+                {cancellation.map((ele) => {
                   return (
-                    <div className="form-group" key={ele.id}>
+                    <div className="form-group" key={ele.id} controlId={ele.id}>
                       <input
                         type="checkBox"
-                        className="form-check-input"
-                        checked={ele.checked}
+                        className="form-check-input mx-1"
                         value={ele.field}
+                        checked={ele.checked}
                         onChange={() => {
-                          handleProperty(ele.id);
+                          handleCancellation(ele.id);
                         }}
                       />
-                      <label check className="checkbox-label">
-                        {ele.field}
-                      </label>
+                      <label className="checkbox-label">{ele.field}</label>
                     </div>
                   );
                 })}
-              </div>
-            }
-          </div>
-        }
-        {Object.keys(errors).length ? (
-          <p style={{ color: "red" }}>{errors.propertyPolices}</p>
-        ) : (
-          ""
-        )}
-        <h4>Acceptable Identity Proof</h4>
-        {
-          <div>
-            {identity.map((ele) => {
-              return (
-                <div className="form-group" key={ele.id}>
-                  <input
-                    type="checkBox"
-                    value={ele.field}
-                    checked={ele.checked}
-                    onChange={() => {
-                      handleIds(ele.id);
-                    }}
-                    className="form-check-input"
-                  />
-                  <label check className="checkbox-label">
-                    {ele.field}
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-        }
-        {Object.keys(errors).length ? (
-          <p style={{ color: "red" }}>{errors.identity}</p>
-        ) : (
-          ""
-        )}
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </Form>
-    </div>
+                {Object.keys(errors).length ? (
+                  <p style={{ color: "red" }}>{errors.cancellationPolicies}</p>
+                ) : (
+                  ""
+                )}
+              </Col>
+              <Col xs={12} md={4}>
+                <h4 className="text-decoration-underline">Guest Policies Rules</h4>
+                {
+                  <div>
+                    {property.map((ele) => {
+                      return (
+                        <div className="form-group" key={ele.id}>
+                          <input
+                            type="checkBox"
+                            className="form-check-input mx-1"
+                            checked={ele.checked}
+                            value={ele.field}
+                            onChange={() => {
+                              handleProperty(ele.id);
+                            }}
+                          />
+                          <label check className="checkbox-label">
+                            {ele.field}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                }
+                {Object.keys(errors).length ? (
+                  <p style={{ color: "red" }}>{errors.propertyPolices}</p>
+                ) : (
+                  ""
+                )}
+              </Col>
+              <Col xs={12} md={4}>
+                <h4 className="text-decoration-underline">Acceptable Identity Proof</h4>
+                {
+                  <div>
+                    {identity.map((ele) => {
+                      return (
+                        <div className="form-group" key={ele.id}>
+                          <input
+                            type="checkBox"
+                            value={ele.field}
+                            checked={ele.checked}
+                            onChange={() => {
+                              handleIds(ele.id);
+                            }}
+                            className="form-check-input mx-1"
+                          />
+                          <label check className="checkbox-label">
+                            {ele.field}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                }
+                {Object.keys(errors).length ? (
+                  <p style={{ color: "red" }}>{errors.identity}</p>
+                ) : (
+                  ""
+                )}
+              </Col>
+            </Row>
+            <button type="submit" className="btn btn-primary offset-9 col-md-2">
+              Submit
+            </button>
+          </Form>
+        </div>
+      </Card>
+    </Container>
   );
 }

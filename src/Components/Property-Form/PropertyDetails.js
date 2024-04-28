@@ -248,11 +248,10 @@ export default function PropertyDetails(props) {
             <Card
               style={{ width: "80rem" }}
               className="m-auto p-3"
-              border="primary"
             >
               <form onSubmit={formik.handleSubmit} className="form-group">
-                <Row>
-                  <Col xs={12} md={4} className="m-auto">
+                <Row className="m-1">
+                  <Col xs={6} md={4} className="m-auto">
                     <label className="form-label">Property Name:</label>
                     <input
                       type="text"
@@ -262,13 +261,13 @@ export default function PropertyDetails(props) {
                     />
 
                     {formik.touched.propertyName &&
-                    formik.errors.propertyName ? (
+                      formik.errors.propertyName ? (
                       <div style={{ color: "red" }}>
                         {formik.errors.propertyName}
                       </div>
                     ) : null}
                   </Col>
-                  <Col xs={12} md={4} className="m-auto">
+                  <Col xs={6} md={4} className="m-auto">
                     <label className="form-label">Property Built Date:</label>
                     <input
                       type="date"
@@ -277,15 +276,15 @@ export default function PropertyDetails(props) {
                       {...formik.getFieldProps("propertyBuiltDate")}
                     />
                     {formik.touched.propertyBuiltDate &&
-                    formik.errors.propertyBuiltDate ? (
+                      formik.errors.propertyBuiltDate ? (
                       <div style={{ color: "red" }}>
                         {formik.errors.propertyBuiltDate}
                       </div>
                     ) : null}
                   </Col>
                 </Row>
-                <Row>
-                  <Col xs={12} md={4} className="m-auto">
+                <Row className="m-1">
+                  <Col xs={6} md={4} className="m-auto">
                     <label className="form-label">Email:</label>
                     <input
                       type="email"
@@ -299,7 +298,7 @@ export default function PropertyDetails(props) {
                       </div>
                     ) : null}
                   </Col>
-                  <Col md={4} xs={12} className="m-auto">
+                  <Col md={4} xs={6} className="m-auto">
                     <label className="form-label">Total Rooms Of Resort:</label>
                     <input
                       type="number"
@@ -313,42 +312,42 @@ export default function PropertyDetails(props) {
                       </div>
                     ) : null}
                   </Col>
-                  <Row>
-                    <Col md={5}>
-                      <label className="form-label">Property Description</label>
-                      <textarea
-                        type="text"
-                        className="form-control"
-                        placeholder="property description "
-                        {...formik.getFieldProps("propertyDescription")}
-                      ></textarea>
-                      {formik.touched.propertyDescription &&
-                      formik.errors.propertyDescription ? (
-                        <div style={{ color: "red" }}>
-                          {formik.errors.propertyDescription}
-                        </div>
-                      ) : null}
-                    </Col>
-                    <Col md={4}>
-                      <label className="form-label">Add Mininmum Price</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Base Price"
-                        {...formik.getFieldProps("basePrice")}
-                      />
-                      {formik.touched.basePrice && formik.errors.basePrice ? (
-                        <div style={{ color: "red" }}>
-                          {formik.errors.basePrice}
-                        </div>
-                      ) : null}
-                    </Col>
-                  </Row>
                 </Row>
-                <h2>Location</h2>
+                <Row className="m-1">
+                  <Col xs={6} md={4} className="m-auto" >
+                    <label className="form-label">Property Description</label>
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      placeholder="property description "
+                      {...formik.getFieldProps("propertyDescription")}
+                    ></textarea>
+                    {formik.touched.propertyDescription &&
+                      formik.errors.propertyDescription ? (
+                      <div style={{ color: "red" }}>
+                        {formik.errors.propertyDescription}
+                      </div>
+                    ) : null}
+                  </Col>
+                  <Col xs={6} md={4} className="m-auto">
+                    <label className="form-label">Add Mininmum Price</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Base Price"
+                      {...formik.getFieldProps("basePrice")}
+                    />
+                    {formik.touched.basePrice && formik.errors.basePrice ? (
+                      <div style={{ color: "red" }}>
+                        {formik.errors.basePrice}
+                      </div>
+                    ) : null}
+                  </Col>
+                </Row> <br />
+                <h2 className="offset-md-2 text-decoration-underline">Location</h2>
                 <Row>
-                  <Col xs={12} md={6}>
-                    <Row>
+                  <Col xs={6} md={6}>
+                    <Row className="m-1">
                       <Col md={4} className="m-auto">
                         <label className="form-label">House Number</label>
                         <input
@@ -358,13 +357,13 @@ export default function PropertyDetails(props) {
                           {...formik.getFieldProps("houseNumber")}
                         />
                         {formik.touched.houseNumber &&
-                        formik.errors.houseNumber ? (
+                          formik.errors.houseNumber ? (
                           <div style={{ color: "red" }}>
                             {formik.errors.houseNumber}
                           </div>
                         ) : null}
                       </Col>
-                      <Col md={4} xs={12} className="m-auto">
+                      <Col md={4} xs={6} className="m-auto">
                         <label className="form-label">Locality</label>
                         <input
                           type="text"
@@ -387,8 +386,8 @@ export default function PropertyDetails(props) {
                       </Col>
                     </Row>
 
-                    <Row>
-                      <Col md={4} xs={12} className="m-auto">
+                    <Row className="m-1">
+                      <Col md={4} xs={6} className="m-auto">
                         <label className="form-label">Area</label>
                         <input
                           type="text"
@@ -407,7 +406,7 @@ export default function PropertyDetails(props) {
                           ""
                         )}
                       </Col>
-                      <Col md={4} xs={12} className="m-auto">
+                      <Col md={4} xs={6} className="m-auto">
                         <label className="form-label">PinCode</label>
                         <input
                           type="text"
@@ -427,8 +426,8 @@ export default function PropertyDetails(props) {
                         )}
                       </Col>
                     </Row>
-                    <Row>
-                      <Col md={4} xs={12} className="m-auto">
+                    <Row className="m-1">
+                      <Col md={4} xs={6} className="m-auto">
                         <label>City</label>
                         <input
                           type="text"
@@ -447,7 +446,7 @@ export default function PropertyDetails(props) {
                           ""
                         )}
                       </Col>
-                      <Col md={4} xs={12} className="m-auto">
+                      <Col md={4} xs={6} className="m-auto">
                         <label className="form-label">State</label>
                         <input
                           type="text"
@@ -467,8 +466,8 @@ export default function PropertyDetails(props) {
                         )}
                       </Col>
                     </Row>
-                    <Row>
-                      <Col md={10} xs={12} className="m-auto">
+                    <Row className="m-1">
+                      <Col md={10} xs={6} className="m-auto">
                         <label className="form-label">Country</label>
                         <input
                           type="text"
@@ -489,9 +488,9 @@ export default function PropertyDetails(props) {
                       </Col>
                     </Row>
                     <Row>
-                      <Col md={10} xs={12} className="m-auto">
+                      <Col md={10} xs={6} className="m-auto">
                         <Button
-                          className="btn col-12 my-1"
+                          className="btn col-12 my-2"
                           onClick={() => {
                             handleSearch(
                               formik.getFieldProps("houseNumber").value,
@@ -509,8 +508,7 @@ export default function PropertyDetails(props) {
                       </Col>
                     </Row>
                   </Col>
-
-                  <Col xs={12} md={6}>
+                  <Col xs={6} md={6}>
                     {map && (
                       <Col xs={12}>
                         <LocationMap
@@ -523,18 +521,20 @@ export default function PropertyDetails(props) {
                     )}
                   </Col>
                 </Row>
+                <hr />
                 {map && (
                   <>
-                    <h2>Property Amenities</h2>
+                    <h2 className="offset-1">Property Amenities</h2>
                     <Row>
                       {propertyAmenities.map((ele) => {
                         return (
-                          <div key={ele._id}>
-                            <label>
+                          <div key={ele._id} className="offset-1 col-4">
+                            <label className="form-check label">
                               <Field
                                 type="checkbox"
                                 name="checked"
                                 value={ele._id}
+                                className="form-check-input"
                               />
                               {ele.name}
                             </label>
@@ -546,16 +546,17 @@ export default function PropertyDetails(props) {
                           {formik.errors.checked}
                         </div>
                       ) : null}
-                    </Row>
-                    <h2>Packages(optional)</h2>
+                    </Row> <br />
+                    <h2 className="offset-1">Packages(optional)</h2> <br />
                     {packages.map((ele, i) => {
                       return (
-                        <div key={i}>
+                        <div key={i} className="offset-1">
                           <Row>
                             <Col>
-                              <label>Enter Package Name</label>
+                              <label className="form-label">Enter Package Name</label>
                               <input
                                 type="text"
+                                className="form-control"
                                 placeholder="Enter package"
                                 value={ele.package}
                                 onChange={(e) => {
@@ -565,11 +566,12 @@ export default function PropertyDetails(props) {
                               />
                             </Col>
                             <Col>
-                              <label>Enter Amount</label>
+                              <label className="form-label">Enter Amount</label>
                               <input
                                 type="text"
                                 value={ele.price}
                                 name="price"
+                                className="form-control"
                                 onChange={(e) => {
                                   handleChange(i, e);
                                 }}
@@ -578,7 +580,7 @@ export default function PropertyDetails(props) {
                             <Col>
                               <Button
                                 type="button"
-                                className="btn btn-danger m-2"
+                                className="btn btn-danger my-4"
                                 onClick={(e) => {
                                   handleRemove(i);
                                 }}
@@ -591,7 +593,7 @@ export default function PropertyDetails(props) {
                       );
                     })}
                     <Button
-                      className="btn btn-success m-2"
+                      className="btn btn-success offset-1"
                       type="button"
                       onClick={handleAddPackage}
                     >
@@ -605,7 +607,7 @@ export default function PropertyDetails(props) {
                       </div>
                     ) : null}
 
-                    <Button type="submit" disabled={submit === true}>
+                    <Button type="submit" disabled={submit === true} className="offset-9 col-2" >
                       Submit
                     </Button>
                   </>
