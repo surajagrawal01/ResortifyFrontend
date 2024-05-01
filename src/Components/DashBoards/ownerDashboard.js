@@ -349,6 +349,7 @@ export default function OwnerDashBoard() {
           }
         />
       </div>
+      <hr />
       <div style={{ display: "flex" }}>
         <div style={{ flex: "1", height: "25%" }}>
           <AgChartsReact options={chartOptions} />

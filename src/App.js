@@ -173,7 +173,7 @@ export default function App() {
               <Route path="/add-rooms" element={<Rooms />} />
               <Route path="/upload-photos" element={<UploadPhotos />} />
               <Route path="/policies" element={<Policies />} />
-              <Route path="/finance-and-legal" element={<FinanceAndLegal />} /> */}
+              <Route path="/finance-and-legal" element={<FinanceAndLegal />} />
               <Route path="/reviews/:id/bookings/:bookingId"
                 element={
                   <PrivateRoute permittedRoles={['user']}>
