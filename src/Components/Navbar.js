@@ -4,16 +4,16 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
-} from "reactstrap"
-import { useSelector, useDispatch } from 'react-redux';
-import { FaHome, FaBuilding,  FaUserCircle } from 'react-icons/fa';
+  DropdownItem,
+} from "reactstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { FaHome, FaBuilding, FaUserCircle } from "react-icons/fa";
 import { IoMdChatboxes } from "react-icons/io";
-import logo from "../Images/logo.png"
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { clearUserData } from '../actions/userActions';
-import { setLoginFalse } from '../actions/isLoginActions';
+import logo from "../Images/logo.png";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { clearUserData } from "../actions/userActions";
+import { setLoginFalse } from "../actions/isLoginActions";
 
 export default function NavigationBar() {
   const navigate = useNavigate();
@@ -28,37 +28,69 @@ export default function NavigationBar() {
   });
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    dispatch(setLoginFalse())
-    dispatch(clearUserData())
-    navigate("/")
-  }
-  
-   const handleBookings = () => {
-    navigate("/my-bookings");
+    localStorage.removeItem("token");
+    dispatch(setLoginFalse());
+    dispatch(clearUserData());
+    navigate("/");
   };
 
   const conditionalLinks = (role) => {
     switch (role) {
-      case 'admin': {
-        return (<DropdownItem><Link to='/owner-dashobard' className='link-style'> Dashboard </Link></DropdownItem>)
+      case "admin": {
+        return (
+          <DropdownItem>
+            <Link to="/owner-dashobard" className="link-style">
+              {" "}
+              Dashboard{" "}
+            </Link>
+          </DropdownItem>
+        );
       }
-      case 'user': {
+      case "user": {
         return (
           <div>
-            <DropdownItem><Link to='/personal-detail' className='link-style'> Personal Details </Link></DropdownItem>
-            <DropdownItem><Link to='/my-bookings' className='link-style'> Your Bookings </Link></DropdownItem></div>)
-      }
-      case 'owner': {
-        return (
-          <div>
-            <DropdownItem><Link to='/personal-detail' className='link-style'> Personal Details </Link></DropdownItem>
-            <DropdownItem><Link to='/owner-dashobard' className='link-style'> Dashboard </Link></DropdownItem>
+            <DropdownItem>
+              <Link to="/personal-detail" className="link-style">
+                {" "}
+                Personal Details{" "}
+              </Link>
+            </DropdownItem>
+            <DropdownItem>
+              <Link to="/my-bookings" className="link-style">
+                {" "}
+                Your Bookings{" "}
+              </Link>
+            </DropdownItem>
           </div>
-        )
+        );
+      }
+      case "owner": {
+        return (
+          <div>
+            <DropdownItem>
+              <Link to="/personal-detail" className="link-style">
+                {" "}
+                Personal Details{" "}
+              </Link>
+            </DropdownItem>
+            <DropdownItem>
+              <Link to="/owner-dashobard" className="link-style">
+                {" "}
+                Dashboard{" "}
+              </Link>
+            </DropdownItem>
+          </div>
+        );
+      }
+      default: {
+        return (
+          <div>
+            <DropdownItem>user</DropdownItem>
+          </div>
+        );
       }
     }
-  }
+  };
 
   return (
     <>
@@ -107,7 +139,12 @@ export default function NavigationBar() {
               )}
             </Nav>
             <Nav className="ms-auto">
-              <Nav.Link><Link to='/chat' className='link-style'> <IoMdChatboxes/> ChatwithUs</Link> </Nav.Link>
+              <Nav.Link>
+                <Link to="/chat" className="link-style">
+                  {" "}
+                  <IoMdChatboxes /> ChatwithUs
+                </Link>{" "}
+              </Nav.Link>
               {isLoggedIn ? (
                 <>
                   <UncontrolledDropdown nav inNavbar>
@@ -120,9 +157,14 @@ export default function NavigationBar() {
                       <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
                     </DropdownMenu>
                   </UncontrolledDropdown>
-                </> )
-                : <Nav.Link><Link to='/registration-page' className='link-style'><FaUserCircle /> Login/SignUp </Link></Nav.Link>
-              }
+                </>
+              ) : (
+                <Nav.Link>
+                  <Link to="/registration-page" className="link-style">
+                    <FaUserCircle /> Login/SignUp{" "}
+                  </Link>
+                </Nav.Link>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

@@ -59,7 +59,7 @@ export default function FinanceAndLegal() {
       "http://localhost:3060/api/documentsphotos",
       formData
     );
-    console.log(result.data);
+    
     const formdata = {
       financeAndLegal: {
         typeOfOwnership: ownerShip,

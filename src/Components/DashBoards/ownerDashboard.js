@@ -80,7 +80,7 @@ export default function OwnerDashBoard() {
         );
         console.log("bookings", response2.data.bookings);
         console.log("total bookings", response2.data.response.length);
-        setTotalBookings(response2?.data?.response?.length);
+        setTotalBookings(response2?.data?.response?.length); 
         const approvedCount = response2.data.bookings.reduce((acc, cv) => {
           return (acc += cv?.approvedCount);
         }, 0);

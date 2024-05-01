@@ -118,7 +118,7 @@ export default function RoomDetails(props) {
             "http://localhost:3060/api/roomphotos",
             formData1
           );
-          console.log(response2.data);
+          
           // set into localStorage
           localStorage.setItem("roomPhotos", JSON.stringify(response2.data));
           if (
@@ -172,7 +172,6 @@ export default function RoomDetails(props) {
                       headers: { Authorization: localStorage.getItem("token") },
                     }
                   );
-                  console.log("update", response2.data);
                   localStorage.setItem(
                     "roomDetails",
                     JSON.stringify(response2.data)
@@ -190,7 +189,7 @@ export default function RoomDetails(props) {
                       headers: { Authorization: localStorage.getItem("token") },
                     }
                   );
-                  console.log("create room type", result.data);
+               
                   const formdata = JSON.stringify(roomTypesData);
                   localStorage.setItem("roomDetails", formdata);
                   localStorage.setItem(
@@ -214,16 +213,10 @@ export default function RoomDetails(props) {
             }
           }
 
-          //for validation
-
-          // console.log({roomTypesData})
-          // const formdata = {roomTypesData:roomTypesData}
         }}
       >
         <Container fluid>
-          <Card
-            className="m-auto p-3"
-          >
+          <Card className="m-auto p-3">
             <Form>
               <Row>
                 <Col className="col-4 m-1">
@@ -237,7 +230,7 @@ export default function RoomDetails(props) {
                     <ErrorMessage name="NumberOfRooms" />
                   </span>
 
-                  {/* <ErrorMessage name="roomTypes" /> */}
+                 
                 </Col>
               </Row>
               <Row>
@@ -254,7 +247,12 @@ export default function RoomDetails(props) {
                   </span>
                 </Col>
                 <Col className="col-4 m-1">
-                  <Field name="baseRoomPrice" type="number" placeholder="price" className="form-control" />
+                  <Field
+                    name="baseRoomPrice"
+                    type="number"
+                    placeholder="price"
+                    className="form-control"
+                  />
                   <span style={{ color: "red" }}>
                     <ErrorMessage name="baseRoomPrice" />
                   </span>
@@ -271,26 +269,54 @@ export default function RoomDetails(props) {
                   <ErrorMessage name="roomDescription" />{" "}
                 </span>
               </Row>
-              <div role="group" aria-labelledby="my-radio-group" className="col-4 my-2">
+              <div
+                role="group"
+                aria-labelledby="my-radio-group"
+                className="col-4 my-2"
+              >
                 <label className="mx-2">Smoking Allowed</label>
                 <label className="form-check-label mx-1">
-                  <Field type="radio" name="smokingAllowed" value="true" className="form-check-input mx-1" />
+                  <Field
+                    type="radio"
+                    name="smokingAllowed"
+                    value="true"
+                    className="form-check-input mx-1"
+                  />
                   Yes
                 </label>
                 <label className="form-check-label mx-1">
-                  <Field type="radio" name="smokingAllowed" value="false" className="form-check-input mx-1" />
+                  <Field
+                    type="radio"
+                    name="smokingAllowed"
+                    value="false"
+                    className="form-check-input mx-1"
+                  />
                   No
                 </label>{" "}
                 <ErrorMessage name="smokingAllowed" />
               </div>
-              <div role="group" aria-labelledby="my-radio-group" className="col-4 my-2">
+              <div
+                role="group"
+                aria-labelledby="my-radio-group"
+                className="col-4 my-2"
+              >
                 <label className="mx-2">Extra Bed</label>
-                <label className="form-check-label mx-1" >
-                  <Field type="radio" name="extraBed" value="true" className="form-check-input mx-1" />
+                <label className="form-check-label mx-1">
+                  <Field
+                    type="radio"
+                    name="extraBed"
+                    value="true"
+                    className="form-check-input mx-1"
+                  />
                   Yes
                 </label>
-                <label className="form-check-label mx-1" >
-                  <Field type="radio" name="extraBed" value="false" className="form-check-input mx-1" />
+                <label className="form-check-label mx-1">
+                  <Field
+                    type="radio"
+                    name="extraBed"
+                    value="false"
+                    className="form-check-input mx-1"
+                  />
                   No
                 </label>
                 <ErrorMessage name="extraBed" />
@@ -299,7 +325,12 @@ export default function RoomDetails(props) {
               {/* backend validations are remaining and change the names of Schemas of room types and rooms */}
               <Row>
                 <Col className="col-4">
-                  <Field name="adult" type="number" placeholder="number of adult" className="form-control" />
+                  <Field
+                    name="adult"
+                    type="number"
+                    placeholder="number of adult"
+                    className="form-control"
+                  />
                   <span style={{ color: "red" }}>
                     <ErrorMessage name="adult" />
                   </span>
@@ -317,7 +348,11 @@ export default function RoomDetails(props) {
               <Row>
                 <Col className="d-flex align-items-center col-md-4">
                   <label className="form-label col-md-2">Start Date</label>
-                  <Field name="startDate" type="date" className="form-control" />
+                  <Field
+                    name="startDate"
+                    type="date"
+                    className="form-control"
+                  />
                   <span style={{ color: "red" }}>
                     {" "}
                     <ErrorMessage name="startDate" />
@@ -345,7 +380,12 @@ export default function RoomDetails(props) {
                   return (
                     <div key={ele._id} className="col-md-4">
                       <label className="form-check-label">
-                        <Field type="checkbox" name="checked" value={ele._id} className="form-check-input mx-1" />
+                        <Field
+                          type="checkbox"
+                          name="checked"
+                          value={ele._id}
+                          className="form-check-input mx-1"
+                        />
                         {ele.name}
                       </label>
                     </div>
@@ -358,57 +398,7 @@ export default function RoomDetails(props) {
               <h3 className="text-decoration-underline">Upload Room Photos</h3>
               <input
                 type="file"
-                name="file"
-                multiple
-                onChange={(e) => {
-                  handleRoomPhotos(e.target.files);
-                }}
-              />
-              <h2>Availability</h2>
-              <Row>
-                <Col>
-                  <label>Start Date</label>
-                  <Field name="startDate" type="date" />
-                  <span style={{ color: "red" }}>
-                    {" "}
-                    <ErrorMessage name="startDate" />
-                  </span>
-                </Col>
-                <Col>
-                  <label>End Date</label>
-                  <Field name="endDate" type="date" />
-                  <span style={{ color: "red" }}>
-                    <ErrorMessage name="endDate" />{" "}
-                  </span>
-                </Col>
-                {dateError.length > 0 ? (
-                  <span style={{ color: "red" }}>{dateError}</span>
-                ) : (
-                  ""
-                )}
-              </Row>
-              <h2>Room Amenities</h2>
-              {resort.amenities
-                .filter((ele) => {
-                  return ele.type === "room";
-                })
-                .map((ele) => {
-                  return (
-                    <div key={ele._id}>
-                      <label>
-                        <Field type="checkbox" name="checked" value={ele._id} />
-                        {ele.name}
-                      </label>
-                    </div>
-                  );
-                })}{" "}
-              <span style={{ color: "red" }}>
-                <ErrorMessage name="checked" />
-              </span>
-              <br />
-              <label>Upload Room Photos</label>
-              <input
-                type="file"
+                className="form-control"
                 name="file"
                 multiple
                 onChange={(e) => {
@@ -429,11 +419,13 @@ export default function RoomDetails(props) {
                 })}
               {error.length ? <p style={{ color: "red" }}>{error}</p> : ""}
               <br />
-              <Button type="submit" className="offset-8 col-md-2">Submit</Button>
+              <Button type="submit" className="offset-8 col-md-2">
+                Submit
+              </Button>
             </Form>
           </Card>
         </Container>
       </Formik>
-    </div >
+    </div>
   );
 }

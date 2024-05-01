@@ -30,7 +30,7 @@ const handleLocation =(e)=>{
     const lat = e.target._latlng.lat.toString()
     const lng = e.target._latlng.lng.toString()
     const  geoLocation={"lat":lat,"lng":lng}
-    console.log(geoLocation)
+   
     resortDispatch({type:'ADD_GEOLOCATION',payload:geoLocation})
 }
 
