@@ -49,7 +49,7 @@ export default function PropertyDetails(props) {
           const response = await axios.get(
             `https://api.geoapify.com/v1/geocode/search?text=${address}&apiKey=9e365a6555974c6e98cbba986f7a43c2`
           );
-          console.log(response.data.features[0].geometry.coordinates);
+          
           setLocation(response.data.features[0].geometry.coordinates);
         } catch (err) {
           console.log(err);
@@ -92,7 +92,6 @@ export default function PropertyDetails(props) {
   };
   const handleChange = (i, e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     const newPackages = [...packages];
     newPackages[i][name] = value;
     setPackages(newPackages);
@@ -115,7 +114,7 @@ export default function PropertyDetails(props) {
     setSubmit(false);
     return false;
   };
-  console.log(JSON.parse(localStorage.getItem("propertyDetails")));
+  
   return (
     <div>
       <h2>Property Details</h2>
@@ -224,8 +223,8 @@ export default function PropertyDetails(props) {
               {
                 headers: { Authorization: localStorage.getItem("token") },
               }
-            );
-            console.log("update", response2.data);
+            );                                                             
+            
           } else {
             const response = await axios.post(
               "http://127.0.0.1:3060/api/owners/propertydetails",
@@ -234,7 +233,7 @@ export default function PropertyDetails(props) {
                 headers: { Authorization: localStorage.getItem("token") },
               }
             );
-            console.log("create", response.data);
+           
             localStorage.setItem("_id", response.data._id);
             const result = JSON.stringify(formdata);
             localStorage.setItem("propertyDetails", result);

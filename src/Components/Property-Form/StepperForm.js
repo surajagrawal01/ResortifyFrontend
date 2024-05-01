@@ -66,7 +66,11 @@ export default function StepperForm() {
       </Stepper>
       <div>
         {steps[activeStep]}
-        <Button onClick={handleBack} disabled={activeStep === 0} className="m-4">
+        <Button
+          onClick={handleBack}
+          disabled={activeStep === 0 || roomEnable === true}
+          className="m-4"
+        >
           <GoArrowLeft /> back{" "}
         </Button>
         {activeStep === 5 ? (

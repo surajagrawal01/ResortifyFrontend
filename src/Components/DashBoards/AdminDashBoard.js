@@ -112,7 +112,7 @@ export default function AdminDashboard() {
         formdata,
         {
           headers: {
-            Authorization: localStorage.get("adminToken"),
+            Authorization: localStorage.getItem("token"),
           },
         }
       );
@@ -319,16 +319,17 @@ export default function AdminDashboard() {
         <ModalBody>
           {Object.keys(documents).length
             ? documents.financeAndLegal.typeOfDocument.map((ele) => {
-              const height = `(${100 / documents.financeAndLegal.typeOfDocument.length
+                const height = `(${
+                  100 / documents.financeAndLegal.typeOfDocument.length
                 })%`;
-              return (
-                <img
-                  src={`http://localhost:3060/images/${ele}`}
-                  style={{ width: "100%", height: { height } }}
-                  alt="documents"
-                />
-              );
-            })
+                return (
+                  <img
+                    src={`http://localhost:3060/images/${ele}`}
+                    style={{ width: "100%", height: { height } }}
+                    alt="documents"
+                  />
+                );
+              })
             : ""}
         </ModalBody>
         <ModalFooter>

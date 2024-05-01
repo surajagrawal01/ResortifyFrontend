@@ -85,9 +85,8 @@ export default function App() {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => {
-    return state.user.user
-  })
-
+    return state.user.user;
+  });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -97,12 +96,12 @@ export default function App() {
     }
   }, []);
 
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem("token");
 
   return (
     <>
-      {(!Object.keys(user).length > 0 && token)
-        ? <div className="parent-container">
+      {!Object.keys(user).length > 0 && token ? (
+        <div className="parent-container">
           <RotatingLines
             visible={true}
             height="96"
@@ -113,78 +112,96 @@ export default function App() {
             ariaLabel="rotating-lines-loading"
             wrapperStyle={{}}
             wrapperClass=""
-          /> </div> : <>
+          />{" "}
+        </div>
+      ) : (
+        <>
           <NavigationBar />
-          <PropertyContext.Provider value={{ resort, resortDispatch }} >
+          <PropertyContext.Provider value={{ resort, resortDispatch }}>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/aboutus" element={<AboutUs />} />
-              <Route path='/registration-page' element={<RegistartionForm />} />
-              <Route path='/loginPage' element={<LoginPage />} />
+              <Route path="/registration-page" element={<RegistartionForm />} />
+              <Route path="/loginPage" element={<LoginPage />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/resort-listing" element={<ListResorts />} />
               <Route path="/resort-detail/:id" element={<ResortDetail />} />
               <Route path="/emailVerification" element={<OTPVerification />} />
               <Route path="/chat" element={<Chat />} />
-              <Route path="/personal-detail"
+              <Route
+                path="/personal-detail"
                 element={
-                  <PrivateRoute permittedRoles={['owner', 'user']}>
+                  <PrivateRoute permittedRoles={["owner", "user"]}>
                     <PersonalDetail />
-                  </PrivateRoute>}
+                  </PrivateRoute>
+                }
               />
-              <Route path="/owner-dashobard"
+              <Route
+                path="/owner-dashobard"
                 element={
-                  <PrivateRoute permittedRoles={['owner']}>
+                  <PrivateRoute permittedRoles={["owner"]}>
                     <OwnerDashBoard />
-                  </PrivateRoute>}
+                  </PrivateRoute>
+                }
               />
-              <Route path="/admin-dashboard"
+              <Route
+                path="/admin-dashboard"
                 element={
-                  <PrivateRoute permittedRoles={['admin']}>
+                  <PrivateRoute permittedRoles={["admin"]}>
                     <AdminDashboard />
-                  </PrivateRoute>}
+                  </PrivateRoute>
+                }
               />
-              <Route path="/stepperform"
+              <Route
+                path="/stepperform"
                 element={
-                  <PrivateRoute permittedRoles={['owner']}>
+                  <PrivateRoute permittedRoles={["owner"]}>
                     <StepperForm />
-                  </PrivateRoute>}
+                  </PrivateRoute>
+                }
               />
-              <Route path="/my-bookings"
+              <Route
+                path="/my-bookings"
                 element={
-                  <PrivateRoute permittedRoles={['user']}>
+                  <PrivateRoute permittedRoles={["user"]}>
                     <MyBookings />
-                  </PrivateRoute>}
+                  </PrivateRoute>
+                }
               />
-              {/* <Route path="/properties-details" element={<PropertyDetails />} />
+              <Route path="/properties-details" element={<PropertyDetails />} />
               <Route path="/room-amenities" element={<RoomDetails />} />
               <Route path="/add-rooms" element={<Rooms />} />
               <Route path="/upload-photos" element={<UploadPhotos />} />
               <Route path="/policies" element={<Policies />} />
-              <Route path="/finance-and-legal" element={<FinanceAndLegal />} /> */}
+              <Route path="/finance-and-legal" element={<FinanceAndLegal />} />
               <Route
                 path="/reviews/:id/bookings/:bookingId"
                 element={<Reviews />}
               />
               <Route path="/booking/payment/:id" element={<PaymentPage />} />
-              <Route path="/success"
+              <Route
+                path="/success"
                 element={
-                  <PrivateRoute permittedRoles={['user']}>
+                  <PrivateRoute permittedRoles={["user"]}>
                     <Success />
-                  </PrivateRoute>}
+                  </PrivateRoute>
+                }
               />
-              <Route path="/cancel"
+              <Route
+                path="/cancel"
                 element={
-                  <PrivateRoute permittedRoles={['user']}>
+                  <PrivateRoute permittedRoles={["user"]}>
                     <Failure />
-                  </PrivateRoute>}
+                  </PrivateRoute>
+                }
               />
               <Route path="/unauthorized" element={<UnAuthorized />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </PropertyContext.Provider>
           <Footer />
-        </>}
+        </>
+      )}
     </>
   );
 }

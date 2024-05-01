@@ -45,70 +45,81 @@ export default function UserRecentSearches() {
   return (
     <div>
       <Container fluid>
-        <Row>
-          <h2 style={{ fontWeight: "bold" }}>Your Recent Searches</h2>
-        </Row>
-        <Row>
-          <div style={{ background: "whitesmoke" }}>
-            <Carousel interval={5000}>
-              {groupedResorts?.map((group, i) => (
-                <Carousel.Item key={i}>
-                  <Row>
-                    {group?.map((ele) => (
-                      <Col key={ele._id} className="col-4">
-                        <Card
-                          style={{
-                            transition: "0.3s",
-                            position: "relative",
-                            width: "25rem",
-                            height: "20rem",
-                          }}
-                          className="my-card"
-                          onClick={() => {
-                            handleResort(ele.location.city, ele._id);
-                          }}
-                        >
-                          <Card.Body>
-                            <Image
+        {recentResorts.length > 0 && (
+          <div>
+            <Row>
+              <h2 style={{ fontWeight: "bold" }}>Your Recent Searches</h2>
+            </Row>
+            <Row>
+              <div style={{ background: "whitesmoke" }}>
+                <Carousel interval={5000}>
+                  {groupedResorts?.map((group, i) => (
+                    <Carousel.Item key={i}>
+                      <Row>
+                        {group?.map((ele) => (
+                          <Col key={ele._id} className="col-4">
+                            <Card
                               style={{
-                                width: "100%",
-                                height: "50%",
+                                transition: "0.3s",
+                                position: "relative",
+                                width: "25rem",
+                                height: "20rem",
                               }}
-                              src={`http://localhost:3060/images/${ele.propertyPhotos[0]}`}
-                              alt="photo"
-                            />
-                            <br />
+                              className="my-card"
+                              onClick={() => {
+                                handleResort(ele.location.city, ele._id);
+                              }}
+                            >
+                              <Card.Body>
+                                <Image
+                                  style={{
+                                    width: "100%",
+                                    height: "50%",
+                                  }}
+                                  src={`http://localhost:3060/images/${ele.propertyPhotos[0]}`}
+                                  alt="photo"
+                                />
+                                <br />
 
-                            <Row>
-                              <h3 style={{ fontWeight: "bold" }}>
-                                {ele.propertyName}
-                              </h3>
-                              <Col className=" col md-4">
-                                <FaLocationDot style={{ display: "inline" }} />
-                                {ele.location.locality}
-                              </Col>
-                              <Col className="col md-8">
-                                <StarRatings rating={ele.rating} />
-                              </Col>
-                            </Row>
-                            <Col style={{ textAlign: "right" }}>
-                              <span style={{ color: "grey" }}>per head :</span>
-                              <span
-                                style={{ fontWeight: "bold", fontSize: "25px" }}
-                              >
-                                <FaIndianRupeeSign /> {ele.basePrice}
-                              </span>
-                            </Col>
-                          </Card.Body>
-                        </Card>
-                      </Col>
-                    ))}
-                  </Row>
-                </Carousel.Item>
-              ))}
-            </Carousel>
+                                <Row>
+                                  <h3 style={{ fontWeight: "bold" }}>
+                                    {ele.propertyName}
+                                  </h3>
+                                  <Col className=" col md-4">
+                                    <FaLocationDot
+                                      style={{ display: "inline" }}
+                                    />
+                                    {ele.location.locality}
+                                  </Col>
+                                  <Col className="col md-8">
+                                    <StarRatings rating={ele.rating} />
+                                  </Col>
+                                </Row>
+                                <Col style={{ textAlign: "right" }}>
+                                  <span style={{ color: "grey" }}>
+                                    per head :
+                                  </span>
+                                  <span
+                                    style={{
+                                      fontWeight: "bold",
+                                      fontSize: "25px",
+                                    }}
+                                  >
+                                    <FaIndianRupeeSign /> {ele.basePrice}
+                                  </span>
+                                </Col>
+                              </Card.Body>
+                            </Card>
+                          </Col>
+                        ))}
+                      </Row>
+                    </Carousel.Item>
+                  ))}
+                </Carousel>
+              </div>
+            </Row>
           </div>
-        </Row>
+        )}
       </Container>
     </div>
   );
