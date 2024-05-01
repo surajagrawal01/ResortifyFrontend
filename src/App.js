@@ -3,9 +3,9 @@ import RoomDetails from "./Components/Property-Form/RoomDetails";
 import Rooms from "./Components/Property-Form/Rooms";
 import UploadPhotos from "./Components/Property-Form/UploadPhotos";
 import Policies from "./Components/Property-Form/PropertyPolicies";
+import FinanceAndLegal from "./Components/Property-Form/FinanceLegal";
 import PropertyContext from "./context/PropertyContext";
 import { useReducer } from "react";
-import FinanceAndLegal from "./Components/Property-Form/FinanceLegal";
 import RegistartionForm from "./Components/userRegistration/RegistrationPage";
 import { useEffect } from "react";
 import { setLoginTrue } from "./actions/isLoginActions";
@@ -32,7 +32,7 @@ import UnAuthorized from "./Components/Unauthorized";
 import { RotatingLines } from "react-loader-spinner";
 import NotFound from "./Components/NotFound";
 import Chat from "./Components/ChatSystem/Chat";
-import PersonalDetail from "./Components/UserPersonalDetail";
+import PersonalDetail from "./Components/UserDetails/UserPersonalDetail";
 import MyBookings from "./Components/UserDetails/MyBookings";
 import AboutUs from "./Components/AboutUs/aboutus";
 
@@ -173,11 +173,12 @@ export default function App() {
               <Route path="/add-rooms" element={<Rooms />} />
               <Route path="/upload-photos" element={<UploadPhotos />} />
               <Route path="/policies" element={<Policies />} />
-              <Route path="/finance-and-legal" element={<FinanceAndLegal />} />
-              <Route
-                path="/reviews/:id/bookings/:bookingId"
-                element={<Reviews />}
-              />
+              <Route path="/finance-and-legal" element={<FinanceAndLegal />} /> */}
+              <Route path="/reviews/:id/bookings/:bookingId"
+                element={
+                  <PrivateRoute permittedRoles={['user']}>
+                    <Reviews />
+                  </PrivateRoute>} />
               <Route path="/booking/payment/:id" element={<PaymentPage />} />
               <Route
                 path="/success"

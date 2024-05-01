@@ -66,8 +66,6 @@ export default function PaymentPage() {
         }
     }
 
-    console.log(bookingInfo, 'bookinginfo')
-
     return (
         <>
             {

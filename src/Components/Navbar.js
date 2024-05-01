@@ -28,10 +28,10 @@ export default function NavigationBar() {
   });
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    dispatch(setLoginFalse());
-    dispatch(clearUserData());
-    navigate("/");
+    localStorage.removeItem('token')
+    dispatch(setLoginFalse())
+    dispatch(clearUserData())
+    navigate("/")
   };
 
   const conditionalLinks = (role) => {
@@ -123,7 +123,7 @@ export default function NavigationBar() {
               {isLoggedIn ? (
                 userDetail.role === "owner" && (
                   <Nav.Link>
-                    <Link to="/list-property" className="link-style">
+                    <Link to="/stepperform" className="link-style">
                       {" "}
                       <FaBuilding /> List Your Property
                     </Link>
@@ -131,7 +131,7 @@ export default function NavigationBar() {
                 )
               ) : (
                 <Nav.Link>
-                  <Link to="/list-property" className="link-style">
+                  <Link to="/stepperform" className="link-style">
                     {" "}
                     <FaBuilding /> List Your Property
                   </Link>

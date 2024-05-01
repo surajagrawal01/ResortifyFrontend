@@ -125,7 +125,7 @@ export default function RoomDetails(props) {
             response2.data.length === 0 &&
             localStorage.getItem("roomDetails")
           ) {
-            setError("upload atleast one photo");
+            setError("upload atleas-7t one photo");
           } else {
             const roomTypesData = {
               NumberOfRooms: values.NumberOfRooms,

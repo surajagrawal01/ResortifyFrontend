@@ -7,8 +7,6 @@ export default function PersonalDetail() {
         return state.user.user
     })
 
-    console.log(userDetail)
-
     return (
         <>
             <Container fluid className="mt-4">

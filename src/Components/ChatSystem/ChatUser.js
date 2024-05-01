@@ -18,7 +18,6 @@ export default function ChatUser() {
 
         socket.on("admin_response", (data) => {
             setChatMessages((previousState) => [...previousState, data]);
-            console.log(data, "admin response");
         });
 
         return () => {
@@ -28,11 +27,10 @@ export default function ChatUser() {
 
     const handleSendMessage = () => {
         if (!message) {
-            alert('Must add some text before sending')
+            return alert('Please add text before sending.')
         }
         const data = { socketId, message };
         setChatMessages((previousState) => [...previousState, data]);
-        console.log(data, "dataByUser");
         socket.emit("user_message", data);
         setMessage("");
     };

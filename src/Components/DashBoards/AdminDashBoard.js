@@ -137,6 +137,7 @@ export default function AdminDashboard() {
       console.log(err);
     }
   };
+
   const handleModal = () => {
     if (!selectedProperty) return null;
 
