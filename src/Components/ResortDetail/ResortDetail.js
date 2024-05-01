@@ -17,7 +17,6 @@ export default function ResortDetail() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  console.log("location", location);
 
   const { id } = useParams();
   const searchInfo = Object.fromEntries(
@@ -92,25 +91,27 @@ export default function ResortDetail() {
     <>
       {Object.keys(resort).length > 0 && (
         <>
-          <Row xs={12} md={8} className="justify-content-center">
-            <Example resortPhotos={propertyPhotos} />
-          </Row>
-          <Row>
-            <Col xs={12} md={7}>
-              <ResortInfo resort={resort} />
-            </Col>
-            <Col xs={12} md={5} className="my-6">
-              <BookingInfo
-                searchInfo={searchInfo}
-                dateSearchInfo={dateSearchInfo}
-                updateDateInfo={updateDateInfo}
-              />
-            </Col>
-          </Row>
-          <Container fluid>
-            <MapLocation resort={resort} />
-            <Reviews resort={resort} />
-          </Container>
+          <div className="container-fluid">
+            <Row xs={12} md={8} className="justify-content-center">
+              <Example resortPhotos={propertyPhotos} />
+            </Row>
+            <Row>
+              <Col xs={12} md={7}>
+                <ResortInfo resort={resort} />
+              </Col>
+              <Col xs={12} md={5} className="my-6">
+                <BookingInfo
+                  searchInfo={searchInfo}
+                  dateSearchInfo={dateSearchInfo}
+                  updateDateInfo={updateDateInfo}
+                />
+              </Col>
+            </Row>
+            <Container fluid>
+              <MapLocation resort={resort} />
+              <Reviews resort={resort} />
+            </Container>
+          </div>
         </>
       )}
     </>

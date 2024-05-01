@@ -34,10 +34,6 @@ export default function NavigationBar() {
     navigate("/")
   }
   
-   const handleBookings = () => {
-    navigate("/my-bookings");
-  };
-
   const conditionalLinks = (role) => {
     switch (role) {
       case 'admin': {
@@ -91,7 +87,7 @@ export default function NavigationBar() {
               {isLoggedIn ? (
                 userDetail.role === "owner" && (
                   <Nav.Link>
-                    <Link to="/list-property" className="link-style">
+                    <Link to="/stepperform" className="link-style">
                       {" "}
                       <FaBuilding /> List Your Property
                     </Link>
@@ -99,7 +95,7 @@ export default function NavigationBar() {
                 )
               ) : (
                 <Nav.Link>
-                  <Link to="/list-property" className="link-style">
+                  <Link to="/stepperform" className="link-style">
                     {" "}
                     <FaBuilding /> List Your Property
                   </Link>

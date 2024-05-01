@@ -27,21 +27,19 @@ export default function MapLocation({ resort }) {
     return (
         <>
             <h4>Where you will be</h4>
-            <MapContainer style={{ height: "400px", width: "100%" }}
+            <MapContainer style={{ height: "400px", width: "90%", margin:"auto"}}
                 ref={mapRef}
                 center={position}
                 zoom={15}
                 scrollWheelZoom={false}
             >
                 <TileLayer
-                    // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    // url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
                     attribution='&copy; <a href="https://www.google.com/maps">Google Maps</a> contributors'
                 />
                 <Marker position={position} icon={customIcon}>
                     <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
+                        {resort.property.propertyName}
                     </Popup>
                 </Marker>
             </MapContainer>

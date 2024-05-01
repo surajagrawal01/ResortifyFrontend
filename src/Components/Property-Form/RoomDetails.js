@@ -125,7 +125,7 @@ export default function RoomDetails(props) {
             response2.data.length === 0 &&
             localStorage.getItem("roomDetails")
           ) {
-            setError("upload atleast one photo");
+            setError("upload atleas-7t one photo");
           } else {
             const roomTypesData = {
               NumberOfRooms: values.NumberOfRooms,
@@ -356,14 +356,6 @@ export default function RoomDetails(props) {
               </span>
               <br />
               <h3 className="text-decoration-underline">Upload Room Photos</h3>
-              <input
-                type="file"
-                name="file"
-                multiple
-                onChange={(e) => {
-                  handleRoomPhotos(e.target.files);
-                }}
-              />
               <h2>Availability</h2>
               <Row>
                 <Col>

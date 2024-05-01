@@ -112,7 +112,7 @@ export default function AdminDashboard() {
         formdata,
         {
           headers: {
-            Authorization: localStorage.get("adminToken"),
+            Authorization: localStorage.getItem("token"),
           },
         }
       );
@@ -137,6 +137,7 @@ export default function AdminDashboard() {
       console.log(err);
     }
   };
+
   const handleModal = () => {
     if (!selectedProperty) return null;
 

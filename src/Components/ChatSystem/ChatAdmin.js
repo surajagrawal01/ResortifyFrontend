@@ -39,14 +39,11 @@ export default function ChatAdmin() {
 
         socketAdmin.on('user_disconnected', (socketId) => {
 
-            console.log(socketId)
-
             //to update the connectedUser state when one user disocnnect the socket that particular socketId of user removed
             setConnectedUser((prevUsers) => prevUsers.filter((user) => user !== socketId));
 
             //updating messages state variable as well when user disconnect that particular messages removed
             setMessages((prevMessages) => prevMessages.filter((msg) => msg.socketId !== socketId))
-            console.log('messages', messages)
         })
 
         return (() => {
@@ -54,7 +51,6 @@ export default function ChatAdmin() {
         })
     }, [])
 
-    console.log('conneccted user', connectedUser)
     const handleAdminMsg = () => {
         let socketId = userSocketConnectedId
         const data = { socketId, adminMsg }
@@ -70,7 +66,6 @@ export default function ChatAdmin() {
         seUserSocketConnectedId(userId)
     }
 
-    console.log(messages, 'messages')
     return (
         <>
             <div className="container-fluid">

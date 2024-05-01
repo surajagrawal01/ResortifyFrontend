@@ -10,7 +10,6 @@ export const startSetUser = ()=>{
     })
 }
 
-
 const setUSer = (data)=>{
     return {
         type:'SET_USER',

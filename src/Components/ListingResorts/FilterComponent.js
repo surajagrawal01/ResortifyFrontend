@@ -2,25 +2,22 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { startResortData } from "../../actions/reosrtsDataAction";
 import { useState } from "react";
-export default function FilterComponent({ resorts, limit }) {
+export default function FilterComponent({ resorts, limit, updatePrice, updateRating, updateOrder, priceVal, order, rating }) {
+  const [sort, setSort] = useState("low")
   const dispatch = useDispatch();
   const searchInfo = JSON.parse(localStorage.getItem("searchInfo"));
 
-  const [priceVal, setPriceVal] = useState(null);
-  const [rating, setRating] = useState(null);
-  const [sort, setSort] = useState("low");
   const handlePrice = (val) => {
-    setPriceVal(val);
+    updatePrice(val)
     const { minPrice, maxPrice } = val;
     const page = 1;
     const ratingVal = rating ? rating : 0;
-
     dispatch(
       startResortData(
         searchInfo.location,
         limit,
         page,
-        sort,
+        order,
         minPrice,
         maxPrice,
         ratingVal
@@ -29,15 +26,14 @@ export default function FilterComponent({ resorts, limit }) {
   };
 
   const handleRating = (val) => {
-    setRating(val);
+    updateRating(val);
     const page = 1;
-
     dispatch(
       startResortData(
         searchInfo.location,
         limit,
         page,
-        sort,
+        order,
         priceVal?.minPrice,
         priceVal?.maxPrice,
         val
@@ -53,9 +49,10 @@ export default function FilterComponent({ resorts, limit }) {
   ];
 
   const handleSort = (e) => {
+    setSort(e.target.value)
     const order = e.target.value || "low";
+    updateOrder(order)
     const page = 1;
-    setSort(order);
     dispatch(
       startResortData(
         searchInfo.location,
@@ -85,7 +82,7 @@ export default function FilterComponent({ resorts, limit }) {
                       handleSort(e);
                     }}
                   >
-                    <option value="low">Select Price Range</option>
+                    <option value="">Select Price Range</option>
                     <option value="low">Low to High</option>
                     <option value="high">High to Low</option>
                   </select>

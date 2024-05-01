@@ -21,16 +21,16 @@ export default function ResortInfo({ resort }) {
     const { property, roomTypes, reviews, generalProperyData } = resort
 
     const ratingsStar = (rate) => {
-        if (rate != 0) {
-            const rating = []
+        if (rate !== 0) {
+            const rating = [];
             for (let i = 1; i <= rate; i++) {
-                rating.push(<FaStar />)
+                rating.push(<FaStar key={i} />);
             }
-            return rating
+            return rating;
         } else {
-            return "NewEnlisted"
+            return "NewEnlisted";
         }
-    }
+    };
 
     const bookingPoliciy = (obj) => {
         const policy = []
@@ -70,7 +70,7 @@ export default function ResortInfo({ resort }) {
         if(roomData._id in bookingData){
             roomBooked = bookingData[roomData._id] 
         }
-        
+
         if (room) {
             return (
                 <>
@@ -87,10 +87,6 @@ export default function ResortInfo({ resort }) {
             )
         }
     }
-
-   
-    
-    console.log(bookingData,'bookingData')
 
     return (
         <>
@@ -195,12 +191,13 @@ export default function ResortInfo({ resort }) {
                                         {bookingPoliciy(generalProperyData.bookingPolicies)}
                                     </Col>
                                     <Col className='col-md-3'>
-                                        <IoDocumentText /> Accetable Id Proofs : {generalProperyData.propertyRules.acceptableIdentityProofs.map((ele,i)=>{
+                                        <IoDocumentText /> Accetable Id Proofs : {generalProperyData.propertyRules.acceptableIdentityProofs.map((ele, i)=>{
                                             return <li key={i}>{ele}</li>
                                         })}
                                     </Col>
                                     <Col className='col-md-3'>
                                         < FaPersonCircleCheck /> Guests Policies : {generalProperyData.propertyRules.guestPolicies.map((ele, i) => {
+                                                console.log(i)
                                             return <li key={i}>{ele}</li>
                                         })}
                                     </Col> 

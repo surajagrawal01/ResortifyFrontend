@@ -2,9 +2,9 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useState, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { useLocation, useParams } from "react-router-dom"
-import axios from "axios"
 import { clearBooking } from "../../actions/bookingAction"
 import { useNavigate } from "react-router-dom"
+import axiosInstance from '../../axiosInstance';
 import Swal from 'sweetalert2'
 export default function BookingInfo({ searchInfo, updateDateInfo, dateSearchInfo }) {
 
@@ -130,11 +130,7 @@ export default function BookingInfo({ searchInfo, updateDateInfo, dateSearchInfo
             const token = localStorage.getItem("token")
             if (token) {
                 try {
-                    const response = await axios.post("http://localhost:3060/api/bookings", formData, {
-                        headers: {
-                            Authorization: token
-                        }
-                    })
+                    const response = await axiosInstance.post("http://localhost:3060/api/bookings", formData)
                     sweetAlertFunc()
                 } catch (err) {
                     console.log(err)
@@ -213,20 +209,6 @@ export default function BookingInfo({ searchInfo, updateDateInfo, dateSearchInfo
                                             />
                                         </div>
                                     </div>
-                                    {/* <div className="row align-items-center my-2">
-                                        <div className="col-auto" style={{ width: "150px" }}>
-                                            <label htmlFor="checkOut">Booking Type</label>
-                                        </div>
-                                        <div className="col">
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                value={searchInfo.bookingCategory}
-                                                disabled={true}
-                                                id="checkOut"
-                                            />
-                                        </div>
-                                    </div> */}
                                     <div className="row align-items-center my-2">
                                         <div className="col-auto" style={{ width: "150px" }}>
                                             <label htmlFor="checkOut">Rooms:</label>

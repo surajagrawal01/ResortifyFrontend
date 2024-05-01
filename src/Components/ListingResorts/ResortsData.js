@@ -2,14 +2,13 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import { FaStar, FaIndianRupeeSign } from "react-icons/fa6";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
-
 import { useDispatch } from "react-redux";
 import { startResortData } from "../../actions/reosrtsDataAction";
-export default function ResortsData({ resorts, limit }) {
+export default function ResortsData({ resorts, limit, order, priceVal, rating }) {
   const naviagte = useNavigate();
 
   const dispatch = useDispatch();
-  console.log(resorts);
+  
   const searchInfo = Object.fromEntries(
     new URLSearchParams(useLocation().search)
   );
@@ -23,11 +22,17 @@ export default function ResortsData({ resorts, limit }) {
   };
 
   const handleNext = () => {
-    dispatch(startResortData(searchInfo.location, limit, resorts.pageNo + 1));
+    dispatch(startResortData(searchInfo.location, limit, resorts.pageNo + 1, order,
+      priceVal?.minPrice,
+      priceVal?.maxPrice,
+      rating));
   };
 
   const handlePrev = () => {
-    dispatch(startResortData(searchInfo.location, limit, resorts.pageNo - 1));
+    dispatch(startResortData(searchInfo.location, limit, resorts.pageNo - 1, order,
+      priceVal?.minPrice,
+      priceVal?.maxPrice,
+      rating));
   };
 
   const handleClick = (id) => {

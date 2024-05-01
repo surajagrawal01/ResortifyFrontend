@@ -58,7 +58,7 @@ export default function SearchBar() {
                     }
                 }}
             >
-                {({ values, setFieldValue }) => (
+                {({ values }) => (
                     <Container fluid className='search-background d-flex align-items-center dynamic-height' style={{
                         "height": "20rem",
                         "backgroundImage": `url(${img})`,

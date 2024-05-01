@@ -113,7 +113,7 @@ export default function OwnerDashBoard() {
             text: "Booking Status",
           },
           subtitle: {
-            text: "show the annual booking status",
+            text: "Annual booking status",
           },
           series: [
             {
@@ -248,6 +248,7 @@ export default function OwnerDashBoard() {
 
   return (
     <>
+    <div className="container-fluid">
       <div className="row my-2">
         <Col xs={12} md={6} className="m-auto">
           <Card
@@ -365,6 +366,7 @@ export default function OwnerDashBoard() {
           </h6>
           <AgChartsReact options={options} />
         </div>
+      </div>
       </div>
     </>
   );

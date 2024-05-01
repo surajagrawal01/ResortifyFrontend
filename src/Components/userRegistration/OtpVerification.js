@@ -47,7 +47,6 @@ export default function OTPVerification() {
                 alert(response.data)
                 navigate("/loginPage")
             } catch (err) {
-                console.log(err)
                 console.log(err.response)
                 setServerErrors(err.response.data)
             }
@@ -65,6 +64,7 @@ export default function OTPVerification() {
                             <Card.Body>
 
                                 <Card.Title > OTP Verification </Card.Title> <hr />
+                                <p>**OTP sent on email</p>
                                 {
                                     serverErrors.error && <div className="text-danger">{serverErrors.error}</div>
                                 }
