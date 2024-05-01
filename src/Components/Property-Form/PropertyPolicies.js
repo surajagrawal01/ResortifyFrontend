@@ -1,13 +1,13 @@
 import Form from "react-bootstrap/Form";
 import { useContext, useEffect, useState } from "react";
-import { Row, Col, Button, Container, Card } from "react-bootstrap";
+import { Row, Col,Container, Card } from "react-bootstrap";
 import PropertyContext from "../../context/PropertyContext";
 import axios from "axios";
 
 // const policies = ["dayOut", "nightOut", "wholeDay"];
 const policies = ["wholeDay"];
 export default function Policies(props) {
-  const { resort, resortDispatch } = useContext(PropertyContext);
+  const { resortDispatch } = useContext(PropertyContext);
   const [checkIn, setCheckIn] = useState({});
   const [select, setSelect] = useState(null);
   const [checkOut, setCheckOut] = useState({});
@@ -165,8 +165,7 @@ export default function Policies(props) {
 
     setIdentity(result);
   };
-  console.log("resort", resort);
-  console.log(checkIn, checkOut);
+  
   return (
     <Container fluid>
       <Card

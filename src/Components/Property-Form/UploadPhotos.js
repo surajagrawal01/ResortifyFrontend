@@ -5,11 +5,11 @@ import { Button } from "react-bootstrap";
 import PropertyContext from "../../context/PropertyContext";
 
 export default function UploadPhotos(props) {
-  const { resort, resortDispatch } = useContext(PropertyContext);
+  const {  resortDispatch } = useContext(PropertyContext);
   const [error, setError] = useState("");
   localStorage.getItem("propertyPhotos") && props.enableUpload();
   const formData = new FormData();
-
+ 
   const handleImage = (files) => {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
@@ -17,18 +17,17 @@ export default function UploadPhotos(props) {
     }
   };
 
-  console.log(resort);
 
   const handlePhotos = async (e) => {
     e.preventDefault();
-    // Append each selected image to FormData
+    
     try {
       const response = await axios.post(
         "http://localhost:3060/api/propertyphotos",
         formData,
         { headers: { Authorization: localStorage.getItem("token") } }
       );
-      console.log(response.data);
+      
 
       if (response.data.propertyPhotos.length === 0) {
         setError("please atleast one photo");
@@ -48,7 +47,7 @@ export default function UploadPhotos(props) {
     }
   };
 
-  console.log(resort);
+ 
 
   return (
     <div>
