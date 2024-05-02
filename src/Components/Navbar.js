@@ -9,7 +9,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { FaHome, FaBuilding, FaUserCircle } from "react-icons/fa";
 import { IoMdChatboxes } from "react-icons/io";
-import logo from "../Images/logo.png";
+import logo from "../Images/Escape, Relax, Indulge.jpg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { clearUserData } from "../actions/userActions";
@@ -102,8 +102,8 @@ export default function NavigationBar() {
                 alt="logo"
                 src={logo}
                 style={{
-                  height: 50,
-                  width: 50,
+                  height: 75,
+                  width: 75,
                 }}
               />
               &nbsp; Resortify

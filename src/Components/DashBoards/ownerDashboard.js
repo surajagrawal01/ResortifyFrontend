@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import axios from "axios";
 import ModalDashboard from "./ModalDashboard";
 import axiosInstance from "../../axiosInstance";
-import { Container, Row, Col, Image, Card } from "react-bootstrap";
+import {   Col, Card } from "react-bootstrap";
 export default function OwnerDashBoard() {
   const [bookings, setBookings] = useState([]);
   const [search, setSearch] = useState([]);
