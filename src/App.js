@@ -168,12 +168,12 @@ export default function App() {
                   </PrivateRoute>
                 }
               />
-              <Route path="/properties-details" element={<PropertyDetails />} />
+              {/* <Route path="/properties-details" element={<PropertyDetails />} />
               <Route path="/room-amenities" element={<RoomDetails />} />
               <Route path="/add-rooms" element={<Rooms />} />
               <Route path="/upload-photos" element={<UploadPhotos />} />
               <Route path="/policies" element={<Policies />} />
-              <Route path="/finance-and-legal" element={<FinanceAndLegal />} />
+              <Route path="/finance-and-legal" element={<FinanceAndLegal />} /> */}
               <Route path="/reviews/:id/bookings/:bookingId"
                 element={
                   <PrivateRoute permittedRoles={['user']}>

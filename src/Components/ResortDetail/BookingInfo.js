@@ -119,13 +119,21 @@ export default function BookingInfo({ searchInfo, updateDateInfo, dateSearchInfo
         return roomValue + packagesValue + taxData
     }, [Rooms, packages])
 
+    const handleRoomBooked = ()=>{
+        return Rooms.reduce((acc,cv)=>{
+            return cv.value
+        },0)
+    }
 
     const handleClick = async () => {
+        console.log(Rooms,'rooms')
         if (Rooms.length < 1) {
             alert('Atleast Select One Room TYpe')
         } else if (dateError) {
             //here handled if error then alert else book
             alert('Checkout date must be greater or equal to checkin date')
+        } else if(searchInfo.adult > (handleRoomBooked() * 2)){
+            alert('In Each Room 2 adults are allowed only')
         } else {
             const token = localStorage.getItem("token")
             if (token) {

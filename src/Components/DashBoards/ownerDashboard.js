@@ -1,12 +1,17 @@
 import DataTable from "react-data-table-component";
 import { AgChartsReact } from "ag-charts-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import { format } from "date-fns";
 import axios from "axios";
 import ModalDashboard from "./ModalDashboard";
 import axiosInstance from "../../axiosInstance";
-import { Container, Row, Col, Image, Card } from "react-bootstrap";
+import { Link } from "react-router-dom"
+import { Col, Card } from "react-bootstrap";
+import ChartPage from "./ChartPage";
+import img from "../../Images/details-add.jpg"
+import img2 from "../../Images/calender.jpg"
 export default function OwnerDashBoard() {
+  const [isProperty, setIsProperty] = useState(false)
   const [bookings, setBookings] = useState([]);
   const [search, setSearch] = useState([]);
   const [totalBookings, setTotalBookings] = useState(0);
@@ -15,6 +20,7 @@ export default function OwnerDashBoard() {
     to: todayDate,
     from: todayDate,
   });
+
 
   const [formError, setFormError] = useState({});
   function getData() {
@@ -61,26 +67,31 @@ export default function OwnerDashBoard() {
       },
     ],
   });
+  
 
   useEffect(() => {
     (async () => {
       try {
+        const property = await axiosInstance.get(`http://localhost:3060/api/owners/property`);
+        property.data ? setIsProperty(true) : setIsProperty(false)
         const response = await axiosInstance.get(
           `http://localhost:3060/api/today/bookings?from=${dateValue.from}&to=${dateValue.to}`
         );
+      
+        setBookings(response.data);
         const result = await axios.get(
           "http://localhost:3060/api/bookings/calculate",
           { headers: { Authorization: localStorage.getItem("token") } }
         );
-        setChartOptions({ data: result?.data?.result });
-        setBookings(response.data);
+        setChartOptions({ data: result.data.result });
+       
         const response2 = await axios.get(
           "http://localhost:3060/api/bookingStatus",
           { headers: { Authorization: localStorage.getItem("token") } }
         );
         console.log("bookings", response2.data.bookings);
         console.log("total bookings", response2.data.response.length);
-        setTotalBookings(response2?.data?.response?.length); 
+        setTotalBookings(response2?.data?.response?.length);
         const approvedCount = response2.data.bookings.reduce((acc, cv) => {
           return (acc += cv?.approvedCount);
         }, 0);
@@ -140,6 +151,7 @@ export default function OwnerDashBoard() {
       }
     });
     setBookings(bookings1);
+    
   };
 
   const handleChange = (e) => {
@@ -176,7 +188,7 @@ export default function OwnerDashBoard() {
           console.log(err);
           alert(err.message);
         }
-      } catch (err) {}
+      } catch (err) { }
     } else {
       setFormError(error);
     }
@@ -221,8 +233,8 @@ export default function OwnerDashBoard() {
           return row.status == "initiated"
             ? "To be Approved"
             : row.status == "approved"
-            ? "Approved"
-            : "Rejected";
+              ? "Approved"
+              : "Rejected";
         } else {
           return row.isPaymentDone == "true" ? "Payment Done" : "To be Paid";
         }
@@ -248,127 +260,135 @@ export default function OwnerDashBoard() {
 
   return (
     <>
-    <div className="container-fluid">
-      <div className="row my-2">
-        <Col xs={12} md={6} className="m-auto">
-          <Card
-            style={{ width: "30rem" }}
-            className="m-auto p-3"
-            border="primary"
-          >
-            <Card.Body>
-              <Card.Title>
-                {" "}
-                Date - {new Date().toString().slice(0, 16)}{" "}
-              </Card.Title>{" "}
-              <hr />
-              {/* <h2>No of Bookings - {bookings.filter((ele) => {
-                                return format(new Date(ele.createdAt), 'dd/MM/yyyy') == format(new Date(), 'dd/MM/yyyy')
-                            }).length}</h2> */}
-              <h2>No of Bookings - {bookings.length}</h2>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col xs={12} md={6} className="m-auto">
-          <Card
-            style={{ width: "30rem" }}
-            className="m-auto p-3"
-            border="primary"
-          >
-            <Card.Body>
-              <Card.Title> Total Bookings </Card.Title> <hr />
-              <h2>Total No of Bookings - {bookings.length}</h2>
-            </Card.Body>
-          </Card>
-        </Col>
-      </div>
-      <hr />
-      <div className="row align-items-center">
-        <div className="col-md-3 row align-items-center offset-md-1">
-          <div className="col-auto">
-            <label htmlFor="from">From</label>
-          </div>
-          <div className="col">
-            <input
-              name="from"
-              type="date"
-              className="form-control"
-              value={dateValue.from}
-              id="from"
-              onChange={handleChange}
-            />
-          </div>
-          {formError.fromValue && (
-            <span className="text-danger">{formError.fromValue}</span>
-          )}
-        </div>
-        <div className="col-md-3 row align-items-center">
-          <div className="col-auto">
-            <label htmlFor="to">To</label>
-          </div>
-          <div className="col">
-            <input
-              name="to"
-              type="date"
-              className={`form-control`}
-              value={dateValue.to}
-              id="to"
-              min={dateValue.from}
-              onChange={handleChange}
-            />
-            {formError.toValue && (
-              <span className="text-danger">{formError.toValue}</span>
-            )}
-          </div>
-        </div>
+      {isProperty ?
+        (totalBookings === 0 ?
+          <div className="offset-md-3 col-6"><p style={{ "color": "white", "height": "30px" }} className="bg-success text-center m-4 p-1"> Welcome to Resotify, Soon you will be receive bookings</p>
+            <img src={img2} style={{ maxWidth: '100%', height: 'auto', display: 'block', margin: '0 auto' }} /></div>
+          : <div className="container-fluid">
+            <div className="row my-2">
+              <Col xs={12} md={6} className="m-auto">
+                <Card
+                  style={{ width: "30rem" }}
+                  className="m-auto p-3"
+                  border="primary"
+                >
+                  <Card.Body>
+                    <Card.Title>
+                      {" "}
+                      Date - {new Date().toString().slice(0, 16)}{" "}
+                    </Card.Title>{" "}
+                    <hr />
+                    {/* <h2>No of Bookings - {bookings.filter((ele) => {
+                               return format(new Date(ele.createdAt), 'dd/MM/yyyy') == format(new Date(), 'dd/MM/yyyy')
+                           }).length}</h2> */}
+                    <h2>No of Bookings - {bookings.length}</h2>
+                  </Card.Body>
+                </Card>
+              </Col>
+              <Col xs={12} md={6} className="m-auto">
+                <Card
+                  style={{ width: "30rem" }}
+                  className="m-auto p-3"
+                  border="primary"
+                >
+                  <Card.Body>
+                    <Card.Title> Total Bookings </Card.Title> <hr />
+                    <h2>Total No of Bookings - {totalBookings}</h2>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </div>
+            <hr />
+            <div className="row align-items-center">
+              <div className="col-md-3 row align-items-center offset-md-1">
+                <div className="col-auto">
+                  <label htmlFor="from">From</label>
+                </div>
+                <div className="col">
+                  <input
+                    name="from"
+                    type="date"
+                    className="form-control"
+                    value={dateValue.from}
+                    id="from"
+                    onChange={handleChange}
+                  />
+                </div>
+                {formError.fromValue && (
+                  <span className="text-danger">{formError.fromValue}</span>
+                )}
+              </div>
+              <div className="col-md-3 row align-items-center">
+                <div className="col-auto">
+                  <label htmlFor="to">To</label>
+                </div>
+                <div className="col">
+                  <input
+                    name="to"
+                    type="date"
+                    className={`form-control`}
+                    value={dateValue.to}
+                    id="to"
+                    min={dateValue.from}
+                    onChange={handleChange}
+                  />
+                  {formError.toValue && (
+                    <span className="text-danger">{formError.toValue}</span>
+                  )}
+                </div>
+              </div>
+              <div className="col-2 ">
+                <button className="btn btn-primary" onClick={handleBookingSearch}>
+                  Search
+                </button>
+              </div>
+              <div className="col-2">
+                <input
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search By BookingId....."
+                  className="form-control"
+                />
+              </div>
+            </div>
+            <hr />
+            <div>
+              <DataTable
+                pagination
+                columns={columns}
+                data={
+                  search
+                    ? bookings.filter((ele) => ele.bookingId.includes(search))
+                    : bookings
+                }
+              />
 
-        <div className="col-2 ">
-          <button className="btn btn-primary" onClick={handleBookingSearch}>
-            Search
-          </button>
-        </div>
-        <div className="col-2">
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search By BookingId....."
-            className="form-control"
-          />
-        </div>
-      </div>
-      <hr />
-      <div>
-        <DataTable
-          pagination
-          columns={columns}
-          data={
-            search
-              ? bookings.filter((ele) => ele.bookingId.includes(search))
-              : bookings
-          }
-        />
-      </div>
-      <hr />
-      <div style={{ display: "flex" }}>
-        <div style={{ flex: "1", height: "25%" }}>
-          <AgChartsReact options={chartOptions} />
-        </div>
-        <div style={{ flex: "1", height: "25%" }}>
-          <h6
-            style={{
-              textAlign: "center",
-              fontSize: "20px",
-              fontWeight: "bold",
-            }}
-          >
-            {" "}
-            Total Bookings:{totalBookings}
-          </h6>
-          <AgChartsReact options={options} />
-        </div>
-      </div>
-      </div>
+            </div>
+            <hr />
+            <div style={{ display: "flex" }}>
+              <div style={{ flex: "1", height: "25%" }}>
+                <AgChartsReact options={chartOptions} />
+              </div>
+              <div style={{ flex: "1", height: "25%" }}>
+                <h6
+                  style={{
+                    textAlign: "center",
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {" "}
+                  Total Bookings:{totalBookings}
+                </h6>
+                <AgChartsReact options={options} />
+              </div>
+            </div>
+          </div>)
+        :
+        <div className="offset-md-3 col-6">
+          <p style={{ "color": "white", "height": "30px" }} className="bg-danger text-center m-4 p-1">Thank you for registration, Please complete your resort detail submission through the <Link to="/stepperform">link</Link></p>
+          <img src={img} style={{ maxWidth: '100%', height: 'auto', display: 'block', margin: '0 auto' }} /></div>}
     </>
   );
 }
