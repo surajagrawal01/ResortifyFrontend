@@ -31,6 +31,12 @@ export default function HomePage() {
             case "admin": {
                 return <AdminDashboard />
             }
+           default:{
+                return <>
+                        <SearchBar />
+                        <SearchCity />
+                       </>
+           }
         }
     }
 
