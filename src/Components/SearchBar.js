@@ -18,6 +18,14 @@ export default function SearchBar() {
 
     const searchInfo = JSON.parse(localStorage.getItem('searchInfo'));
 
+    const options = [
+        { value: 'Bangalore', label: 'Bangalore' },
+        { value: 'Coorg', label: 'Coorg' },
+        { value: 'Ooty', label: 'Ooty' },
+        { value: 'Gokarna', label: 'Gokarna' },
+        { value: 'Munnar', label: 'Munnar' },
+      ];
+
     return (
         <>
             <Formik
@@ -73,11 +81,20 @@ export default function SearchBar() {
                                         <Form className='row'>
                                             <div className='col-md-2'>
                                                 <label className='form-label' htmlFor='location'>Location</label>
-                                                <Field className="form-control" name="location" id="location" list="locations" />
+                                                <Field className="form-select" as="select" name="location" id="location">
+                                                    <option value="" label="Select" />
+                                                    {options.map(option => (
+                                                        <option key={option.value} value={option.value}>
+                                                            {option.label}
+                                                        </option>
+                                                    ))}
+                                                </Field>
+                                                <ErrorMessage name="location" component="div" className="text-danger" />
+                                                {/* <Field className="form-control" name="location" id="location" list="locations" />
                                                 <datalist id="locations">
                                                     <option value="Bangalore" />
                                                 </datalist>
-                                                <ErrorMessage name="location" component="div" className="text-danger" />
+                                                <ErrorMessage name="location" component="div" className="text-danger" /> */}
                                             </div>
                                             <div className='col-md-3'>
                                                 <label className='form-label' htmlFor='checkIn'>CheckIn</label>
