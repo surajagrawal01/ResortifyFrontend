@@ -20,7 +20,6 @@ export default function SearchCity() {
     const checkOut = date.toISOString().split('T')[0]
 
     const handleClick = (city) => {
-        alert(city)
         dispatch(clearResortsData())
         navigate(`/resort-listing?location=${city}&checkIn=${checkIn}&checkOut=${checkOut}&adult=2&children=0`)
     }
@@ -33,14 +32,14 @@ export default function SearchCity() {
                 </Row>
                 <Row>
                     <Col xs={12} md={3} className='my-4'>
-                        <Card style={{ width: '20rem', height: '15rem' }} className='m-auto' onClick={() => handleClick('coorg')}>
+                        <Card style={{ width: '20rem', height: '15rem' }} className='m-auto' onClick={() => handleClick('Coorg')}>
                             <Card.Body style={{ "padding": 0 }}>
                                 <Image src={img1} fluid className='card-image' />
                             </Card.Body>
                         </Card>
                     </Col>
                     <Col xs={12} md={3} className='my-4'>
-                        <Card style={{ width: '20rem', height: '15rem' }} className='m-auto' onClick={() => handleClick('ooty')}>
+                        <Card style={{ width: '20rem', height: '15rem' }} className='m-auto' onClick={() => handleClick('Ooty')}>
                             <Card.Body style={{ "padding": 0 }}>
                                 <Image src={img2} fluid className='card-image' />
                             </Card.Body>
@@ -54,7 +53,7 @@ export default function SearchCity() {
                         </Card>
                     </Col>
                     <Col xs={12} md={3} className='my-4'>
-                        <Card style={{ width: '20rem', height: '15rem' }} className='m-auto' onClick={() => handleClick('Chikmagalur')}>
+                        <Card style={{ width: '20rem', height: '15rem' }} className='m-auto' onClick={() => handleClick('Munnar')}>
                             <Card.Body style={{ "padding": 0 }}>
                                 <Image src={img4} fluid className='card-image' />
                             </Card.Body>

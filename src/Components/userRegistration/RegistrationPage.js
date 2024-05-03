@@ -82,11 +82,11 @@ export default function RegistartionForm() {
                                             <label id="role-radio" className='form-label'>Role: &nbsp;</label>
                                             <span role="group" aria-labelledby="role-radio">
                                             <Field className="form-check-input" type="radio" name="role" value="user" id="user"/> &nbsp;
-                                                <label for="user">
+                                                <label htmlFor="user">
                                                     User
                                                 </label>  &nbsp; &nbsp;
                                                 <Field className="form-check-input" type="radio" name="role" value="owner" id="owner" /> &nbsp;
-                                                <label for="owner">
+                                                <label htmlFor="owner">
                                                     Owner
                                                 </label>
                                             </span> &nbsp;
