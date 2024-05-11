@@ -68,7 +68,7 @@ export default function ResortsData({ resorts, limit, order, priceVal, rating })
                       <Row>
                         <Col md={3}>
                           <img
-                            src={`http://localhost:3060/images/${ele.propertyPhotos[0]}`}
+                            src={`https://resortifybackend.onrender.com/images/${ele.propertyPhotos[0]}`}
                             className="img-fluid"
                             alt="Logo"
                           />
