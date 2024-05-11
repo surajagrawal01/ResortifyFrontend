@@ -1,7 +1,7 @@
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useEffect, useRef } from 'react';
 import { Icon } from 'leaflet';
-import image from "../../Images/gps.png";
+import image from "../../Images/gps1.png";
 
 export default function MapLocation({ resort }) {
 
