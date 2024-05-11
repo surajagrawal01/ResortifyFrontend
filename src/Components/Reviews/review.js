@@ -9,9 +9,10 @@ export default function Reviews() {
   const { id, bookingId } = useParams();
   const [description, setDescription] = useState("");
   const [reviewPhotos, setReviewPhotos] = useState([]);
+  const [formErrors,setformErrors] = useState({})
   const navigate = useNavigate();
   const photos = new FormData();
-
+  const errors = {}
   const handleRatingChange = (value) => {
     setRatings(value);
   };
@@ -33,10 +34,19 @@ export default function Reviews() {
       console.log(err);
     }
   };
-
+  const validateErrors = ()=>{
+    if(ratings === 0){
+      errors.ratings ='* provide ratings'
+    }else if(description.trim().length === 0){
+      errors.description = '* description required'
+    }
+  }
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = {
+    validateErrors()
+    if(Object.keys(errors).length === 0){
+       const formData = {
       ratings: ratings,
       description: description,
       photos: reviewPhotos,
@@ -59,6 +69,10 @@ export default function Reviews() {
     } catch (err) {
       console.log(err);
     }
+    }else{
+      setformErrors(errors)
+    }
+   
   };
 
   return (
@@ -80,6 +94,7 @@ export default function Reviews() {
             />
             <br />
           </Form.Group>
+          {Object.keys(formErrors).length > 0 ? <span style={{color:"red"}}>{formErrors.ratings}</span>:''}
           <Form.Group as={Row} controlId="formRating">
             <Form.Label column sm={2}>
               Rating:
@@ -88,6 +103,7 @@ export default function Reviews() {
               <StarRating onChange={handleRatingChange} />
             </Col>
           </Form.Group>
+          {Object.keys(formErrors).length > 0 ? <span style={{color:"red"}}>{formErrors.description}</span>:''}
           <Form.Group as={Row} controlId="formDescription">
             <Form.Label column sm={2}>
               Description:

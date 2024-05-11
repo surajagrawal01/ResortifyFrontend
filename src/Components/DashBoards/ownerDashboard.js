@@ -31,25 +31,7 @@ export default function OwnerDashBoard() {
       { asset: "Approved", amount: 0, yield: 4 },
     ];
   }
-  const [chartOptions, setChartOptions] = useState({
-    // Data: Data to be displayed in the chart
-    data: [
-      { id: "Jan", totalSum: 0 },
-      { id: "Feb", totalSum: 0 },
-      { id: "Mar", totalSum: 0 },
-      { id: "Apr", totalSum: 0 },
-      { id: "May", totalSum: 0 },
-      { id: "Jun", totalSum: 0 },
-      { id: "Jul", totalSum: 0 },
-      { id: "Aug", totalSum: 0 },
-      { id: "Sep", totalSum: 0 },
-      { id: "Oct", totalSum: 0 },
-      { id: "Nov", totalSum: 0 },
-      { id: "Dec", totalSum: 0 },
-    ],
-    // Series: Defines which chart type and data to use
-    series: [{ type: "bar", xKey: "id", yKey: "totalSum" }],
-  });
+ 
   const [options, setOptions] = useState({
     data: getData(),
     title: {
@@ -78,12 +60,6 @@ export default function OwnerDashBoard() {
           `http://localhost:3060/api/today/bookings?from=${dateValue.from}&to=${dateValue.to}`
         );
         setBookings(response.data);
-        const result = await axios.get(
-          "http://localhost:3060/api/bookings/calculate",
-          { headers: { Authorization: localStorage.getItem("token") } }
-        );
-        setChartOptions({ data: result.data.result });
-       
         const response2 = await axios.get(
           "http://localhost:3060/api/bookingStatus",
           { headers: { Authorization: localStorage.getItem("token") } }
@@ -105,11 +81,6 @@ export default function OwnerDashBoard() {
               amount: response2?.data?.bookings[1]?.count - unApproved,
               yield: 4,
             },
-            // {
-            //   asset: "Bookings",
-            //   amount: response2.data.response.length,
-            //   yield: 5,
-            // },
             {
               asset: "unApproved",
               amount: unApproved,
@@ -259,7 +230,7 @@ export default function OwnerDashBoard() {
       {isProperty ?
         (totalBookings === 0 ?
           <div className="offset-md-3 col-6"><p style={{ "color": "white", "height": "30px" }} className="bg-success text-center m-4 p-1"> Welcome to Resotify, Soon you will be receive bookings</p>
-            <img src={img2} style={{ maxWidth: '100%', height: 'auto', display: 'block', margin: '0 auto' }} /></div>
+            <img alt="warning sign" src={img2} style={{ maxWidth: '100%', height: 'auto', display: 'block', margin: '0 auto' }} /></div>
           : <div className="container-fluid">
             <div className="row my-2">
               <Col xs={12} md={6} className="m-auto">
@@ -364,7 +335,7 @@ export default function OwnerDashBoard() {
             <hr />
             <div style={{ display: "flex" }}>
               <div style={{ flex: "1", height: "25%" }}>
-                <AgChartsReact options={chartOptions} />
+               <ChartPage />
               </div>
               <div style={{ flex: "1", height: "25%" }}>
                 <h6
@@ -384,7 +355,7 @@ export default function OwnerDashBoard() {
         :
         <div className="offset-md-3 col-6">
           <p style={{ "color": "white", "height": "30px" }} className="bg-danger text-center m-4 p-1">Thank you for registration, Please complete your resort detail submission through the <Link to="/stepperform">link</Link></p>
-          <img src={img} style={{ maxWidth: '100%', height: 'auto', display: 'block', margin: '0 auto' }} /></div>}
+          <img  alt="image" src={img} style={{ maxWidth: '100%', height: 'auto', display: 'block', margin: '0 auto' }} /></div>}
     </>
   );
 }
