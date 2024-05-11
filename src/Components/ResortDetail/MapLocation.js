@@ -35,7 +35,7 @@ export default function MapLocation({ resort }) {
             >
                 <TileLayer
                     url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
-                    attribution='&copy; <a href="https://www.google.com/maps">Google Maps</a> contributors'
+                    attribution='&copy; <a href="https://www.google.com/maps">Google Maps</a> contributors'
                 />
                 <Marker position={position} icon={customIcon}>
                     <Popup>
