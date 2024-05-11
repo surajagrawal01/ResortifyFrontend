@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import PropertyContext from '../../context/PropertyContext';
 import { useEffect,useRef} from 'react';
 import { Icon } from 'leaflet';
-import image from'../../Images/gps.png'
+import image from'../../Images/gps1.png'
 export default function LocationMap(props){
   const {resort, resortDispatch} = useContext(PropertyContext)
   const mapRef = useRef(null);
