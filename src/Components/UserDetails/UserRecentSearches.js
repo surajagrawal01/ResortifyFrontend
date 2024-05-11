@@ -12,9 +12,42 @@ export default function UserRecentSearches() {
   // const [recentResorts, setRecentResorts] = useState([]);
   const navigate = useNavigate();
 
-  const recentResorts = useSelector((state)=>{
+  const recentResorts = useSelector((state) => {
     return state.user.user.recentSearches
   })
+
+  const [groupedResorts, setGroupedResorts] = useState([]);
+
+  useEffect(() => {
+    function updateGroupedResorts() {
+      const screenWidth = window.innerWidth;
+      let resortsPerGroup;
+      if (screenWidth < 768) {
+          resortsPerGroup = 1;
+      } else if (screenWidth < 992) {
+          resortsPerGroup = 2;
+      } else {
+          resortsPerGroup = 3;
+      }
+
+      const newGroupedResorts = [];
+      for (let i = 0; i < recentResorts.length; i += resortsPerGroup) {
+          newGroupedResorts.push(recentResorts.slice(i, i + resortsPerGroup));
+      }
+      setGroupedResorts(newGroupedResorts);
+    }
+
+    // Initial setup
+    updateGroupedResorts();
+
+    // Listen for window resize events
+    window.addEventListener("resize", updateGroupedResorts);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", updateGroupedResorts);
+    };
+  }, [recentResorts]); // Re-run effect when recentResorts changes
 
   // useEffect(() => {
   //   (async () => {
@@ -32,11 +65,23 @@ export default function UserRecentSearches() {
   //   })();
   // }, []);
 
-  // Group recent searches into sets of three
-  const groupedResorts = [];
-  for (let i = 0; i < recentResorts.length; i += 3) {
-    groupedResorts.push(recentResorts.slice(i, i + 3));
-  }
+  // const groupedResorts = [];
+  // const screenWidth = window.innerWidth;
+
+  // // Define the number of resorts per group based on screen width
+  // let resortsPerGroup;
+  // if (screenWidth < 768) {
+  //   resortsPerGroup = 1; // Adjust based on your requirements
+  // } else if (screenWidth < 992) {
+  //   resortsPerGroup = 2; // Adjust based on your requirements
+  // } else {
+  //   resortsPerGroup = 3; // Default grouping for larger screens
+  // }
+
+  // for (let i = 0; i < recentResorts.length; i += resortsPerGroup) {
+  //   groupedResorts.push(recentResorts.slice(i, i + resortsPerGroup));
+  // }
+
   const handleResort = (location, id) => {
     const checkIn = format(new Date(), "yyyy-MM-dd");
 
@@ -95,14 +140,14 @@ export default function UserRecentSearches() {
                                   <Col className=" col md-4">
                                     <FaLocationDot
                                       style={{ display: "inline" }}
-                                    /> 
+                                    />
                                     {ele.location.city}
                                   </Col>
                                   <Col className="col md-8">
                                     <StarRatings rating={ele.rating} />
                                   </Col>
                                 </Row>
-                                <Col style={{ textAlign: "right" }}>
+                                <Col className="mx-4" style={{ textAlign: "right" }}>
                                   <span style={{ color: "grey" }}>
                                     Base Price:
                                   </span>

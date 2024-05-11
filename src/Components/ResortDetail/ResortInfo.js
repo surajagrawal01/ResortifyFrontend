@@ -186,16 +186,16 @@ export default function ResortInfo({ resort }) {
 
                                 <h4>Property Rules and Policies :</h4>
                                 <Row>
-                                    <Col className='col-md-6'>
+                                    <Col md={6}>
                                         Booking Policies:
                                         {bookingPoliciy(generalProperyData.bookingPolicies)}
                                     </Col>
-                                    <Col className='col-md-3'>
+                                    <Col md={3}>
                                         <IoDocumentText /> Accetable Id Proofs : {generalProperyData.propertyRules.acceptableIdentityProofs.map((ele, i)=>{
                                             return <li key={i}>{ele}</li>
                                         })}
                                     </Col>
-                                    <Col className='col-md-3'>
+                                    <Col md={3}>
                                         < FaPersonCircleCheck /> Guests Policies : {generalProperyData.propertyRules.guestPolicies.map((ele, i) => {
                                             return <li key={i}>{ele}</li>
                                         })}

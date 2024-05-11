@@ -44,17 +44,21 @@ export default function RegistartionForm() {
         >
             <>
                 <Container fluid style={{
-                        "backgroundImage": `url(${img})`,
-                        "backgroundSize": "cover",
-                        "backgroundPosition": "center",
-                        "backgroundRepeat": "no-repeat"
-                    }}>
-                    <Row>
-                        <Col xs={12} md={6}>
+                    backgroundImage: `url(${img})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    minHeight: "100vh",// Set minimum height to ensure full coverage
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>
+                    <Row className='mx-2'>
+                        {/* <Col xs={0} md={6}>
                             <Image  fluid style={{ height: '100vh', objectFit: 'cover' }} />
-                        </Col>
-                        <Col xs={12} md={6} className='m-auto'>
-                            <Card style={{ width: '30rem' }} className='m-auto p-3'>
+                        </Col> */}
+                        <Col xs={12} md={6} className='offset-md-8 mt-5' style={{ height: '100vh' }}>
+                            <Card style={{ width: '28rem' }} className='m-auto p-3'>
                                 <Card.Body>
 
                                     <Card.Title > Registration Form </Card.Title> <hr />
@@ -81,7 +85,7 @@ export default function RegistartionForm() {
                                         <div>
                                             <label id="role-radio" className='form-label'>Role: &nbsp;</label>
                                             <span role="group" aria-labelledby="role-radio">
-                                            <Field className="form-check-input" type="radio" name="role" value="user" id="user"/> &nbsp;
+                                                <Field className="form-check-input" type="radio" name="role" value="user" id="user" /> &nbsp;
                                                 <label htmlFor="user">
                                                     User
                                                 </label>  &nbsp; &nbsp;

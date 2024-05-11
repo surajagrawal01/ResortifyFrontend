@@ -51,18 +51,21 @@ export default function LoginPage() {
         >
             <>
                 <Container fluid style={{
-                        "backgroundImage": `url(${img})`,
-                        "backgroundSize": "cover",
-                        "backgroundPosition": "center",
-                        "backgroundRepeat": "no-repeat",
-                        "height": '100vh'
-                    }}>
-                    <Row>
-                    <Col xs={0} md={6}>
+                    backgroundImage: `url(${img})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    minHeight: "100vh",// Set minimum height to ensure full coverage
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                }}>
+                    <Row className='mx-2'>
+                        {/* <Col xs={0} md={6}>
                             <Image  fluid style={{ height: '100vh', objectFit: 'cover' }} />
-                    </Col>
-                        <Col xs={12} md={6} className='m-auto'>
-                            <Card style={{ width: '30rem' }} className='m-auto p-3'>
+                    </Col> */}
+                        <Col xs={12} md={6} className='offset-md-8 mt-5' style={{ height: '100vh' }}>
+                            <Card style={{ width: '26rem' }} className='m-auto p-3'>
                                 <Card.Body>
 
                                     <Card.Title> LogIn </Card.Title> <hr />
