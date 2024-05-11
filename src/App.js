@@ -1,25 +1,25 @@
+import React from "react"
 import PropertyDetails from "./Components/Property-Form/PropertyDetails";
 import RoomDetails from "./Components/Property-Form/RoomDetails";
 import Rooms from "./Components/Property-Form/Rooms";
 import UploadPhotos from "./Components/Property-Form/UploadPhotos";
 import Policies from "./Components/Property-Form/PropertyPolicies";
 import FinanceAndLegal from "./Components/Property-Form/FinanceLegal";
-import PropertyContext from "./context/PropertyContext";
 import { useReducer } from "react";
-import RegistartionForm from "./Components/userRegistration/RegistrationPage";
 import { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import PropertyContext from "./context/PropertyContext";
+import RegistartionForm from "./Components/userRegistration/RegistrationPage";
 import { setLoginTrue } from "./actions/isLoginActions";
-import { Routes, Route, Link } from "react-router-dom";
 import OTPVerification from "./Components/userRegistration/OtpVerification";
 import LoginPage from "./Components/userRegistration/LogInPage";
 import ForgotPassword from "./Components/userRegistration/ForgotPassword";
 import OwnerDashBoard from "./Components/DashBoards/ownerDashboard";
 import HomePage from "./Components/HomePage";
-import { useSelector, useDispatch } from "react-redux";
 import { startSetUser } from "./actions/userActions";
 import ListResorts from "./Components/ListingResorts/ListResorts";
 import NavigationBar from "./Components/Navbar";
-import ResortDetail from "./Components/ResortDetail/ResortDetail";
 import Footer from "./Components/Footer";
 import PaymentPage from "./Components/PaymentComp/PaymentPage";
 import Success from "./Components/PaymentComp/Success";
@@ -35,6 +35,7 @@ import Chat from "./Components/ChatSystem/Chat";
 import PersonalDetail from "./Components/UserDetails/UserPersonalDetail";
 import MyBookings from "./Components/UserDetails/MyBookings";
 import AboutUs from "./Components/AboutUs/aboutus";
+const LazyResortDetail = React.lazy(() => import("./Components/ResortDetail/ResortDetail"));
 
 function PropertyReducer(state, action) {
   switch (action.type) {
@@ -98,21 +99,35 @@ export default function App() {
 
   const token = localStorage.getItem("token");
 
+  const spinner = (
+    <div
+      style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+      }}
+    >
+      <RotatingLines
+        visible={true}
+        height="96"
+        width="96"
+        strokeColor="#7758A6"
+        strokeWidth="5"
+        animationDuration="0.75"
+        ariaLabel="rotating-lines-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+      />
+    </div>
+  );
+  
+
   return (
     <>
       {!Object.keys(user).length > 0 && token ? (
         <div className="parent-container">
-          <RotatingLines
-            visible={true}
-            height="96"
-            width="96"
-            color="grey"
-            strokeWidth="5"
-            animationDuration="0.75"
-            ariaLabel="rotating-lines-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-          />{" "}
+          {spinner}{" "}
         </div>
       ) : (
         <>
@@ -125,7 +140,10 @@ export default function App() {
               <Route path="/loginPage" element={<LoginPage />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/resort-listing" element={<ListResorts />} />
-              <Route path="/resort-detail/:id" element={<ResortDetail />} />
+              <Route path="/resort-detail/:id" element={
+                <React.Suspense fallback={spinner}>
+                  <LazyResortDetail />
+                </React.Suspense> } />
               <Route path="/emailVerification" element={<OTPVerification />} />
               <Route path="/chat" element={<Chat />} />
               <Route
@@ -183,17 +201,13 @@ export default function App() {
               <Route
                 path="/success"
                 element={
-                  <PrivateRoute permittedRoles={["user"]}>
-                    <Success />
-                  </PrivateRoute>
+                  <Success />
                 }
               />
               <Route
                 path="/cancel"
                 element={
-                  <PrivateRoute permittedRoles={["user"]}>
-                    <Failure />
-                  </PrivateRoute>
+                  <Failure />
                 }
               />
               <Route path="/unauthorized" element={<UnAuthorized />} />

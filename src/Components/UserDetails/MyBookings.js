@@ -10,7 +10,7 @@ export default function MyBookings() {
   const [bookings, setBookings] = useState([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(0);
-  const [next, setNext] = useState(false);
+  // const [next, setNext] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     (async () => {
@@ -18,11 +18,9 @@ export default function MyBookings() {
         `http://localhost:3060/api/users/account?page=${page}&limit=${limit}`,
         { headers: { Authorization: localStorage.getItem("token") } }
       );
-      if (response.data.myBookings < page) {
-        setNext(true);
-      }
-      console.log("page", page, "limit", limit);
-      console.log(response.data.myBookings);
+      // if (response.data.myBookings < page) {
+      //   setNext(true);
+      // }
       setBookings(response.data.myBookings);
     })();
   }, [page, limit]);
@@ -30,22 +28,23 @@ export default function MyBookings() {
     console.log(id);
     navigate(`/reviews/${id}/bookings/${bookingId}`);
   };
-  const handleNext = () => {
-    console.log(page);
-    setPage(page + 1);
-  };
-  const handlePrev = () => {
-    console.log(page);
-    setPage(page - 1);
-  };
+
+  // const handleNext = () => {
+  //   setPage(page + 1);
+  // };
+  // const handlePrev = () => {
+  //   setPage(page - 1);
+  // };
+  
   const handleLimit = (e) => {
     setLimit(e.target.value);
     setPage(1);
   };
+  
   return (
     <div>
-      <h2>My bookings </h2>
-      <span>Get First</span>
+      <div className="m-4">
+      <span>Get First:</span> &nbsp;
       <select
         onChange={(e) => {
           handleLimit(e);
@@ -53,8 +52,11 @@ export default function MyBookings() {
       >
         <option value="0">Set Limit</option>
         <option value="2">2</option>
+        <option value="10">5</option>
         <option value="10">10</option>
+        <option value="10">20</option>
       </select>
+      </div>
       {bookings.map((ele) => {
         return (
           <Card key={ele._id} style={{ margin: "20px" }}>
@@ -76,7 +78,7 @@ export default function MyBookings() {
                       </span>
                     </Col>
                     <Col md={6}>
-                      Your Booking Id:
+                      Your Booking Id: &nbsp;
                       <span style={{ fontWeight: "bold" }}>
                         {" "}
                         {ele.bookingId}
@@ -85,7 +87,7 @@ export default function MyBookings() {
                   </Row>
                   <Row>
                     <Col md={6}>
-                      CheckIn :
+                      CheckIn : &nbsp;
                       <DatePicker
                         className="calendar-container"
                         selected={ele.Date.checkIn}
@@ -95,7 +97,7 @@ export default function MyBookings() {
                     </Col>{" "}
                     <Col>
                       <div></div>
-                      CheckOut :
+                      CheckOut : &nbsp;
                       <DatePicker
                         className="calendar-container"
                         selected={ele.Date.checkOut}
@@ -144,7 +146,7 @@ export default function MyBookings() {
                     </Col>
                     <Col md={3}>
                       {" "}
-                      Status:
+                      Status: &nbsp;
                       <span style={{ fontWeight: "bold" }}>{ele.status} </span>
                     </Col>
                     <Col md={3}>
@@ -196,11 +198,11 @@ export default function MyBookings() {
           </Card>
         );
       })}
-      <Button onClick={handlePrev}>Previous</Button>
+      {/* <Button onClick={handlePrev}>Previous</Button>
       {page} {limit}
       <Button onClick={handleNext} disabled={next}>
         Next
-      </Button>
+      </Button> */}
     </div>
   );
 }

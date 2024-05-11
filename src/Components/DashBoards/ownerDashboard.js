@@ -59,19 +59,16 @@ export default function OwnerDashBoard() {
         const response = await axiosInstance.get(
           `http://localhost:3060/api/today/bookings?from=${dateValue.from}&to=${dateValue.to}`
         );
-      
         setBookings(response.data);
         const response2 = await axios.get(
           "http://localhost:3060/api/bookingStatus",
           { headers: { Authorization: localStorage.getItem("token") } }
         );
-       
         setTotalBookings(response2?.data?.response?.length);
         const approvedCount = response2.data.bookings.reduce((acc, cv) => {
           return (acc += cv?.approvedCount);
         }, 0);
         const unApproved = response2?.data?.response?.length - approvedCount;
-       
         setOptions({
           data: [
             {

@@ -197,7 +197,6 @@ export default function ResortInfo({ resort }) {
                                     </Col>
                                     <Col className='col-md-3'>
                                         < FaPersonCircleCheck /> Guests Policies : {generalProperyData.propertyRules.guestPolicies.map((ele, i) => {
-                                                console.log(i)
                                             return <li key={i}>{ele}</li>
                                         })}
                                     </Col> 
