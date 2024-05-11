@@ -11,7 +11,7 @@ export const startResortData = (
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        `http://localhost:3060/api/properties/lists?city=${location}&limit=${limit}&page=${page}&order=${order}&minPrice=${minPrice}&maxPrice=${maxPrice}&rating=${rating}`
+        `https://resortifybackend.onrender.com/api/properties/lists?city=${location}&limit=${limit}&page=${page}&order=${order}&minPrice=${minPrice}&maxPrice=${maxPrice}&rating=${rating}`
       );
       dispatch(resortsData(response.data));
     } catch (err) {
