@@ -34,7 +34,7 @@ export default function RegistartionForm() {
             onSubmit={async (values) => {
                 try {
                     localStorage.setItem('email', values.email)
-                    const response = await axios.post("http://localhost:3060/api/users", values)
+                    const response = await axios.post("https://resortifybackend.onrender.com/api/users", values)
                     navigate('/emailVerification')
                 } catch (err) {
                     console.log(err)

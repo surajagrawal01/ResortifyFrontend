@@ -19,7 +19,7 @@ export default function ForgotPassword() {
             formErrors.email = 'Email Required'
         } else {
             try {
-                const response = await axios.post('http://localhost:3060/api/users/reVerifiyEmail', { email })
+                const response = await axios.post('https://resortifybackend.onrender.com/api/users/reVerifiyEmail', { email })
                 setServerErrors({})
                 setFormErrors({})
                 setIsActive(false)
@@ -47,7 +47,7 @@ export default function ForgotPassword() {
             onSubmit={async (values) => {
                 try {
                     const formData = { email, otp: values.otp, password: values.password }
-                    const response = await axios.put('http://localhost:3060/api/users/forgotPassword', formData)
+                    const response = await axios.put('https://resortifybackend.onrender.com/api/users/forgotPassword', formData)
                     alert('Password Updated')
                     navigate('/loginPage')
                     setServerErrors({})

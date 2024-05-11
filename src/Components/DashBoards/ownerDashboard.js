@@ -54,14 +54,14 @@ export default function OwnerDashBoard() {
   useEffect(() => {
     (async () => {
       try {
-        const property = await axiosInstance.get(`http://localhost:3060/api/owners/property`);
+        const property = await axiosInstance.get(`https://resortifybackend.onrender.com/api/owners/property`);
         property.data ? setIsProperty(true) : setIsProperty(false)
         const response = await axiosInstance.get(
-          `http://localhost:3060/api/today/bookings?from=${dateValue.from}&to=${dateValue.to}`
+          `https://resortifybackend.onrender.com/api/today/bookings?from=${dateValue.from}&to=${dateValue.to}`
         );
         setBookings(response.data);
         const response2 = await axios.get(
-          "http://localhost:3060/api/bookingStatus",
+          "https://resortifybackend.onrender.com/api/bookingStatus",
           { headers: { Authorization: localStorage.getItem("token") } }
         );
         setTotalBookings(response2?.data?.response?.length);
@@ -147,7 +147,7 @@ export default function OwnerDashBoard() {
       try {
         try {
           const response = await axiosInstance.get(
-            `http://localhost:3060/api/bookings?from=${dateValue.from}&to=${dateValue.to}`
+            `https://resortifybackend.onrender.com/api/bookings?from=${dateValue.from}&to=${dateValue.to}`
           );
           setFormError({});
           setBookings(response.data);

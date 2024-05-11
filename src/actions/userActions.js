@@ -2,7 +2,7 @@ import axiosInstance from "../axiosInstance"
 export const startSetUser = ()=>{
     return (async(dispatch)=>{
         try{
-            const response = await axiosInstance.get('http://localhost:3060/api/users/account')
+            const response = await axiosInstance.get('https://resortifybackend.onrender.com/api/users/account')
             dispatch(setUSer(response.data))
         }catch(err){
             console.log(err)

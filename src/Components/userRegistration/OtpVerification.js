@@ -26,7 +26,7 @@ export default function OTPVerification() {
             email: localStorage.getItem('email')
         }
         try {
-            const response = await axios.post("http://localhost:3060/api/users/reVerifiyEmail", emailData)
+            const response = await axios.post("https://resortifybackend.onrender.com/api/users/reVerifiyEmail", emailData)
             alert(response.data)
         } catch (err) {
             console.log(err)
@@ -43,7 +43,7 @@ export default function OTPVerification() {
         validate()
         if (Object.keys(errorsObj).length === 0) {
             try {
-                const response = await axios.post("http://localhost:3060/api/users/verifyEmail", formData)
+                const response = await axios.post("https://resortifybackend.onrender.com/api/users/verifyEmail", formData)
                 alert(response.data)
                 navigate("/loginPage")
             } catch (err) {

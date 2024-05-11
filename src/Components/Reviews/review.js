@@ -23,7 +23,7 @@ export default function Reviews() {
     }
     try {
       const response = await axios.post(
-        "http://localhost:3060/api/reviewsphotos",
+        "https://resortifybackend.onrender.com/api/reviewsphotos",
         photos,
         { headers: { Authorization: localStorage.getItem("token") } }
       );
@@ -53,7 +53,7 @@ export default function Reviews() {
     };
     try {
       const response = await axios.post(
-        `http://localhost:3060/api/users/reviews/${id}?bookingId=${bookingId}`,
+        `https://resortifybackend.onrender.com/api/users/reviews/${id}?bookingId=${bookingId}`,
         formData,
         { headers: { Authorization: localStorage.getItem("token") } }
       );

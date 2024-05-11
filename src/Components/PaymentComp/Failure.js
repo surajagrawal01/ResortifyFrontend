@@ -23,7 +23,7 @@ export default function Failure() {
         (async () => {
             try {
                 const stripeId = localStorage.getItem('stripeId')
-                const payment = await axios.put(`http://localhost:3060/api/payments/${stripeId}/failed`, { paymentStatus: "failure" })
+                const payment = await axios.put(`https://resortifybackend.onrender.com/api/payments/${stripeId}/failed`, { paymentStatus: "failure" })
                 alert('Payment Failed')
             } catch (err) {
                 sweetAlertFunc()

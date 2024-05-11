@@ -42,7 +42,7 @@ export default function AboutUs() {
   useEffect(() => {
     (async () => {
       const response = await axios.get(
-        "http://localhost:3060/api/propertyStats"
+        "https://resortifybackend.onrender.com/api/propertyStats"
       );
       console.log(response.data);
       setOptions({
