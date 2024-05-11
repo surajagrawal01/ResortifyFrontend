@@ -77,7 +77,6 @@ export default function OwnerDashBoard() {
         const response = await axiosInstance.get(
           `http://localhost:3060/api/today/bookings?from=${dateValue.from}&to=${dateValue.to}`
         );
-      
         setBookings(response.data);
         const result = await axios.get(
           "http://localhost:3060/api/bookings/calculate",
@@ -89,24 +88,21 @@ export default function OwnerDashBoard() {
           "http://localhost:3060/api/bookingStatus",
           { headers: { Authorization: localStorage.getItem("token") } }
         );
-        console.log("bookings", response2.data.bookings);
-        console.log("total bookings", response2.data.response.length);
         setTotalBookings(response2?.data?.response?.length);
         const approvedCount = response2.data.bookings.reduce((acc, cv) => {
           return (acc += cv?.approvedCount);
         }, 0);
         const unApproved = response2?.data?.response?.length - approvedCount;
-        console.log("approved count", approvedCount);
         setOptions({
           data: [
             {
               asset: "Paid",
-              amount: response2?.data?.bookings[1]?.count,
+              amount: response2?.data?.bookings[0]?.count,
               yield: 5,
             },
             {
               asset: "Unpaid",
-              amount: response2?.data?.bookings[0]?.count - unApproved,
+              amount: response2?.data?.bookings[1]?.count - unApproved,
               yield: 4,
             },
             // {

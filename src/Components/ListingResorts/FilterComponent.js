@@ -2,10 +2,15 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { startResortData } from "../../actions/reosrtsDataAction";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 export default function FilterComponent({ resorts, limit, updatePrice, updateRating, updateOrder, priceVal, order, rating }) {
   const [sort, setSort] = useState("low")
   const dispatch = useDispatch();
-  const searchInfo = JSON.parse(localStorage.getItem("searchInfo"));
+
+  const searchInfo = Object.fromEntries(
+    new URLSearchParams(useLocation().search)
+  );
+
 
   const handlePrice = (val) => {
     updatePrice(val)
@@ -51,6 +56,7 @@ export default function FilterComponent({ resorts, limit, updatePrice, updateRat
   const handleSort = (e) => {
     setSort(e.target.value)
     const order = e.target.value || "low";
+    const ratingVal = rating ? rating : 0;
     updateOrder(order)
     const page = 1;
     dispatch(

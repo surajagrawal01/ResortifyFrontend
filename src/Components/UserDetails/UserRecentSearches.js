@@ -1,30 +1,37 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Container, Card, Image, Carousel } from "react-bootstrap";
 import axios from "axios";
+import { Row, Col, Container, Card, Image, Carousel } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import StarRatings from "./StarRatings";
 import { format } from "date-fns";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaIndianRupeeSign } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
 export default function UserRecentSearches() {
-  const [recentResorts, setRecentResorts] = useState([]);
+  // const [recentResorts, setRecentResorts] = useState([]);
   const navigate = useNavigate();
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3060/api/users/account",
-          { headers: { Authorization: localStorage.getItem("token") } }
-        );
-        console.log(response.data.recentSearches);
-        setRecentResorts(response.data.recentSearches.reverse());
-      } catch (err) {
-        alert(err.msg);
-        console.log(err);
-      }
-    })();
-  }, []);
+
+  const recentResorts = useSelector((state)=>{
+    return state.user.user.recentSearches
+  })
+
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         "http://localhost:3060/api/users/account",
+  //         { headers: { Authorization: localStorage.getItem("token") } }
+  //       );
+  //       console.log(response.data.recentSearches)
+  //       setRecentResorts(response.data.recentSearches.reverse());
+  //     } catch (err) {
+  //       alert(err.msg);
+  //       console.log(err);
+  //     }
+  //   })();
+  // }, []);
+
   // Group recent searches into sets of three
   const groupedResorts = [];
   for (let i = 0; i < recentResorts.length; i += 3) {
@@ -88,8 +95,8 @@ export default function UserRecentSearches() {
                                   <Col className=" col md-4">
                                     <FaLocationDot
                                       style={{ display: "inline" }}
-                                    />
-                                    {ele.location.locality}
+                                    /> 
+                                    {ele.location.city}
                                   </Col>
                                   <Col className="col md-8">
                                     <StarRatings rating={ele.rating} />
@@ -97,7 +104,7 @@ export default function UserRecentSearches() {
                                 </Row>
                                 <Col style={{ textAlign: "right" }}>
                                   <span style={{ color: "grey" }}>
-                                    per head :
+                                    Base Price:
                                   </span>
                                   <span
                                     style={{

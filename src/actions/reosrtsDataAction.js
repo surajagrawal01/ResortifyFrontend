@@ -14,7 +14,6 @@ export const startResortData = (
         `http://localhost:3060/api/properties/lists?city=${location}&limit=${limit}&page=${page}&order=${order}&minPrice=${minPrice}&maxPrice=${maxPrice}&rating=${rating}`
       );
       dispatch(resortsData(response.data));
-      console.log("API CALL", response.data);
     } catch (err) {
       alert(err.message);
       console.log(err);
