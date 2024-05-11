@@ -28,7 +28,7 @@ export default function PaymentPage() {
     useEffect(() => {
         ((async () => {
             try {
-                const response = await axios.get(`http://localhost:3060/api/bookings/${id}`)
+                const response = await axios.get(`https://resortifybackend.onrender.com/api/bookings/${id}`)
                 response.data == null ? sweetAlertFunc() :setBookingInfo(response.data)
             } catch (err) {
                 console.log(err)
@@ -45,7 +45,7 @@ export default function PaymentPage() {
                     bookingId: bookingInfo.bookingId,
                     totalAmount: bookingInfo.totalAmount
                 }
-                const response = await axios.post('http://localhost:3060/api/create-checkout-session', body, {
+                const response = await axios.post('https://resortifybackend.onrender.com/api/create-checkout-session', body, {
                     headers: {
                         Authorization: token
                     }

@@ -20,7 +20,7 @@ export default function UserRecentSearches() {
   //   (async () => {
   //     try {
   //       const response = await axios.get(
-  //         "http://localhost:3060/api/users/account",
+  //         "https://resortifybackend.onrender.com/api/users/account",
   //         { headers: { Authorization: localStorage.getItem("token") } }
   //       );
   //       console.log(response.data.recentSearches)
@@ -83,7 +83,7 @@ export default function UserRecentSearches() {
                                     width: "100%",
                                     height: "50%",
                                   }}
-                                  src={`http://localhost:3060/images/${ele.propertyPhotos[0]}`}
+                                  src={`https://resortifybackend.onrender.com/images/${ele.propertyPhotos[0]}`}
                                   alt="photo"
                                 />
                                 <br />

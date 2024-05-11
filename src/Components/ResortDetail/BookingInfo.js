@@ -138,7 +138,7 @@ export default function BookingInfo({ searchInfo, updateDateInfo, dateSearchInfo
             const token = localStorage.getItem("token")
             if (token) {
                 try {
-                    const response = await axiosInstance.post("http://localhost:3060/api/bookings", formData)
+                    const response = await axiosInstance.post("https://resortifybackend.onrender.com/api/bookings", formData)
                     sweetAlertFunc()
                 } catch (err) {
                     console.log(err)

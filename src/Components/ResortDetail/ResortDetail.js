@@ -44,7 +44,7 @@ export default function ResortDetail() {
       try {
         if (isLoggedIn) {
           const response = await axios.get(
-            `http://localhost:3060/api/users/resorts/${id}/recentsearches?checkIn=${dateSearchInfo.checkIn}&checkOut=${dateSearchInfo.checkOut}`,
+            `https://resortifybackend.onrender.com/api/users/resorts/${id}/recentsearches?checkIn=${dateSearchInfo.checkIn}&checkOut=${dateSearchInfo.checkOut}`,
             {
               headers: {
                 Authorization: localStorage.getItem("token"),
@@ -55,7 +55,7 @@ export default function ResortDetail() {
           setResort(response.data);
         } else {
           const response = await axios.get(
-            `http://localhost:3060/api/users/resorts/${id}?checkIn=${dateSearchInfo.checkIn}&checkOut=${dateSearchInfo.checkOut}`
+            `https://resortifybackend.onrender.com/api/users/resorts/${id}?checkIn=${dateSearchInfo.checkIn}&checkOut=${dateSearchInfo.checkOut}`
           );
           console.log(response.data);
           setResort(response.data);
@@ -79,7 +79,7 @@ export default function ResortDetail() {
 
     propertyPhotos = photos.map((ele, i) => {
       return {
-        src: `http://localhost:3060/images/${ele}`,
+        src: `https://resortifybackend.onrender.com/images/${ele}`,
         altText: `Property Photo${i}`,
         caption: "Photo",
         key: i + 1,

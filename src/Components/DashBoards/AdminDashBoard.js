@@ -31,7 +31,7 @@ export default function AdminDashboard() {
           "http://127.0.0.1:3060/api/users/resorts"
         );
         const generalModel = await axios.get(
-          "http://localhost:3060/api/generalmodel",
+          "https://resortifybackend.onrender.com/api/generalmodel",
           { headers: { Authorization: localStorage.getItem("token") } }
         );
         console.log(response.data);
@@ -108,7 +108,7 @@ export default function AdminDashboard() {
     const formdata = {};
     try {
       const response = await axios.put(
-        `http://localhost:3060/api/admin/propertydetails/${id}`,
+        `https://resortifybackend.onrender.com/api/admin/propertydetails/${id}`,
         formdata,
         {
           headers: {
@@ -325,7 +325,7 @@ export default function AdminDashboard() {
                 })%`;
                 return (
                   <img
-                    src={`http://localhost:3060/images/${ele}`}
+                    src={`https://resortifybackend.onrender.com/images/${ele}`}
                     style={{ width: "100%", height: { height } }}
                     alt="documents"
                   />

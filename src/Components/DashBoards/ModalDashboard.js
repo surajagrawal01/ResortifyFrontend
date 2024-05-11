@@ -10,7 +10,7 @@ export default function ModalDashboard(props) {
 
     const handleStatus = async (id, type) => {
         try {
-            const response = await axiosInstance.put(`http://localhost:3060/api/bookings/${id}?status=${type}`)
+            const response = await axiosInstance.put(`https://resortifybackend.onrender.com/api/bookings/${id}?status=${type}`)
             alert(type)
             handleUpdate(response.data)
             toggle()
@@ -22,7 +22,7 @@ export default function ModalDashboard(props) {
 
     const handleCheckInOut = async (id, type) => {
         try {
-            const response = await axiosInstance.put(`http://localhost:3060/api/bookings/in-out/${id}?type=${type}`)
+            const response = await axiosInstance.put(`https://resortifybackend.onrender.com/api/bookings/in-out/${id}?type=${type}`)
             alert(type)
             handleUpdate(response.data)
             toggle()

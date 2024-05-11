@@ -15,7 +15,7 @@ export default function MyBookings() {
   useEffect(() => {
     (async () => {
       const response = await axios.get(
-        `http://localhost:3060/api/users/account?page=${page}&limit=${limit}`,
+        `https://resortifybackend.onrender.com/api/users/account?page=${page}&limit=${limit}`,
         { headers: { Authorization: localStorage.getItem("token") } }
       );
       // if (response.data.myBookings < page) {
@@ -64,7 +64,7 @@ export default function MyBookings() {
               <Row>
                 <Col md={4}>
                   <Image
-                    src={`http://localhost:3060/images/${ele.propertyId.propertyPhotos[0]}`}
+                    src={`https://resortifybackend.onrender.com/images/${ele.propertyId.propertyPhotos[0]}`}
                     alt="property-photos"
                     width="100%"
                     height="100%"

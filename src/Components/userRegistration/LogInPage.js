@@ -31,7 +31,7 @@ export default function LoginPage() {
             })}
             onSubmit={async (values) => {
                 try {
-                    const response = await axios.post("http://localhost:3060/api/users/login", values)
+                    const response = await axios.post("https://resortifybackend.onrender.com/api/users/login", values)
                     localStorage.setItem('token', response.data.token)
                     dispatch(setLoginTrue())
                     dispatch(startSetUser())

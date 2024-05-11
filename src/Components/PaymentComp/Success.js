@@ -23,7 +23,7 @@ export default function Success() {
         (async () => {
             try {
                 const stripeId = localStorage.getItem('stripeId')
-                const payment = await axios.put(`http://localhost:3060/api/payments/${stripeId}/success`, { paymentStatus: "success" })
+                const payment = await axios.put(`https://resortifybackend.onrender.com/api/payments/${stripeId}/success`, { paymentStatus: "success" })
                 localStorage.removeItem('stripeId')
                 sweetAlertFunc()
             } catch (err) {

@@ -26,7 +26,7 @@ export default function ChartPage(){
     try{
 
       const result = await axios.get(
-        "http://localhost:3060/api/bookings/calculate",
+        "https://resortifybackend.onrender.com/api/bookings/calculate",
         { headers: { Authorization: localStorage.getItem("token") } }
       );
       setChartOptions({ data: result.data.result });
