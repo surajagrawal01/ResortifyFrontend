@@ -183,7 +183,7 @@ export default function RoomDetails(props) {
               } else if (roomstotal <= resort.propertyData.totalRooms) {
                 try {
                   const result = await axios.post(
-                    "http://127.0.0.1:3060/api/owners/propertydetails/roomtypemodel",
+                    "https://resortifybackend.onrender.com/api/owners/propertydetails/roomtypemodel",
                     roomTypesData,
                     {
                       headers: { Authorization: localStorage.getItem("token") },

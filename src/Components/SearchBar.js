@@ -45,7 +45,7 @@ export default function SearchBar() {
                         .min(today, 'Not Less than today date')
                         .required('Required'),
                     checkOut: Yup.date()
-                        .min(Yup.ref('checkIn'), 'Should Not be less than checkIn date')
+                        .min(Yup.ref('checkIn'), 'Should Not be less than checkin date')
                         .required('Required'),
                     adult: Yup.number()
                         .min(1, 'Should not be less than zero')
