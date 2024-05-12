@@ -2,7 +2,7 @@ import { io } from "socket.io-client";
 import { useEffect, useState, useMemo } from "react";
 export default function ChatUser() {
     const socket = useMemo(() => {
-        return io("http://localhost:3060");
+        return io("https://resortifybackend.onrender.com");
     }, []);
 
     const [message, setMessage] = useState("");

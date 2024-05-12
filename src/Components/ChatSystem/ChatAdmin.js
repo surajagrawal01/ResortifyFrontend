@@ -8,7 +8,7 @@ export default function ChatAdmin() {
     const [connectedUser, setConnectedUser] = useState([])
 
     const socketAdmin = useMemo(() => {
-        return io('http://localhost:3060/admin')
+        return io('https://resortifybackend.onrender.com/admin')
     }, [])
 
 
