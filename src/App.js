@@ -18,7 +18,7 @@ import ForgotPassword from "./Components/userRegistration/ForgotPassword";
 import OwnerDashBoard from "./Components/DashBoards/ownerDashboard";
 import HomePage from "./Components/HomePage";
 import { startSetUser } from "./actions/userActions";
-import ListResorts from "./Components/ListingResorts/ListResorts";
+// import ListResorts from "./Components/ListingResorts/ListResorts";
 import NavigationBar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import PaymentPage from "./Components/PaymentComp/PaymentPage";
@@ -36,6 +36,7 @@ import PersonalDetail from "./Components/UserDetails/UserPersonalDetail";
 import MyBookings from "./Components/UserDetails/MyBookings";
 import AboutUs from "./Components/AboutUs/aboutus";
 const LazyResortDetail = React.lazy(() => import("./Components/ResortDetail/ResortDetail"));
+const LazyResortLisitng = React.lazy(() => import("./Components/ListingResorts/ListResorts"));
 
 function PropertyReducer(state, action) {
   switch (action.type) {
@@ -139,7 +140,11 @@ export default function App() {
               <Route path="/registration-page" element={<RegistartionForm />} />
               <Route path="/loginPage" element={<LoginPage />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/resort-listing" element={<ListResorts />} />
+              <Route path="/resort-listing" element={
+                <React.Suspense fallback={spinner}>
+                  <LazyResortLisitng />
+                </React.Suspense> } />
+              {/* <Route path="/resort-listing" element={<ListResorts />} /> */}
               <Route path="/resort-detail/:id" element={
                 <React.Suspense fallback={spinner}>
                   <LazyResortDetail />

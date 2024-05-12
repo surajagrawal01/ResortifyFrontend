@@ -115,7 +115,7 @@ export default function RoomDetails(props) {
         })}
         onSubmit={async (values) => {
           const response2 = await axios.post(
-            "http://localhost:3060/api/roomphotos",
+            "https://resortifybackend.onrender.com/api/roomphotos",
             formData1
           );
           
@@ -164,7 +164,7 @@ export default function RoomDetails(props) {
               ) {
                 try {
                   const response2 = await axios.put(
-                    `http://localhost:3060/api/owners/propertydetails/rooms/${localStorage.getItem(
+                    `https://resortifybackend.onrender.com/api/owners/propertydetails/rooms/${localStorage.getItem(
                       "roomId"
                     )}`,
                     roomTypesData,
@@ -411,7 +411,7 @@ export default function RoomDetails(props) {
                   return (
                     <img
                       key={i}
-                      src={`http://localhost:3060/images/${ele}`}
+                      src={`https://resortifybackend.onrender.com/images/${ele}`}
                       style={{ width: "25%", height: "25%", margin: "20px" }}
                       alt="documents"
                     />
