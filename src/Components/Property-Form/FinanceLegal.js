@@ -97,7 +97,7 @@ export default function FinanceAndLegal() {
         localStorage.setItem("financeAndLegal", JSON.stringify(form));
 
         const response = await axios.post(
-          "http://127.0.0.1:3060/api/owners/propertydetails/generalModel",
+          "https://resortifybackend.onrender.com/api/owners/propertydetails/generalModel",
           form,
           {
             headers: {

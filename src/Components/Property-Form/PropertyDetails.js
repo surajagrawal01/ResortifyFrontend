@@ -27,7 +27,7 @@ export default function PropertyDetails(props) {
     (async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:3060/api/owners/amenities",
+          "https://resortifybackend.onrender.com/api/owners/amenities",
           { headers: { Authorization: localStorage.getItem("token") } }
         );
         const property = response.data.filter((ele) => {
@@ -227,7 +227,7 @@ export default function PropertyDetails(props) {
             
           } else {
             const response = await axios.post(
-              "http://127.0.0.1:3060/api/owners/propertydetails",
+              "https://resortifybackend.onrender.com/api/owners/propertydetails",
               formdata,
               {
                 headers: { Authorization: localStorage.getItem("token") },
