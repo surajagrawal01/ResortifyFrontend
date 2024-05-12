@@ -28,13 +28,12 @@ export default function AdminDashboard() {
     (async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:3060/api/users/resorts"
+          "https://resortifybackend.onrender.com/api/users/resorts"
         );
         const generalModel = await axios.get(
           "https://resortifybackend.onrender.com/api/generalmodel",
           { headers: { Authorization: localStorage.getItem("token") } }
         );
-        console.log(response.data);
         setGeneralDetails(generalModel.data);
         setOwnerDetails(response.data);
       } catch (err) {
