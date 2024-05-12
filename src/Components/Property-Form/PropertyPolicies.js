@@ -22,7 +22,7 @@ export default function Policies(props) {
     (async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3060/api/static-data"
+          "https://resortifybackend.onrender.com/api/static-data"
         );
 
         setCancellation(

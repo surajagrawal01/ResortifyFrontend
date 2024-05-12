@@ -56,7 +56,7 @@ export default function FinanceAndLegal() {
     console.log(ownerShip);
     // localStorage -- then make a put request else post
     const result = await axios.post(
-      "http://localhost:3060/api/documentsphotos",
+      "https://resortifybackend.onrender.com/api/documentsphotos",
       formData
     );
     

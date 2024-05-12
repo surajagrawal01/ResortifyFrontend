@@ -23,7 +23,7 @@ export default function UploadPhotos(props) {
     
     try {
       const response = await axios.post(
-        "http://localhost:3060/api/propertyphotos",
+        "https://resortifybackend.onrender.com/api/propertyphotos",
         formData,
         { headers: { Authorization: localStorage.getItem("token") } }
       );
@@ -75,7 +75,7 @@ export default function UploadPhotos(props) {
               return (
                 <img
                   key={i}
-                  src={`http://localhost:3060/images/${ele}`}
+                  src={`https://resortifybackend.onrender.com/images/${ele}`}
                   style={{ width: "25%", height: "25%", margin: "20px" }}
                   alt="documents"
                 />

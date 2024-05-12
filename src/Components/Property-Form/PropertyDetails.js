@@ -216,7 +216,7 @@ export default function PropertyDetails(props) {
 
           if (JSON.parse(localStorage.getItem("propertyDetails"))) {
             const response2 = await axios.put(
-              `http://localhost:3060/api/owners/propertydetails/${localStorage.getItem(
+              `https://resortifybackend.onrender.com/api/owners/propertydetails/${localStorage.getItem(
                 "_id"
               )}`,
               formdata,
