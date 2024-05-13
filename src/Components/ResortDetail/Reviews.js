@@ -12,6 +12,10 @@ export default function Reviews({ resort }) {
         return rating
     }
 
+    const handleImageError = (event,ele) => {
+        event.target.src = ele;
+    };
+
     return (
         <>
             <hr />
@@ -35,7 +39,7 @@ export default function Reviews({ resort }) {
                                     ele.photos.map((ele,i) => {
                                         return (
                                             <Col xs={3} className='text-center mb-3 mb-md-0' key={i}>
-                                                <Image src={`https://resortifybackend.onrender.com/images/${ele}`} fluid style={{ maxHeight: '20vh', objectFit: 'cover' }} />
+                                               <Image src={`http://localhost:3060/images/${ele}`} onError={(e) => { handleImageError(e, ele) }} fluid style={{ maxHeight: '20vh', objectFit:'cover'}}/>
                                             </Col>
                                         )
                                     })
