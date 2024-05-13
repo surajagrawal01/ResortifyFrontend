@@ -75,7 +75,7 @@ export default function UploadPhotos(props) {
               return (
                 <img
                   key={i}
-                  src={`https://resortifybackend.onrender.com/images/${ele}`}
+                  src={ele}
                   style={{ width: "25%", height: "25%", margin: "20px" }}
                   alt="documents"
                 />

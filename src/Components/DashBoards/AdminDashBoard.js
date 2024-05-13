@@ -137,6 +137,10 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleImageError = (event,ele) => {
+    event.target.src = ele;
+  };
+
   const handleModal = () => {
     if (!selectedProperty) return null;
 
@@ -325,6 +329,7 @@ export default function AdminDashboard() {
                 return (
                   <img
                     src={`https://resortifybackend.onrender.com/images/${ele}`}
+                    onError={(e) => { handleImageError(e, ele) }}
                     style={{ width: "100%", height: { height } }}
                     alt="documents"
                   />

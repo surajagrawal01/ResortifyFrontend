@@ -94,6 +94,10 @@ export default function UserRecentSearches() {
     );
   };
 
+  const handleImageError = (event,ele) => {
+    event.target.src = ele;
+  };
+
   return (
     <div>
       <Container fluid>
@@ -129,6 +133,7 @@ export default function UserRecentSearches() {
                                     height: "50%",
                                   }}
                                   src={`https://resortifybackend.onrender.com/images/${ele.propertyPhotos[0]}`}
+                                  onError={(e) => { handleImageError(e,ele.propertyPhotos[0])}}
                                   alt="photo"
                                 />
                                 <br />

@@ -42,6 +42,10 @@ export default function ResortsData({ resorts, limit, order, priceVal, rating })
     );
   };
 
+  const handleImageError = (event,ele) => {
+    event.target.src = ele;
+  };
+
   return (
     <>
       <Container fluid>
@@ -69,6 +73,7 @@ export default function ResortsData({ resorts, limit, order, priceVal, rating })
                         <Col md={3}>
                           <img
                             src={`https://resortifybackend.onrender.com/images/${ele.propertyPhotos[0]}`}
+                            onError={(e) => { handleImageError(e,ele.propertyPhotos[0])}}
                             className="img-fluid"
                             alt="Logo"
                           />

@@ -79,7 +79,7 @@ export default function ResortDetail() {
 
     propertyPhotos = photos.map((ele, i) => {
       return {
-        src: `https://resortifybackend.onrender.com/images/${ele}`,
+        src: ele,
         altText: `Property Photo${i}`,
         caption: "Photo",
         key: i + 1,
