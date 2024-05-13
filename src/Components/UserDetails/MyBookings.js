@@ -41,6 +41,10 @@ export default function MyBookings() {
     setPage(1);
   };
   
+  const handleImageError = (event,ele) => {
+    event.target.src = ele;
+  };
+
   return (
     <div>
       <div className="m-4">
@@ -65,6 +69,7 @@ export default function MyBookings() {
                 <Col md={4}>
                   <Image
                     src={`https://resortifybackend.onrender.com/images/${ele.propertyId.propertyPhotos[0]}`}
+                    onError={(e) => { handleImageError(e,ele.propertyId.propertyPhotos[0])}}
                     alt="property-photos"
                     width="100%"
                     height="100%"

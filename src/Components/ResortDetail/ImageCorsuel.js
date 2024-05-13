@@ -29,6 +29,10 @@ function Example({ resortPhotos }) {
     setActiveIndex(newIndex);
   };
 
+  const handleImageError = (event,ele) => {
+    event.target.src = ele;
+  };
+
   const slides = resortPhotos.map((item) => {
     return (
       <CarouselItem
@@ -37,7 +41,7 @@ function Example({ resortPhotos }) {
         key={item.src}
       >
         <div style={{ width: '80%', margin: '0 auto' }}>
-          <img src={item.src} alt={item.altText} style={{ "width": "100%", "height": "25rem" }} />
+          <img src={`https://resortifybackend.onrender.com/images/${item.src}`} onError={(e) => { handleImageError(e,item.src)}} alt={item.altText} style={{ "width": "100%", "height": "25rem" }} />
         </div>
         <CarouselCaption
           captionText={item.caption}
