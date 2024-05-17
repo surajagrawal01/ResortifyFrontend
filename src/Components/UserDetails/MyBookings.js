@@ -58,7 +58,7 @@ export default function MyBookings() {
         <option value="2">2</option>
         <option value="10">5</option>
         <option value="10">10</option>
-        <option value="10">20</option>
+        <option value="20">20</option>
       </select>
       </div>
       {bookings.map((ele) => {
