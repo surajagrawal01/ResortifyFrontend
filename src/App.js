@@ -35,6 +35,7 @@ import Chat from "./Components/ChatSystem/Chat";
 import PersonalDetail from "./Components/UserDetails/UserPersonalDetail";
 import MyBookings from "./Components/UserDetails/MyBookings";
 import AboutUs from "./Components/AboutUs/aboutus";
+import axios from "axios"
 const LazyResortDetail = React.lazy(() => import("./Components/ResortDetail/ResortDetail"));
 const LazyResortLisitng = React.lazy(() => import("./Components/ListingResorts/ListResorts"));
 
@@ -91,6 +92,16 @@ export default function App() {
   });
 
   useEffect(() => {
+
+    (async()=>{
+      try{
+        const response = await axios.get("https://resortifybackend.onrender.com")
+        console.log(response.data)
+      }catch(err){
+        console.log(err)
+      }
+    })();
+
     const token = localStorage.getItem("token");
     if (token) {
       dispatch(setLoginTrue());
