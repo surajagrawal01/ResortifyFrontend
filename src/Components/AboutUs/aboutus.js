@@ -89,7 +89,7 @@ export default function AboutUs() {
         </Row>
         <Row style={{ margin: "20px 0px" }}>
           <Col className="col-md-6" style={{ wordSpacing: "5px" }}>
-            <div style={{ lineHeight: "40px" }}>
+            <div style={{ lineHeight: "30px" }}>
               <h3 style={{ marginTop: "20px" }}> Our Mission </h3> <br />
               At Resortify, our mission is simple: to empower travelers like you
               to embark on unforgettable journeys with ease and confidence. We
@@ -170,6 +170,7 @@ export default function AboutUs() {
             className="col-md-6 text-style"
           >
             <div>
+              <br />
               <h3>Trust and Transparency</h3>
               <p>
                 We believe in transparency and integrity in everything we do.
