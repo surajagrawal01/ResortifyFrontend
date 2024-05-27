@@ -44,7 +44,6 @@ export default function AboutUs() {
       const response = await axios.get(
         "https://resortifybackend.onrender.com/api/propertyStats"
       );
-      console.log(response.data);
       setOptions({
         title: {
           text: "Annual Resorts Registration",
@@ -74,7 +73,7 @@ export default function AboutUs() {
         />
       </div>
 
-      <div style={{ margin: "0px 70px 0px 70px" }}>
+      <div className="m-4">
         <Row
           style={{
             wordSpacing: "5px",
@@ -100,7 +99,7 @@ export default function AboutUs() {
               process is seamless and stress-free.
             </div>
           </Col>
-          <Col className="col-md-6">
+          <Col xs={12} md={6}>
             <Image src={aboutus} style={{ height: "100%", width: "100%" }} />
           </Col>
         </Row>
@@ -109,11 +108,7 @@ export default function AboutUs() {
             <AgChartsReact options={options} />
           </Col>
           <Col
-            className="col-md-6"
-            style={{
-              wordSpacing: "5px",
-              lineHeight: "30px",
-            }}
+            className="col-md-6 text-style"
           >
             <div>
               <h3>Discover Your Dream Resort</h3>
@@ -140,11 +135,7 @@ export default function AboutUs() {
         </Row>
         <Row style={{ margin: "50px 0px" }}>
           <Col
-            className="col-md-6"
-            style={{
-              wordSpacing: "5px",
-              lineHeight: "30px",
-            }}
+            className="col-md-6 text-style"
           >
             <div>
               <h3>Seamless Booking Process</h3>
@@ -167,20 +158,16 @@ export default function AboutUs() {
               </p>
             </div>
           </Col>
-          <Col className="col-md-6">
+          <Col xs={12} md={6}>
             <Image src={friends} style={{ height: "100%", width: "100%" }} />
           </Col>
         </Row>
         <Row style={{ margin: "50px 0px" }}>
-          <Col className="col-md-6">
+          <Col xs={12} md={6}>
             <Image src={hands} style={{ height: "100%", width: "100%" }} />
           </Col>
           <Col
-            className="col-md-6"
-            style={{
-              wordSpacing: "5px",
-              lineHeight: "30px",
-            }}
+            className="col-md-6 text-style"
           >
             <div>
               <h3>Trust and Transparency</h3>

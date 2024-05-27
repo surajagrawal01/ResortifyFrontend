@@ -105,3 +105,8 @@
     border-color: #007bff;
   }
 }
+
+.text-style {
+    word-spacing: 5px;
+    line-height: 30px;
+}
